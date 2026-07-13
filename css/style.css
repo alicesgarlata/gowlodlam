@@ -1,27 +1,32 @@
+/* =====================================================================
+   LODLAM God of War (2018) — report site stylesheet
+   Design tokens + shared layout across all five pages.
+   ===================================================================== */
+
 :root {
-  color-bg: #f7f5f0;
-  color-content-bg: #ffffff;
-  color-text: #222;
-  color-text-muted: #666;
-  color-header-bg: #2b3542;
-  color-header-text: #f5f5f2;
-  color-accent: #c9a86a;
-  color-accent-hover: #d9bd85;
-  color-code-bg: #1e2530;
-  color-code-text: #e0e0e0;
-  color-code-keyword: #c9a86a;
-  color-callout-bg: #fdf6e3;
-  color-callout-border: #c9a86a;
-  color-callout-title: #7a5b1e;
-  color-link: #1a5f8a;
-  color-link-border: #99c0dc;
-  color-border: #e0e0e0;
+  --color-bg: #f7f5f0;
+  --color-content-bg: #ffffff;
+  --color-text: #222;
+  --color-text-muted: #666;
+  --color-header-bg: #2b3542;
+  --color-header-text: #f5f5f2;
+  --color-accent: #c9a86a;
+  --color-accent-hover: #d9bd85;
+  --color-code-bg: #1e2530;
+  --color-code-text: #e0e0e0;
+  --color-code-keyword: #c9a86a;
+  --color-callout-bg: #fdf6e3;
+  --color-callout-border: #c9a86a;
+  --color-callout-title: #7a5b1e;
+  --color-link: #1a5f8a;
+  --color-link-border: #99c0dc;
+  --color-border: #e0e0e0;
 
-  font-serif: Georgia, "Times New Roman", serif;
-  font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
-  font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
 
-  max-width: 900px;
+  --max-width: 900px;
 }
 
 * { box-sizing: border-box; }
