@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>God of War (2018) — A Linked Open Data Model</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-title">
+      <span class="site-title-main">God of War (2018)</span>
+      <span class="site-title-sub">A LINKED OPEN DATA MODEL</span>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html" class="current">Home</a></li>
+        <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
+        <li><a href="conceptual-model.html">Conceptual Model</a></li>
+        <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="hero">
+    <h1>Modelling a fictional adaptation of Norse myth</h1>
+    <p class="subtitle">A LODLAM project on the Wikipedia article for <em>God of War</em> (2018).</p>
+  </div>
+
+  <article>
+
+    <p>This project takes a single Wikipedia article — the one for the 2018 video game <em><a href="https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&amp;oldid=1357494264" target="_blank" rel="noopener">God of War</a></em> — and progressively lifts its content into a Linked Open Data graph. Fifteen entities are identified across three narrative layers (production, fictional, mythological) plus two subject concepts; encoded in TEI/XML with authority reconciliation to Wikidata and VIAF; transformed into an interactive HTML rendering; modelled conceptually against a reused vocabulary of dcterms, schema.org, FOAF, SKOS, and DBpedia; and finally serialised as an RDF/Turtle graph of 92 triples across 18 subjects.</p>
+
+    <p>The interesting modelling problem lies in how the game <em>reinterprets</em> its mythological source. The 2018 <em>God of War</em> takes six figures from Norse mythology — Odin, Thor, Freyja, Baldur, Loki, Jörmungandr — and redraws their genealogy in ways that do not match the received tradition: in the game Freyja is Baldur's mother, where the <em>Prose Edda</em> attributes that role to Frigg; the young character Atreus is revealed to be Loki, the mythological father of the World Serpent whom the pair encounter on the boat. Standard vocabularies do not carry a property that means "fictional reinterpretation of a mythological figure", so this project introduces a single coined term, <code>gow:reinterprets</code>, as a subproperty of <code>dcterms:relation</code>. The graph is built so that a mythological figure's Wikidata identity is preserved (through <code>gow:reinterprets</code>) while the game's alternative genealogy is stated in its own right (through <code>schema:children</code>), without collapsing the two into a single <code>owl:sameAs</code> assertion.</p>
+
+    <div class="callout">
+      <p class="callout-title">Course context</p>
+      <p>Individual project for the Information Science and Cultural Heritage course, taught by Prof. Francesca Tomasi and Prof. Marilena Daquino in the Digital Humanities and Digital Knowledge (DHDK) MA at the University of Bologna, academic year 2025-2026.</p>
+    </div>
+
+    <h2>How to read this site</h2>
+
+    <p>The site is organised in three sections that follow the three phases of the LODLAM workflow. Each section explains a methodological choice, shows the artefact produced, and links to the raw file.</p>
+
+    <div class="section-index">
+      <a class="section-card" href="knowledge-organization.html">
+        <span class="step-number">Phase 1</span>
+        <h3>Knowledge Organization</h3>
+        <p>Selecting the topic, identifying entities across three layers, encoding the Wikipedia text in TEI/XML with authority reconciliation, and rendering it as an interactive HTML article.</p>
+      </a>
+      <a class="section-card" href="conceptual-model.html">
+        <span class="step-number">Phase 2</span>
+        <h3>Conceptual Model</h3>
+        <p>Reusing standard vocabularies (dcterms, schema.org, FOAF, SKOS, DBO) and coining one new property — <code>gow:reinterprets</code> — to capture the fictional-adaptation-of-myth relation.</p>
+      </a>
+      <a class="section-card" href="knowledge-representation.html">
+        <span class="step-number">Phase 3</span>
+        <h3>Knowledge Representation</h3>
+        <p>Building the RDF/Turtle graph with rdflib, differentiating reconciliation strategy per entity type, and closing the fiction↔myth loop through in-game and myth-derived family relations.</p>
+      </a>
+    </div>
+
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>LODLAM project for the Information Science and Cultural Heritage course, Digital Humanities and Digital Knowledge (DHDK) MA, University of Bologna, a.y. 2025-2026.</p>
+  <p>Instructors: Prof. Francesca Tomasi and Prof. Marilena Daquino.</p>
+</footer>
+
+</body>
+</html>
