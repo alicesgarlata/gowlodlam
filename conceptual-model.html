@@ -71,7 +71,7 @@
         </tr>
         <tr>
           <td>Mythological figures (Odin, Thor, …)</td>
-          <td><code>foaf:Person</code></td>
+          <td><code>foaf:Person</code>, <code>dbo:FictionalCharacter</code></td>
           <td><code>gow:reinterprets</code></td>
         </tr>
         <tr>
@@ -89,9 +89,16 @@
 
     <p>Production relations between the game and the entities reuse the specific properties that Wikidata's mapping community has aligned to each role: <code>schema:director</code> for Barlog, <code>dbo:developer</code> for Santa Monica Studio, <code>dcterms:publisher</code> for Sony Interactive Entertainment, <code>schema:musicBy</code> for McCreary, and <code>schema:gamePlatform</code> for the PlayStation 4. Characters are attached to the game with <code>schema:character</code>, subjects with <code>dcterms:subject</code>, and family relations between characters (in and out of the game's narrative) with <code>schema:children</code>. Data properties are limited to <code>dcterms:title</code> (range <code>xsd:string</code>) and <code>dcterms:date</code> (range <code>xsd:date</code>).</p>
 
+    <div class="callout">
+      <p class="callout-title">Why mythological figures are also dbo:FictionalCharacter</p>
+      <p>Odin, Thor, Freyja, Baldur, Loki, and Jörmungandr are not just names cited in passing — they appear, speak, and act within the game's own narrative, exactly as Kratos and Atreus do. Typing them <code>dbo:FictionalCharacter</code> as well as <code>foaf:Person</code> makes that explicit, and it has a direct payoff for the model: it gives <code>gow:reinterprets</code> a single, uniform domain class instead of splitting the property's subjects across two different types depending on which character happens to be mid-conversation with which god. The alternative — leaving the six mythological figures as plain <code>foaf:Person</code> — would have worked too, but would have made "who reinterprets a myth" a property of an arbitrary subset of persons rather than a property of characters specifically, which is the claim the project actually wants to make.</p>
+    </div>
+
+    <p>The same reasoning extends one step further: each mythological figure also carries its own <code>dcterms:subject</code> triple to <code>gow:norse-mythology</code> — not just the game as a whole. Without it, the graph would only say "the game is about Norse mythology", leaving the individual deities' membership in that pantheon implicit. <code>skos:narrower</code> — visible as a self-loop on <code>skos:Concept</code> in the diagram below — cannot carry that link itself: it only connects two <code>skos:Concept</code> instances, and the deities are modelled as characters, not concepts. It stays in the diagram because it is a genuine part of the SKOS vocabulary this project reuses (a concept scheme can always have narrower concepts), even though no triple currently instantiates it.</p>
+
     <h2>The conceptual diagram</h2>
 
-    <p>The conceptual model is drawn using <a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener">Graffoo</a>, a graphical notation for OWL ontologies. Classes are yellow rectangles, individuals are pink ellipses, object properties are labelled blue arrows between classes, and data properties are green arrows to XSD datatypes. Self-loops on <code>schema:children</code> (character to character) and <code>skos:narrower</code> (concept to concept) express relations that can hold between two instances of the same class.</p>
+    <p>The conceptual model is drawn using <a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener">Graffoo</a>, a graphical notation for OWL ontologies, diagrammed in <a href="https://www.yworks.com/products/yed" target="_blank" rel="noopener">yEd Graph Editor</a> using Graffoo's own official yEd palette. Classes are yellow rectangles, individuals are pink ellipses, object properties are labelled blue arrows between classes, and data properties are green arrows to XSD datatypes. Self-loops on <code>schema:children</code> (character to character) and <code>skos:narrower</code> (concept to concept) express relations that can hold between two instances of the same class.</p>
 
     <figure>
       <img src="assets/graffoo.png" alt="Graffoo conceptual model diagram showing classes, object properties, and data properties.">
