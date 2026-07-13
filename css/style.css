@@ -186,17 +186,22 @@ body {
   max-width: 60ch;
 }
 
-/* hero emblem watermark (home page only) */
-.hero-emblem {
-  position: absolute;
-  top: -0.5rem;
-  right: -1rem;
-  width: 160px;
-  height: 160px;
-  opacity: 0.1;
-  pointer-events: none;
+.hero-frieze {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 760px;
+  margin: 0 auto 0.6rem;
 }
-@media (max-width: 700px) { .hero-emblem { display: none; } }
+.hero-frieze-caption {
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  color: var(--color-ink-muted);
+  text-align: center;
+  letter-spacing: 0.01em;
+  margin: 0 0 1.8rem;
+  font-style: italic;
+}
 
 article h2 {
   font-family: var(--font-display);
