@@ -18,6 +18,7 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
+        <li><a href="html-rendering.html">HTML Rendering</a></li>
         <li><a href="conceptual-model.html">Conceptual Model</a></li>
         <li><a href="knowledge-representation.html" class="current">Knowledge Representation</a></li>
         <li><a href="resources.html">Resources</a></li>
@@ -37,9 +38,98 @@
 
     <h2>Transformation approach</h2>
 
-    <p>The graph is built by a Python script (<code>tei_to_rdf.py</code>) that uses <code>lxml</code> for parsing the TEI source and <code>rdflib</code> for constructing and serialising the graph. The script's structure follows the conceptual model directly: a first pass extracts entity definitions from the TEI standoff and taxonomy into a Python dictionary; a second pass emits ontology-header triples (including the definition of <code>gow:reinterprets</code>); a third pass emits typed triples for each entity, choosing the reconciliation property based on entity type; and a fourth pass adds the fixed relations between the game and its production, characters, and subjects.</p>
+    <p>The graph is built by a Python script (<code>tei_to_rdf.py</code>) that uses <code>lxml</code> for parsing the TEI source and <code>rdflib</code> for constructing and serialising the graph. The script reuses the exact same <code>extract_entities</code> function documented step by step on the <a href="knowledge-organization.html">Knowledge Organization page</a> — the entity dictionary built there is the input to everything below, so the two transformations never risk drifting out of sync about what an entity's Wikidata ID or role actually is.</p>
 
-    <p>The resulting file is 92 triples across 18 subjects. It round-trips through <code>rdflib</code> — reparsing the serialised Turtle yields the same triple count, so the file is syntactically valid Turtle by round-trip verification.</p>
+    <h3>Step 1 — Declare the ontology header</h3>
+
+    <p>Before any entity is processed, the script writes the graph's self-description: an <code>owl:Ontology</code> resource with a label and comment, and the declaration of <code>gow:reinterprets</code> itself as an <code>owl:ObjectProperty</code> with its <code>rdfs:subPropertyOf</code> link to <code>dcterms:relation</code> (the reasoning for this specific placement is argued in full on the <a href="conceptual-model.html">Conceptual Model page</a>). This runs first so that the coined term is defined in the graph before anything uses it.</p>
+
+<pre><code><span class="kw">def</span> add_ontology_header(g: Graph) -&gt; <span class="kw">None</span>:
+    ont = URIRef(<span class="kw">str</span>(GOW).rstrip(<span class="st">"/"</span>))
+    g.add((ont, RDF.type, OWL.Ontology))
+    g.add((ont, RDFS.label, Literal(<span class="st">"God of War (2018) LODLAM ontology"</span>, lang=<span class="st">"en"</span>)))
+
+    reinterprets = GOW[<span class="st">"reinterprets"</span>]
+    g.add((reinterprets, RDF.type, OWL.ObjectProperty))
+    g.add((reinterprets, RDFS.subPropertyOf, DCTERMS.relation))
+    g.add((reinterprets, RDFS.label, Literal(<span class="st">"reinterprets"</span>, lang=<span class="st">"en"</span>)))</code></pre>
+
+    <h3>Step 2 — Branch the reconciliation strategy by entity type and role</h3>
+
+    <p>This is the step that does the actual semantic work of the project. For every entity in the dictionary, the script looks at both its <code>type</code> (person / org / object / concept) and, for persons, its <code>role</code> (real production credit / fictional character / mythological figure), and picks the reconciliation property accordingly:</p>
+
+<pre><code><span class="kw">if</span> etype == <span class="st">"person"</span>:
+    g.add((uri, RDF.type, FOAF.Person))
+    g.add((uri, FOAF.name, Literal(name, lang=<span class="st">"en"</span>)))
+
+    <span class="kw">if</span> role == <span class="st">"fictional-character"</span>:
+        g.add((uri, RDF.type, DBO.FictionalCharacter))
+        <span class="kw">if</span> wikidata:
+            g.add((uri, OWL.sameAs, WD[wikidata]))  <span class="cm"># Wikidata IS the game character</span>
+
+    <span class="kw">elif</span> role == <span class="st">"mythological-figure"</span>:
+        <span class="kw">if</span> wikidata:
+            <span class="cm"># Wikidata describes the MYTH figure, not the game's version —</span>
+            <span class="cm"># owl:sameAs would incorrectly merge the two identities.</span>
+            g.add((uri, GOW[<span class="st">"reinterprets"</span>], WD[wikidata]))
+
+    <span class="kw">else</span>:  <span class="cm"># real person: director, composer, …</span>
+        <span class="kw">if</span> wikidata:
+            g.add((uri, OWL.sameAs, WD[wikidata]))
+        <span class="kw">if</span> viaf:
+            g.add((uri, OWL.sameAs, VIAF[viaf_id_only(viaf)]))</code></pre>
+
+    <p>The inline comments in the actual script mark exactly this: that the branch is not a stylistic choice but a semantic necessity, forced by what a Wikidata entry represents for each role. This branching logic is what produces the 12 / 6 / 2 split documented below — it is the direct, mechanical consequence of the TEI encoding's <code>@role</code> attribute, set back in <a href="knowledge-organization.html">Phase 1</a> when each mythological figure was tagged <code>role="mythological-figure"</code> rather than left the same as a real person.</p>
+
+    <h3>Step 3 — Add the fixed game-level and family relations</h3>
+
+    <p>Unlike entity reconciliation, which is generated by iterating the dictionary, the relations between the game and its production/characters/subjects, and the family relations between characters, are not derivable purely from the TEI encoding — they are domain knowledge about who directed what and who is whose parent. These are added explicitly as a fixed list of triples, documented with inline comments explaining <em>why</em> each one is asserted the way it is (the Freyja/Baldur case is the one worth reading closely):</p>
+
+<pre><code><span class="cm"># In-game genealogy: Odin and Freyja are Baldur's parents
+# NOTE: Freyja-as-Baldur's-mother is a game-specific change from myth,
+#       where Frigg (not Freyja) is Baldur's mother.</span>
+g.add((GOW[<span class="st">"odin"</span>], SCHEMA.children, GOW[<span class="st">"baldur"</span>]))
+g.add((GOW[<span class="st">"freyja"</span>], SCHEMA.children, GOW[<span class="st">"baldur"</span>]))</code></pre>
+
+    <p>See the <a href="#family-relations">Family relations</a> section below for the full set and the reasoning behind each one.</p>
+
+    <h3>Step 4 — Serialise and verify</h3>
+
+    <p>The graph object is serialised to Turtle with a single <code>rdflib</code> call, and verified by reparsing the output and checking the triple count matches:</p>
+
+<pre><code>g.serialize(destination=output_path, format=<span class="st">"turtle"</span>)
+
+<span class="cm"># verification, run separately:</span>
+g2 = Graph()
+g2.parse(output_path, format=<span class="st">"turtle"</span>)
+<span class="kw">assert</span> <span class="kw">len</span>(g2) == <span class="kw">len</span>(g)  <span class="cm"># 92 == 92</span></code></pre>
+
+    <p>The resulting file is 92 triples across 18 subjects. It round-trips through <code>rdflib</code> — reparsing the serialised Turtle yields the same triple count, so the file is syntactically valid Turtle by round-trip verification, not just by visual inspection.</p>
+
+    <h2>What the graph actually contains</h2>
+
+    <p>Rather than only describing the graph in the abstract, here are ten real triples taken directly from the generated <code>gow.ttl</code>, chosen to show one example of each pattern discussed above:</p>
+
+    <table>
+      <thead><tr><th>Subject</th><th>Predicate</th><th>Object</th><th>Pattern illustrated</th></tr></thead>
+      <tbody>
+        <tr><td><code>gow:god-of-war-2018</code></td><td><code>owl:sameAs</code></td><td><code>wd:Q18345138</code></td><td>The game reconciled to its own Wikidata entity</td></tr>
+        <tr><td><code>gow:god-of-war-2018</code></td><td><code>schema:director</code></td><td><code>gow:cory-barlog</code></td><td>Production relation, game → person</td></tr>
+        <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>wd:Q5173545</code></td><td>Real person → Wikidata</td></tr>
+        <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>viaf:6865153289917732770006</code></td><td>Real person → VIAF (22-digit cluster ID, verified against Wikidata)</td></tr>
+        <tr><td><code>gow:kratos</code></td><td><code>a</code></td><td><code>dbo:FictionalCharacter</code></td><td>Fictional-character typing</td></tr>
+        <tr><td><code>gow:baldur</code></td><td><code>gow:reinterprets</code></td><td><code>wd:Q131658</code></td><td>Mythological figure — coined property, not sameAs</td></tr>
+        <tr><td><code>gow:freyja</code></td><td><code>schema:children</code></td><td><code>gow:baldur</code></td><td>In-game genealogy that departs from myth</td></tr>
+        <tr><td><code>gow:loki</code></td><td><code>schema:children</code></td><td><code>gow:jormungandr</code></td><td>Myth-derived relation closing the fiction↔myth loop</td></tr>
+        <tr><td><code>gow:norse-mythology</code></td><td><code>skos:exactMatch</code></td><td><code>wd:Q128285</code></td><td>Concept reconciliation via SKOS</td></tr>
+        <tr><td><code>gow:reinterprets</code></td><td><code>rdfs:subPropertyOf</code></td><td><code>dcterms:relation</code></td><td>The coined property's own placement in the hierarchy</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p class="callout-title">A number worth a second look, and why it's actually fine</p>
+      <p>The <code>viaf:6865153289917732770006</code> triple above looks suspicious at first glance — standard VIAF identifiers are usually 8–12 digits, and a 22-digit string looks like two identifiers pasted together by mistake. It isn't: Wikidata's own documentation for the <a href="https://www.wikidata.org/wiki/Property:P214" target="_blank" rel="noopener">VIAF cluster ID property</a> specifies a format of "up to 22 digits", precisely because a VIAF cluster ID can represent the merge of several source authority records into one cluster. Cory Barlog's Wikidata entry (<a href="https://www.wikidata.org/wiki/Q5173545" target="_blank" rel="noopener">Q5173545</a>) genuinely carries this value. This is kept in as a small worked example of why every surprising-looking identifier in this graph was checked against its source rather than assumed to be a typo — the two failure modes (an actual copy-paste error vs. an unusual but valid format) look identical until verified.</p>
+    </div>
 
     <h2>Reconciliation, three ways</h2>
 
@@ -86,7 +176,7 @@
 
     <p>Using both <code>schema:director</code> for Barlog and <code>dbo:developer</code> for Santa Monica Studio (rather than falling back on <code>dcterms:contributor</code> for both) preserves the distinction between the roles that a downstream query might want to disambiguate. The same reasoning underlies the choice of <code>schema:musicBy</code> over the more generic <code>dcterms:creator</code> for the composer credit.</p>
 
-    <h2>Family relations and the fiction↔myth loop</h2>
+    <h2 id="family-relations">Family relations and the fiction↔myth loop</h2>
 
     <p>Five <code>schema:children</code> assertions carry the genealogies that connect the mythological layer to the fictional one and expose where the game diverges from its source. These are the triples that turn a static catalogue into a graph with narrative structure.</p>
 
