@@ -18,6 +18,7 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
+        <li><a href="html-rendering.html">HTML Rendering</a></li>
         <li><a href="conceptual-model.html">Conceptual Model</a></li>
         <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
         <li><a href="resources.html" class="current">Resources</a></li>
@@ -58,8 +59,8 @@
       <div class="download-card">
         <span class="type-label">Phase 1 · Output</span>
         <h3>Interactive HTML article</h3>
-        <p>The Wikipedia text rendered as a self-contained HTML page with entities colour-coded by type. Open in a browser to interact.</p>
-        <a href="files/index.html" target="_blank" class="download-link">Open article</a>
+        <p>The Wikipedia text rendered as a self-contained HTML page with entities colour-coded by type. Browsable live on the <a href="html-rendering.html">HTML Rendering page</a>, or open the raw file directly below.</p>
+        <a href="files/index.html" target="_blank" class="download-link">Open raw file</a>
       </div>
 
       <div class="download-card">
@@ -98,13 +99,15 @@
 
     <h2>Tools used</h2>
 
+    <p>Every tool below was chosen over at least one plausible alternative; the reasoning is included because the course guidelines ask not just which tools were used but why.</p>
+
     <ul>
-      <li><a href="https://lxml.de/" target="_blank" rel="noopener"><strong>lxml</strong></a> — Python XML library used in both transformation scripts to parse the TEI file and walk its tree.</li>
-      <li><a href="https://rdflib.readthedocs.io/" target="_blank" rel="noopener"><strong>rdflib</strong></a> — Python RDF library used to build and serialise the Turtle graph.</li>
-      <li><a href="https://app.diagrams.net/" target="_blank" rel="noopener"><strong>draw.io</strong> (diagrams.net)</a> — used to produce the theoretical model mind map and the Graffoo conceptual model diagram.</li>
-      <li><a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener"><strong>Graffoo</strong></a> — the graphical notation used for the conceptual model, developed at the University of Bologna.</li>
-      <li><a href="https://www.ldf.fi/service/rdf-grapher" target="_blank" rel="noopener"><strong>rdf-grapher</strong></a> — free web service used to render the Turtle graph as SVG for the graph visualisation on the Knowledge Representation page.</li>
-      <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener"><strong>VS Code</strong></a> with the Red Hat XML extension — used for TEI editing with live schema validation.</li>
+      <li><a href="https://lxml.de/" target="_blank" rel="noopener"><strong>lxml</strong></a> — Python XML library used in both transformation scripts to parse the TEI file and walk its tree. Chosen over the standard-library <code>xml.etree.ElementTree</code> because it has full XPath support and better namespace handling, both needed to query the TEI namespace cleanly; chosen over XSLT (the more TEI-idiomatic option) to keep the whole pipeline in one language shared with the RDF step. See the <a href="knowledge-organization.html">Knowledge Organization page</a> for the full comparison.</li>
+      <li><a href="https://rdflib.readthedocs.io/" target="_blank" rel="noopener"><strong>rdflib</strong></a> — Python RDF library used to build and serialise the Turtle graph. Chosen over hand-writing Turtle strings because it validates triples as they are added (malformed URIs or literal-datatype mismatches fail immediately rather than producing a broken file), and because it can round-trip its own output, which is what the round-trip verification on the <a href="knowledge-representation.html">Knowledge Representation page</a> depends on.</li>
+      <li><a href="https://app.diagrams.net/" target="_blank" rel="noopener"><strong>draw.io</strong> (diagrams.net)</a> — used to produce the theoretical model mind map and the Graffoo conceptual model diagram. Chosen over a code-based diagram tool (e.g. Graphviz/DOT) because both diagrams needed manual layout control — the grouped mythological-figures sub-container in the mind map and the class/property alignment in the Graffoo diagram are easier to arrange by hand than to coax out of an automatic layout algorithm.</li>
+      <li><a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener"><strong>Graffoo</strong></a> — the graphical notation used for the conceptual model, developed at the University of Bologna. Chosen because it is the notation used in the course itself, so the diagram is directly legible against what the course teaches, rather than a general-purpose UML or ER notation that would need translating.</li>
+      <li><a href="https://www.ldf.fi/service/rdf-grapher" target="_blank" rel="noopener"><strong>rdf-grapher</strong></a> — free web service used to render the Turtle graph as SVG for the graph visualisation on the Knowledge Representation page. Chosen over a local library (e.g. <code>rdflib</code>'s own graph-to-image export, which requires Graphviz installed locally) because it needs no local setup: the Turtle file can be pasted directly and the SVG downloaded, which keeps the diagram-generation step reproducible by anyone who opens this page without needing the Python environment.</li>
+      <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener"><strong>VS Code</strong></a> with the Red Hat XML extension — used for TEI editing with live schema validation. Chosen over editing TEI as plain text because the extension catches namespace and well-formedness errors (like the two documented on the <a href="knowledge-organization.html">Knowledge Organization page</a>) as they are typed, rather than only at transformation time.</li>
     </ul>
 
     <h2>Vocabularies</h2>
