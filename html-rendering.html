@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive HTML Rendering — God of War (2018) LOD Project</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-title">
+      <span class="site-title-main">God of War (2018)</span>
+      <span class="site-title-sub">A LINKED OPEN DATA MODEL</span>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
+        <li><a href="html-rendering.html" class="current">HTML Rendering</a></li>
+        <li><a href="conceptual-model.html">Conceptual Model</a></li>
+        <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="hero">
+    <h1>Interactive HTML Rendering</h1>
+    <p class="subtitle">The TEI-encoded article, transformed and browsable directly on this page.</p>
+  </div>
+
+  <article>
+
+    <p>This is the actual output of the <code>tei_to_html.py</code> transformation described on the <a href="knowledge-organization.html">Knowledge Organization page</a>, embedded live below rather than linked as a separate download. Scroll inside the frame to read the full article; hover over any coloured entity to see its name, role, and authority identifiers; click an entity to open its Wikidata page in a new tab.</p>
+
+    <div class="callout">
+      <p class="callout-title">What to look for</p>
+      <p>The sidebar on the left of the embedded page lists the article's sections and the colour legend for the five entity types (person, organisation, object, concept, mythical place). Cory Barlog's and Bear McCreary's direct quotations are shown with a gold left border and a "Attributed to…" tooltip, distinguishing them from unattributed quoted phrases which are shown in plain italics. Citation markers from the original Wikipedia text ("[26]", "[10]") are preserved as small superscript numbers.</p>
+    </div>
+
+    <div class="embed-frame">
+      <iframe src="files/index.html" title="God of War (2018) — interactive HTML rendering of the TEI-encoded article" loading="lazy"></iframe>
+    </div>
+
+    <p style="text-align: center; margin-top: 1rem;">
+      <a href="files/index.html" target="_blank" rel="noopener" class="download-link" style="display: inline-block; text-decoration: none;">Open in a new tab ↗</a>
+    </p>
+
+    <h2>How this was produced</h2>
+
+    <p>The rendering above is generated, not hand-written: every coloured span, tooltip, and Wikidata link is computed from the same TEI standoff and taxonomy that back the RDF graph on the <a href="knowledge-representation.html">Knowledge Representation page</a>. Regenerating it after any change to <code>tei.xml</code> is a single command:</p>
+
+<pre><code>python tei_to_html.py tei.xml index.html</code></pre>
+
+    <p>The full walkthrough of what the script does internally — how entities are extracted, how tooltips are built, how the TEI tree is walked recursively — is documented step by step on the <a href="knowledge-organization.html">Knowledge Organization page</a>, alongside the source code.</p>
+
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>LODLAM project for the Information Science and Cultural Heritage course, Digital Humanities and Digital Knowledge (DHDK) MA, University of Bologna, a.y. 2025-2026.</p>
+  <p>Instructors: Prof. Francesca Tomasi and Prof. Marilena Daquino.</p>
+</footer>
+
+</body>
+</html>
