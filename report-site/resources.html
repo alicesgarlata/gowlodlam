@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — God of War (2018) LOD Project</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-title">
+      <span class="site-title-main">God of War (2018)</span>
+      <span class="site-title-sub">A LINKED OPEN DATA MODEL</span>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
+        <li><a href="conceptual-model.html">Conceptual Model</a></li>
+        <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
+        <li><a href="resources.html" class="current">Resources</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="content">
+
+  <div class="hero">
+    <h1>Resources</h1>
+    <p class="subtitle">All artefacts produced in the three phases, plus external sources and tools.</p>
+  </div>
+
+  <article>
+
+    <h2>Project artefacts</h2>
+
+    <p>Every file produced during the project is downloadable below. The Python scripts are self-contained and require only the standard scientific-Python stack (<code>lxml</code>, <code>rdflib</code>).</p>
+
+    <div class="downloads-grid">
+
+      <div class="download-card">
+        <span class="type-label">Phase 1 · Source</span>
+        <h3>TEI/XML encoding</h3>
+        <p>The Wikipedia article encoded in TEI/XML, with all fifteen entities defined in the standoff and taxonomy, reconciled to Wikidata and (where applicable) VIAF.</p>
+        <a href="files/tei.xml" download class="download-link">Download tei.xml</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Phase 1 · Transformation</span>
+        <h3>TEI → HTML script</h3>
+        <p>Python script that walks the TEI, extracts entities from standoff, and renders the article as HTML with colour-coded entities, hover tooltips, and section navigation.</p>
+        <a href="files/tei_to_html.py" download class="download-link">Download tei_to_html.py</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Phase 1 · Output</span>
+        <h3>Interactive HTML article</h3>
+        <p>The Wikipedia text rendered as a self-contained HTML page with entities colour-coded by type. Open in a browser to interact.</p>
+        <a href="files/index.html" target="_blank" class="download-link">Open article</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Phase 2 · Diagram</span>
+        <h3>Graffoo conceptual model</h3>
+        <p>The full conceptual model as a Graffoo diagram (classes, object properties, data properties, and the coined <code>gow:reinterprets</code>).</p>
+        <a href="assets/graffoo.png" target="_blank" class="download-link">View diagram</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Phase 3 · Transformation</span>
+        <h3>TEI → RDF script</h3>
+        <p>Python script that builds the RDF graph with rdflib, differentiating reconciliation strategy per entity type and emitting the ontology header, game entity, entity triples, and relations.</p>
+        <a href="files/tei_to_rdf.py" download class="download-link">Download tei_to_rdf.py</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Phase 3 · Output</span>
+        <h3>RDF/Turtle graph</h3>
+        <p>92 triples across 18 subjects. Contains the ontology header, the <code>gow:reinterprets</code> definition, and all typed entities and relations. Round-trips through <code>rdflib</code>.</p>
+        <a href="files/gow.ttl" download class="download-link">Download gow.ttl</a>
+      </div>
+
+    </div>
+
+    <h2>Source and authority records</h2>
+
+    <p>The source Wikipedia article is fixed to a permalink so the encoding remains reproducible against a specific revision:</p>
+
+    <ul>
+      <li>Wikipedia permalink: <a href="https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&amp;oldid=1357494264" target="_blank" rel="noopener">God of War (2018 video game), revision 1357494264</a> (consulted 3 July 2026).</li>
+      <li>Wikidata entity for the game: <a href="https://www.wikidata.org/wiki/Q18345138" target="_blank" rel="noopener">Q18345138</a>.</li>
+    </ul>
+
+    <p>All fifteen entities in the graph resolve to Wikidata identifiers; the six mythological figures resolve through the coined <code>gow:reinterprets</code> property, everything else through <code>owl:sameAs</code> or <code>skos:exactMatch</code>. See the <a href="knowledge-representation.html">Knowledge Representation page</a> for the reconciliation breakdown.</p>
+
+    <h2>Tools used</h2>
+
+    <ul>
+      <li><a href="https://lxml.de/" target="_blank" rel="noopener"><strong>lxml</strong></a> — Python XML library used in both transformation scripts to parse the TEI file and walk its tree.</li>
+      <li><a href="https://rdflib.readthedocs.io/" target="_blank" rel="noopener"><strong>rdflib</strong></a> — Python RDF library used to build and serialise the Turtle graph.</li>
+      <li><a href="https://app.diagrams.net/" target="_blank" rel="noopener"><strong>draw.io</strong> (diagrams.net)</a> — used to produce the theoretical model mind map and the Graffoo conceptual model diagram.</li>
+      <li><a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener"><strong>Graffoo</strong></a> — the graphical notation used for the conceptual model, developed at the University of Bologna.</li>
+      <li><a href="https://www.ldf.fi/service/rdf-grapher" target="_blank" rel="noopener"><strong>rdf-grapher</strong></a> — free web service used to render the Turtle graph as SVG for the graph visualisation on the Knowledge Representation page.</li>
+      <li><a href="https://code.visualstudio.com/" target="_blank" rel="noopener"><strong>VS Code</strong></a> with the Red Hat XML extension — used for TEI editing with live schema validation.</li>
+    </ul>
+
+    <h2>Vocabularies</h2>
+
+    <p>The following external vocabularies are used in the graph. Prefixes as bound in the Turtle file.</p>
+
+    <table>
+      <thead><tr><th>Prefix</th><th>Namespace</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td><code>schema:</code></td><td><a href="https://schema.org/" target="_blank" rel="noopener">schema.org</a></td><td>VideoGame, Product, director, musicBy, gamePlatform, character, children</td></tr>
+        <tr><td><code>dcterms:</code></td><td><a href="http://purl.org/dc/terms/" target="_blank" rel="noopener">DCMI Terms</a></td><td>title, date, publisher, subject, relation</td></tr>
+        <tr><td><code>foaf:</code></td><td><a href="http://xmlns.com/foaf/0.1/" target="_blank" rel="noopener">FOAF</a></td><td>Person, Organization, name</td></tr>
+        <tr><td><code>skos:</code></td><td><a href="http://www.w3.org/2004/02/skos/core#" target="_blank" rel="noopener">SKOS</a></td><td>Concept, prefLabel, exactMatch</td></tr>
+        <tr><td><code>dbo:</code></td><td><a href="http://dbpedia.org/ontology/" target="_blank" rel="noopener">DBpedia Ontology</a></td><td>FictionalCharacter, developer</td></tr>
+        <tr><td><code>owl:</code></td><td><a href="http://www.w3.org/2002/07/owl" target="_blank" rel="noopener">OWL</a></td><td>Ontology, ObjectProperty, sameAs</td></tr>
+        <tr><td><code>wd:</code></td><td><a href="http://www.wikidata.org/entity/" target="_blank" rel="noopener">Wikidata Entities</a></td><td>Reconciliation targets</td></tr>
+        <tr><td><code>viaf:</code></td><td><a href="http://viaf.org/viaf/" target="_blank" rel="noopener">VIAF</a></td><td>Reconciliation targets for real people and organisations</td></tr>
+        <tr><td><code>gow:</code></td><td>project namespace</td><td>All coined terms and individual URIs (namespace is a placeholder; update to your actual publishing base)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Credits</h2>
+
+    <p>The source article and its content are drawn from Wikipedia contributors and are used here under Wikipedia's licensing terms (<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>). Wikidata identifiers are used under <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">CC0</a>. The project's own artefacts — the TEI encoding, the two Python scripts, the Turtle file, and the site itself — are released under the same CC BY-SA 4.0 licence for consistency with the source.</p>
+
+    <p>The coined <code>gow:reinterprets</code> property is the only original ontology contribution and is defined in the graph's ontology header with its <code>rdfs:label</code>, <code>rdfs:comment</code>, and placement as a subproperty of <code>dcterms:relation</code>. Anyone wanting to reuse it in another project is free to do so under the same licence.</p>
+
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>LODLAM project for the Information Science and Cultural Heritage course, Digital Humanities and Digital Knowledge (DHDK) MA, University of Bologna, a.y. 2025-2026.</p>
+  <p>Instructors: Prof. Francesca Tomasi and Prof. Marilena Daquino.</p>
+</footer>
+
+</body>
+</html>
