@@ -18,6 +18,7 @@
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="knowledge-organization.html" class="current">Knowledge Organization</a></li>
+        <li><a href="html-rendering.html">HTML Rendering</a></li>
         <li><a href="conceptual-model.html">Conceptual Model</a></li>
         <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
         <li><a href="resources.html">Resources</a></li>
@@ -136,7 +137,101 @@
 
     <h2>HTML transformation</h2>
 
-    <p>The TEI file is transformed into a self-contained HTML document by a Python script (<code>tei_to_html.py</code>) that uses <code>lxml</code> for parsing. The transformation walks the standoff to build an entity dictionary keyed by <code>xml:id</code>, then walks the body recursively and emits HTML with entities colour-coded by type. The tooltip on each entity shows its canonical name, its role, its Wikidata QID, and its VIAF identifier; clicking on it opens the corresponding Wikidata page. A sticky sidebar carries the table of contents and a legend of the entity colour scheme.</p>
+    <p>Both a Python script and an XSLT stylesheet were viable options for the TEI→HTML step; XSLT is arguably the more idiomatic choice for TEI specifically, since it is designed to transform XML tree structures declaratively and many TEI toolchains ship XSLT stylesheets out of the box. Python with <code>lxml</code> was chosen instead for two practical reasons: it keeps the whole pipeline (TEI parsing, HTML generation, and the later RDF serialisation) in a single language the author is already fluent in, which matters when the transformation logic needs to be extended or debugged under time pressure; and it makes it straightforward to share code between the two transformation scripts — both <code>tei_to_html.py</code> and <code>tei_to_rdf.py</code> use the same entity-extraction function shape, so a change to how entities are read from the standoff only has to be reasoned about once, even though the two scripts remain separate files. The trade-off accepted is that the script re-implements, in Python, some of the tree-walking that XSLT would have given for free through template matching.</p>
+
+    <p>The TEI file is transformed into a self-contained HTML document by a Python script (<code>tei_to_html.py</code>) that uses <code>lxml</code> for parsing. A sticky sidebar carries the table of contents and a legend of the entity colour scheme. The transformation runs in four steps, each shown below with the actual code and the reasoning behind it. The output of this exact script, running against the current <code>tei.xml</code>, is embedded live on the <a href="html-rendering.html">HTML Rendering page</a> — not just linked as a download.</p>
+
+    <h3>Step 1 — Extract entities from the standoff</h3>
+
+    <p>Before any text can be rendered, the script needs a lookup table: given an <code>xml:id</code> like <code>baldur</code>, what is this entity's display name, its role, and its authority identifiers? This is built once by walking <code>&lt;listPerson&gt;</code>, <code>&lt;listOrg&gt;</code>, <code>&lt;listObject&gt;</code>, and the taxonomy's <code>&lt;category&gt;</code> elements, and collecting the result into a plain Python dictionary keyed by <code>xml:id</code>.</p>
+
+<pre><code><span class="kw">def</span> extract_entities(root) -&gt; <span class="kw">dict</span>:
+    entities = {}
+    <span class="kw">for</span> person <span class="kw">in</span> root.iter(_q(<span class="st">"person"</span>)):
+        pid = _xml_id(person)
+        <span class="kw">if not</span> pid:
+            <span class="kw">continue</span>
+        name_el = person.find(_q(<span class="st">"persName"</span>))
+        wikidata = viaf = <span class="st">""</span>
+        <span class="kw">for</span> idno <span class="kw">in</span> person.findall(_q(<span class="st">"idno"</span>)):
+            <span class="kw">if</span> idno.get(<span class="st">"type"</span>) == <span class="st">"Wikidata"</span>:
+                wikidata = clean_id(idno.text)
+            <span class="kw">elif</span> idno.get(<span class="st">"type"</span>) == <span class="st">"VIAF"</span>:
+                viaf = clean_id(idno.text)
+        entities[pid] = {
+            <span class="st">"type"</span>: <span class="st">"person"</span>,
+            <span class="st">"name"</span>: name_el.text <span class="kw">if</span> name_el <span class="kw">is not</span> <span class="kw">None</span> <span class="kw">else</span> pid,
+            <span class="st">"role"</span>: person.get(<span class="st">"role"</span>, <span class="st">""</span>),
+            <span class="st">"wikidata"</span>: wikidata,
+            <span class="st">"viaf"</span>: viaf,
+        }
+    <span class="cm"># … same pattern repeats for &lt;org&gt;, &lt;object&gt;, &lt;category&gt;
+    # (concepts get skos-style fields instead of role/viaf)</span>
+    <span class="kw">return</span> entities</code></pre>
+
+    <p>This function is deliberately identical in shape to the one used in <code>tei_to_rdf.py</code> (see the <a href="knowledge-representation.html">Knowledge Representation page</a>): both scripts need the same lookup table, just to feed different output formats downstream. Keeping the extraction logic in one recognisable shape across both scripts means a correction to how, say, VIAF identifiers are cleaned only has to be made — and re-verified — once per script, with the same mental model applying to both.</p>
+
+    <h3>Step 2 — Build the hover tooltip text</h3>
+
+    <p>Each entity's tooltip needs to combine whatever fields are actually present — not every entity has a role, not every entity has a VIAF — without producing an awkward string with empty gaps. A small helper function assembles the tooltip conditionally:</p>
+
+<pre><code><span class="kw">def</span> tooltip_for(entity: <span class="kw">dict</span>) -&gt; <span class="kw">str</span>:
+    parts = [entity[<span class="st">"name"</span>]]
+    <span class="kw">if</span> entity[<span class="st">"role"</span>]:
+        parts.append(<span class="st">f"({entity['role'].replace('-', ' ')})"</span>)
+    tail = []
+    <span class="kw">if</span> entity[<span class="st">"wikidata"</span>]:
+        tail.append(<span class="st">f"Wikidata: {entity['wikidata']}"</span>)
+    <span class="kw">if</span> entity[<span class="st">"viaf"</span>]:
+        tail.append(<span class="st">f"VIAF: {viaf_display(entity['viaf'])}"</span>)
+    <span class="kw">if</span> tail:
+        <span class="kw">return</span> <span class="st">f"{' '.join(parts)} — {' · '.join(tail)}"</span>
+    <span class="kw">return</span> <span class="st">" "</span>.join(parts)</code></pre>
+
+    <p>For example, hovering over Baldur produces <code>"Baldur (mythological figure) — Wikidata: Q131658"</code> — no VIAF clause, since mythological figures don't carry one — while hovering over Cory Barlog produces both clauses. This is why the function branches on presence rather than always concatenating four fixed fields: a fixed-format string would print empty labels for entities missing a field.</p>
+
+    <h3>Step 3 — Walk the TEI tree and dispatch by tag</h3>
+
+    <p>The core of the transformation is a recursive function that walks every element in the TEI <code>&lt;body&gt;</code> and decides what HTML to emit based on the element's tag name. Structural elements (<code>div</code>, <code>head</code>, <code>p</code>) become their HTML equivalents; entity elements (<code>persName</code>, <code>orgName</code>, <code>rs</code>) are looked up in the dictionary built in Step 1 and wrapped in a coloured, tooltipped span or link:</p>
+
+<pre><code><span class="kw">def</span> render_element(el, entities: <span class="kw">dict</span>) -&gt; <span class="kw">str</span>:
+    tag = etree.QName(el).localname
+
+    <span class="kw">if</span> tag == <span class="st">"persName"</span>:
+        ref = el.get(<span class="st">"ref"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
+        <span class="kw">return</span> render_entity_span(<span class="st">"person"</span>, render_children(el, entities), ref, entities)
+
+    <span class="kw">if</span> tag == <span class="st">"quote"</span>:
+        who = el.get(<span class="st">"who"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
+        inner = render_children(el, entities)
+        <span class="kw">if</span> who <span class="kw">and</span> who <span class="kw">in</span> entities:
+            speaker = entities[who][<span class="st">"name"</span>]
+            <span class="kw">return</span> (<span class="st">f'&lt;span class="quote attributed" title="Attributed to {speaker}"&gt;'</span>
+                    <span class="st">f'&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>)
+        <span class="kw">return</span> <span class="st">f'&lt;span class="quote"&gt;&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>
+    <span class="cm"># … one branch per TEI tag the encoding uses (orgName, objectName,
+    # rs, placeName, title, ref, hi); unrecognised tags fall through
+    # to rendering just their children, so the transformation never
+    # crashes on an unexpected element — it degrades to plain text.</span></code></pre>
+
+    <p>The <code>quote</code> branch is the clearest example of why a dispatch-by-tag design pays off: it is the only place in the script that needs to know about the <code>@who</code> attribute and the standoff lookup for attributed speech, and it can decide, per quote, whether to render the gold-bordered "attributed" style or the plain italic style — a decision the TEI encoding already made explicit by including or omitting <code>@who</code>.</p>
+
+    <h3>Step 4 — Assemble the page and write it out</h3>
+
+    <p>The last step collects the rendered body, the table of contents (built by scanning top-level <code>&lt;div&gt;</code> elements for their <code>&lt;head&gt;</code> text), and the document metadata (title, source URL, consultation date, all read straight from <code>teiHeader</code>) into the HTML template, and writes the result to disk:</p>
+
+<pre><code>toc = extract_toc(body)
+body_html = render_children(body, entities)
+html = HTML_TEMPLATE.format(
+    page_title=escape(page_title),
+    source_url=escape(source_url),
+    toc_items=toc_items,
+    body=body_html,
+    css=CSS,
+)
+Path(output_path).write_text(html, encoding=<span class="st">"utf-8"</span>)</code></pre>
+
+    <p>Nothing about the title, the source link, or the table of contents is hand-typed into the HTML template — all three are derived from the TEI file at run time, which is what makes the transformation reproducible: editing <code>tei.xml</code> and re-running the script regenerates a consistent page without anyone having to remember to also update a separately maintained HTML file.</p>
 
     <p>The five entity types have distinct colour treatments so the density and distribution of entities across sections is visible at a glance:</p>
 
