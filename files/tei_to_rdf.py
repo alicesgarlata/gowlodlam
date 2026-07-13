@@ -55,7 +55,7 @@ XML_NS = "http://www.w3.org/XML/1998/namespace"
 # Project namespace — change this to your actual base URL if you publish
 # the ontology online. All coined terms (gow:reinterprets) and all
 # individual resources (gow:kratos, gow:god-of-war-2018, …) live here.
-GOW = Namespace("https://alicesgarlata.github.io/gowlodlam/")
+GOW = Namespace("https://alicebologna.github.io/lodlam-gow/")
 
 WD = Namespace("http://www.wikidata.org/entity/")
 VIAF = Namespace("http://viaf.org/viaf/")
@@ -249,6 +249,21 @@ def add_entity_triples(g: Graph, eid: str, ent: dict) -> None:
                 g.add((uri, OWL.sameAs, WD[wikidata]))
 
         elif role == "mythological-figure":
+            # Mythological figures are also active characters within the
+            # game's narrative (they appear, speak, and act — not just
+            # cited references), so they get the same dbo:FictionalCharacter
+            # typing as Kratos and Atreus. This makes gow:reinterprets have
+            # a single, uniform domain class instead of splitting across
+            # foaf:Person for some characters and dbo:FictionalCharacter
+            # for others.
+            g.add((uri, RDF.type, DBO.FictionalCharacter))
+            # Every mythological-figure entity in this dataset belongs to
+            # Norse mythology specifically (there are no Greek deities in
+            # the entity set — Kratos is a fictional-character, not a
+            # mythological-figure). This makes explicit, at the individual
+            # level, the pantheon each figure belongs to — a tighter link
+            # than just having the game itself carry dcterms:subject.
+            g.add((uri, DCTERMS.subject, GOW["norse-mythology"]))
             if wikidata:
                 # game character reinterprets the mythological figure —
                 # not owl:sameAs because Wikidata's entry is about the myth
