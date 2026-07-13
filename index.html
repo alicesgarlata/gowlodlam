@@ -34,70 +34,6 @@
 <main class="content">
 
   <div class="hero">
-    <svg class="hero-frieze" viewBox="0 0 1200 210" aria-hidden="true">
-      <defs>
-        <pattern id="greekkey" width="24" height="16" patternUnits="userSpaceOnUse">
-          <path d="M0,14 H9 V3 H24" fill="none" stroke="#a2472f" stroke-width="2.2"/>
-        </pattern>
-      </defs>
-      <g transform="translate(50,50)" fill="#4e7f97">
-        <path d="M0,18 C15,-2 30,-2 40,14 C50,-2 65,-2 80,18 C65,10 52,10 40,20 C28,10 15,10 0,18 Z"/>
-      </g>
-      <g transform="translate(230,20)" stroke="#4f7f6b" stroke-width="3.5" fill="none" stroke-linecap="round">
-        <path d="M50,140 L50,70"/>
-        <path d="M50,95 C30,85 18,65 22,45"/>
-        <path d="M50,95 C70,85 82,65 78,45"/>
-        <path d="M50,75 C38,62 34,45 40,28"/>
-        <path d="M50,75 C62,62 66,45 60,28"/>
-        <path d="M50,70 C50,55 50,40 50,22"/>
-        <path d="M50,140 C36,150 20,150 8,142"/>
-        <path d="M50,140 C64,150 80,150 92,142"/>
-        <path d="M50,140 C50,152 50,160 50,166"/>
-        <circle cx="50" cy="18" r="6" fill="#4f7f6b" stroke="none"/>
-        <circle cx="22" cy="43" r="4" fill="#4f7f6b" stroke="none"/>
-        <circle cx="78" cy="43" r="4" fill="#4f7f6b" stroke="none"/>
-      </g>
-      <g transform="translate(410,15)" fill="#a2472f">
-        <circle cx="40" cy="18" r="12"/>
-        <path d="M40,30 C27,32 22,46 24,64 L27,140 L37,140 L38,88 L44,88 L46,140 L56,140 L58,64
-                 C60,46 53,32 40,30 Z"/>
-        <path d="M24,50 C13,44 8,32 12,20 L20,24 C18,32 21,40 28,44 Z"/>
-        <g transform="translate(66,26)">
-          <rect x="0" y="0" width="5" height="66" rx="2"/>
-          <path d="M2,2 C-2,-12 12,-22 26,-16 C18,-8 10,-2 6,12 C4,8 3,5 2,2 Z"/>
-        </g>
-      </g>
-      <g transform="translate(590,60)">
-        <path d="M0,50 Q60,66 150,50 Q145,58 78,60 Q12,60 0,50 Z" fill="#4e7f97"/>
-        <path d="M6,48 Q-14,26 4,2" fill="none" stroke="#4e7f97" stroke-width="4" stroke-linecap="round"/>
-        <path d="M146,48 Q158,34 152,18" fill="none" stroke="#4e7f97" stroke-width="4" stroke-linecap="round"/>
-        <line x1="75" y1="50" x2="75" y2="-36" stroke="#4e7f97" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M75,-32 L44,-2 L75,10 Z" fill="#dee6e6" stroke="#4e7f97" stroke-width="2.5"/>
-        <path d="M75,-32 L106,-2 L75,10 Z" fill="#c3d6dc" stroke="#4e7f97" stroke-width="2.5"/>
-      </g>
-      <g transform="translate(830,50)" fill="#4f7f6b">
-        <rect x="12" y="24" width="10" height="55" rx="3"/>
-        <rect x="0" y="0" width="34" height="30" rx="4"/>
-      </g>
-      <g transform="translate(985,50)">
-        <circle cx="0" cy="0" r="42" fill="none" stroke="#22384a" stroke-width="5"/>
-        <circle cx="0" cy="0" r="30" fill="none" stroke="#22384a" stroke-width="2"/>
-        <circle cx="0" cy="0" r="9" fill="#22384a"/>
-        <line x1="-42" y1="0" x2="-9" y2="0" stroke="#22384a" stroke-width="2"/>
-        <line x1="42" y1="0" x2="9" y2="0" stroke="#22384a" stroke-width="2"/>
-        <line x1="0" y1="-42" x2="0" y2="-9" stroke="#22384a" stroke-width="2"/>
-        <line x1="0" y1="42" x2="0" y2="9" stroke="#22384a" stroke-width="2"/>
-      </g>
-      <g fill="#93a3ac" opacity="0.55">
-        <circle cx="30" cy="170" r="2.2"/>
-        <circle cx="1170" cy="170" r="2.2"/>
-      </g>
-      <line x1="0" y1="170" x2="1200" y2="170" stroke="#b7c5c6" stroke-width="1" opacity="0.4"/>
-      <rect x="0" y="188" width="1200" height="14" fill="url(#greekkey)" opacity="0.75"/>
-    </svg>
-
-    <p class="hero-frieze-caption">Raven, world tree, warrior with axe, longship, Mjölnir, shield — original illustrations in the site's own palette, not derived from any game or copyrighted artwork. The border below nods to the project's Greek mythology thread.</p>
-
     <h1>Modelling a fictional adaptation of Norse myth</h1>
     <p class="subtitle">A LODLAM project on the Wikipedia article for <em>God of War</em> (2018).</p>
   </div>
@@ -111,6 +47,104 @@
     <div class="callout">
       <p class="callout-title">Course context</p>
       <p>Individual project for the Information Science and Cultural Heritage course, taught by Prof. Francesca Tomasi and Prof. Marilena Daquino in the Digital Humanities and Digital Knowledge (DHDK) MA at the University of Bologna, academic year 2025-2026.</p>
+    </div>
+
+    <h2>Myth and reinterpretation, side by side</h2>
+
+    <p>For each mythological figure, the traditional depiction and the game's portrayal are shown together, with a short note on where the game follows its source and where it departs from it — the same distinction that <code>gow:reinterprets</code> and <code>schema:children</code> keep separate in the RDF graph. Images and analysis are being added; the placeholders below show where each will go.</p>
+
+    <div class="myth-game-grid">
+
+      <div class="myth-game-card">
+        <h3>Odin</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/odin-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/odin-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — send images to fill this in.</p>
+      </div>
+
+      <div class="myth-game-card">
+        <h3>Thor</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/thor-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/thor-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — send images to fill this in.</p>
+      </div>
+
+      <div class="myth-game-card">
+        <h3>Freyja</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/freyja-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/freyja-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — this is the clearest divergence case: the game makes Freyja, not Frigg, Baldur's mother.</p>
+      </div>
+
+      <div class="myth-game-card">
+        <h3>Baldur</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/baldur-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/baldur-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — send images to fill this in.</p>
+      </div>
+
+      <div class="myth-game-card">
+        <h3>Loki</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/loki-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/atreus-loki-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — the fiction↔myth loop: Atreus is revealed to be Loki.</p>
+      </div>
+
+      <div class="myth-game-card">
+        <h3>Jörmungandr</h3>
+        <div class="image-pair">
+          <div class="image-slot">
+            <span class="image-slot-label">Mythology</span>
+            <span class="image-slot-hint">assets/characters/jormungandr-myth.jpg</span>
+          </div>
+          <div class="image-slot">
+            <span class="image-slot-label">In the game</span>
+            <span class="image-slot-hint">assets/characters/jormungandr-game.jpg</span>
+          </div>
+        </div>
+        <p class="comparison-placeholder">Analysis pending — send images to fill this in.</p>
+      </div>
+
     </div>
 
     <h2>How to read this site</h2>
