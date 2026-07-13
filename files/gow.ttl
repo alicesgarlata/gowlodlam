@@ -1,8 +1,7 @@
-
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix gow: <https://alicesgarlata.github.io/gowlodlam/> .
+@prefix gow: <https://alicebologna.github.io/lodlam-gow/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
@@ -11,12 +10,14 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://alicesgarlata.github.io/gowlodlam> a owl:Ontology ;
+<https://alicebologna.github.io/lodlam-gow> a owl:Ontology ;
     rdfs:label "God of War (2018) LODLAM ontology"@en ;
     rdfs:comment "Ontology for the LODLAM project on the God of War (2018) Wikipedia page. Reuses schema.org, dcterms, FOAF, SKOS, and DBO; adds one coined property (gow:reinterprets) for the fictional-adaptation-of-myth relation."@en .
 
-gow:freyja a foaf:Person ;
+gow:freyja a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Freyja"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Freyja"@en ;
     gow:reinterprets wd:Q1647325 ;
     schema:children gow:baldur .
@@ -36,14 +37,18 @@ gow:god-of-war-2018 a schema:VideoGame ;
     schema:gamePlatform gow:playstation-4 ;
     schema:musicBy gow:bear-mccreary .
 
-gow:loki a foaf:Person ;
+gow:loki a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Loki"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Loki"@en ;
     gow:reinterprets wd:Q133147 ;
     schema:children gow:jormungandr .
 
-gow:odin a foaf:Person ;
+gow:odin a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Odin"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Odin"@en ;
     gow:reinterprets wd:Q43610 ;
     schema:children gow:baldur,
@@ -71,8 +76,10 @@ gow:greek-mythology a skos:Concept ;
     skos:exactMatch wd:Q34726 ;
     skos:prefLabel "Greek mythology"@en .
 
-gow:jormungandr a foaf:Person ;
+gow:jormungandr a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Jörmungandr"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Jörmungandr"@en ;
     gow:reinterprets wd:Q181227 .
 
@@ -82,11 +89,6 @@ gow:kratos a dbo:FictionalCharacter,
     owl:sameAs wd:Q2291154 ;
     foaf:name "Kratos"@en ;
     schema:children gow:atreus .
-
-gow:norse-mythology a skos:Concept ;
-    rdfs:label "Norse mythology"@en ;
-    skos:exactMatch wd:Q128285 ;
-    skos:prefLabel "Norse mythology"@en .
 
 gow:playstation-4 a schema:Product ;
     rdfs:label "PlayStation 4"@en ;
@@ -105,8 +107,10 @@ gow:sony-ie a foaf:Organization ;
         wd:Q18594 ;
     foaf:name "Sony Interactive Entertainment"@en .
 
-gow:thor a foaf:Person ;
+gow:thor a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Thor"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Thor"@en ;
     gow:reinterprets wd:Q42952 .
 
@@ -116,8 +120,15 @@ gow:atreus a dbo:FictionalCharacter,
     owl:sameAs wd:Q54896805 ;
     foaf:name "Atreus"@en .
 
-gow:baldur a foaf:Person ;
+gow:baldur a dbo:FictionalCharacter,
+        foaf:Person ;
     rdfs:label "Baldur"@en ;
+    dcterms:subject gow:norse-mythology ;
     foaf:name "Baldur"@en ;
     gow:reinterprets wd:Q131658 .
+
+gow:norse-mythology a skos:Concept ;
+    rdfs:label "Norse mythology"@en ;
+    skos:exactMatch wd:Q128285 ;
+    skos:prefLabel "Norse mythology"@en .
 
