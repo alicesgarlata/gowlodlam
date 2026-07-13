@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conceptual Model — God of War (2018) LOD Project</title>
+<title>Knowledge Representation — God of War (2018) LOD Project</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
@@ -23,8 +23,8 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
         <li><a href="html-rendering.html">HTML Rendering</a></li>
-        <li><a href="conceptual-model.html" class="current">Conceptual Model</a></li>
-        <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
+        <li><a href="conceptual-model.html">Conceptual Model</a></li>
+        <li><a href="knowledge-representation.html" class="current">Knowledge Representation</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
     </nav>
@@ -34,114 +34,245 @@
 <main class="content">
 
   <div class="hero">
-    <h1>Conceptual Model</h1>
-    <p class="subtitle">Phase 2 — mapping the entities and relations onto standard vocabularies, and coining the one term that is missing.</p>
+    <h1>Knowledge Representation</h1>
+    <p class="subtitle">Phase 3 — serialising the conceptual model as a concrete RDF/Turtle graph.</p>
   </div>
 
   <article>
 
-    <h2>Reuse first, coin only when necessary</h2>
+    <h2>Transformation approach</h2>
 
-    <p>The starting principle for the conceptual model is that shared vocabularies are almost always preferable to invented ones. A graph that draws on <a href="https://schema.org/" target="_blank" rel="noopener">schema.org</a>, <a href="http://purl.org/dc/terms/" target="_blank" rel="noopener">DCMI Terms</a>, <a href="http://xmlns.com/foaf/0.1/" target="_blank" rel="noopener">FOAF</a>, <a href="http://www.w3.org/2004/02/skos/core#" target="_blank" rel="noopener">SKOS</a> and <a href="http://dbpedia.org/ontology/" target="_blank" rel="noopener">DBpedia (DBO)</a> can be consumed by any tool that already knows those vocabularies, and its assertions inherit whatever cross-vocabulary alignment those tools already carry. A graph that leans heavily on a local ontology only interoperates with itself.</p>
+    <p>The graph is built by a Python script (<code>tei_to_rdf.py</code>) that uses <code>lxml</code> for parsing the TEI source and <code>rdflib</code> for constructing and serialising the graph. The script reuses the exact same <code>extract_entities</code> function documented step by step on the <a href="knowledge-organization.html">Knowledge Organization page</a> — the entity dictionary built there is the input to everything below, so the two transformations never risk drifting out of sync about what an entity's Wikidata ID or role actually is.</p>
 
-    <p>The concrete mapping between the entity types identified in <a href="knowledge-organization.html">Phase 1</a> and the classes and properties they instantiate is summarised below.</p>
+    <h3>Step 1 — Declare the ontology header</h3>
+
+    <p>Before any entity is processed, the script writes the graph's self-description: an <code>owl:Ontology</code> resource with a label and comment, and the declaration of <code>gow:reinterprets</code> itself as an <code>owl:ObjectProperty</code> with its <code>rdfs:subPropertyOf</code> link to <code>dcterms:relation</code> (the reasoning for this specific placement is argued in full on the <a href="conceptual-model.html">Conceptual Model page</a>). This runs first so that the coined term is defined in the graph before anything uses it.</p>
+
+<pre><code><span class="kw">def</span> add_ontology_header(g: Graph) -&gt; <span class="kw">None</span>:
+    ont = URIRef(<span class="kw">str</span>(GOW).rstrip(<span class="st">"/"</span>))
+    g.add((ont, RDF.type, OWL.Ontology))
+    g.add((ont, RDFS.label, Literal(<span class="st">"God of War (2018) LODLAM ontology"</span>, lang=<span class="st">"en"</span>)))
+
+    reinterprets = GOW[<span class="st">"reinterprets"</span>]
+    g.add((reinterprets, RDF.type, OWL.ObjectProperty))
+    g.add((reinterprets, RDFS.subPropertyOf, DCTERMS.relation))
+    g.add((reinterprets, RDFS.label, Literal(<span class="st">"reinterprets"</span>, lang=<span class="st">"en"</span>)))</code></pre>
+
+    <h3>Step 2 — Branch the reconciliation strategy by entity type and role</h3>
+
+    <p>This is the step that does the actual semantic work of the project. For every entity in the dictionary, the script looks at both its <code>type</code> (person / org / object / concept) and, for persons, its <code>role</code> (real production credit / fictional character / mythological figure), and picks the reconciliation property accordingly:</p>
+
+<pre><code><span class="kw">if</span> etype == <span class="st">"person"</span>:
+    g.add((uri, RDF.type, FOAF.Person))
+    g.add((uri, FOAF.name, Literal(name, lang=<span class="st">"en"</span>)))
+
+    <span class="kw">if</span> role == <span class="st">"fictional-character"</span>:
+        g.add((uri, RDF.type, DBO.FictionalCharacter))
+        <span class="kw">if</span> wikidata:
+            g.add((uri, OWL.sameAs, WD[wikidata]))  <span class="cm"># Wikidata IS the game character</span>
+
+    <span class="kw">elif</span> role == <span class="st">"mythological-figure"</span>:
+        <span class="cm"># Mythological figures act as characters within the game's own</span>
+        <span class="cm"># narrative too, so they get the same typing as Kratos and Atreus —</span>
+        <span class="cm"># this gives gow:reinterprets one uniform domain class.</span>
+        g.add((uri, RDF.type, DBO.FictionalCharacter))
+        <span class="kw">if</span> wikidata:
+            <span class="cm"># Wikidata describes the MYTH figure, not the game's version —</span>
+            <span class="cm"># owl:sameAs would incorrectly merge the two identities.</span>
+            g.add((uri, GOW[<span class="st">"reinterprets"</span>], WD[wikidata]))
+
+    <span class="kw">else</span>:  <span class="cm"># real person: director, composer, …</span>
+        <span class="kw">if</span> wikidata:
+            g.add((uri, OWL.sameAs, WD[wikidata]))
+        <span class="kw">if</span> viaf:
+            g.add((uri, OWL.sameAs, VIAF[viaf_id_only(viaf)]))</code></pre>
+
+    <p>The inline comments in the actual script mark exactly this: that the branch is not a stylistic choice but a semantic necessity, forced by what a Wikidata entry represents for each role. This branching logic is what produces the 12 / 6 / 2 reconciliation split documented below — it is the direct, mechanical consequence of the TEI encoding's <code>@role</code> attribute, set back in <a href="knowledge-organization.html">Phase 1</a> when each mythological figure was tagged <code>role="mythological-figure"</code> rather than left the same as a real person. The <code>dbo:FictionalCharacter</code> typing on the <code>elif</code> branch is what makes <code>gow:reinterprets</code> have a single domain class in the <a href="conceptual-model.html">conceptual model</a>, rather than splitting its subjects across <code>foaf:Person</code> for some characters and <code>dbo:FictionalCharacter</code> for others.</p>
+
+    <h3>Step 3 — Add the fixed game-level and family relations</h3>
+
+    <p>Unlike entity reconciliation, which is generated by iterating the dictionary, the relations between the game and its production/characters/subjects, and the family relations between characters, are not derivable purely from the TEI encoding — they are domain knowledge about who directed what and who is whose parent. These are added explicitly as a fixed list of triples, documented with inline comments explaining <em>why</em> each one is asserted the way it is (the Freyja/Baldur case is the one worth reading closely):</p>
+
+<pre><code><span class="cm"># In-game genealogy: Odin and Freyja are Baldur's parents
+# NOTE: Freyja-as-Baldur's-mother is a game-specific change from myth,
+#       where Frigg (not Freyja) is Baldur's mother.</span>
+g.add((GOW[<span class="st">"odin"</span>], SCHEMA.children, GOW[<span class="st">"baldur"</span>]))
+g.add((GOW[<span class="st">"freyja"</span>], SCHEMA.children, GOW[<span class="st">"baldur"</span>]))</code></pre>
+
+    <p>See the <a href="#family-relations">Family relations</a> section below for the full set and the reasoning behind each one.</p>
+
+    <h3>Step 4 — Serialise and verify</h3>
+
+    <p>The graph object is serialised to Turtle with a single <code>rdflib</code> call, and verified by reparsing the output and checking the triple count matches:</p>
+
+<pre><code>g.serialize(destination=output_path, format=<span class="st">"turtle"</span>)
+
+<span class="cm"># verification, run separately:</span>
+g2 = Graph()
+g2.parse(output_path, format=<span class="st">"turtle"</span>)
+<span class="kw">assert</span> <span class="kw">len</span>(g2) == <span class="kw">len</span>(g)  <span class="cm"># 104 == 104</span></code></pre>
+
+    <p>The resulting file is 104 triples across 18 subjects. It round-trips through <code>rdflib</code> — reparsing the serialised Turtle yields the same triple count, so the file is syntactically valid Turtle by round-trip verification, not just by visual inspection.</p>
+
+    <h2>What the graph actually contains</h2>
+
+    <p>Rather than only describing the graph in the abstract, here are twelve real triples taken directly from the generated <code>gow.ttl</code>, chosen to show one example of each pattern discussed above:</p>
 
     <table>
-      <thead><tr><th>Entity type</th><th>Class(es)</th><th>Reconciliation property</th></tr></thead>
+      <thead><tr><th>Subject</th><th>Predicate</th><th>Object</th><th>Pattern illustrated</th></tr></thead>
+      <tbody>
+        <tr><td><code>gow:god-of-war-2018</code></td><td><code>owl:sameAs</code></td><td><code>wd:Q18345138</code></td><td>The game reconciled to its own Wikidata entity</td></tr>
+        <tr><td><code>gow:god-of-war-2018</code></td><td><code>schema:director</code></td><td><code>gow:cory-barlog</code></td><td>Production relation, game → person</td></tr>
+        <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>wd:Q5173545</code></td><td>Real person → Wikidata</td></tr>
+        <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>viaf:6865153289917732770006</code></td><td>Real person → VIAF (22-digit cluster ID, verified against Wikidata)</td></tr>
+        <tr><td><code>gow:kratos</code></td><td><code>a</code></td><td><code>dbo:FictionalCharacter</code></td><td>Fictional-character typing</td></tr>
+        <tr><td><code>gow:baldur</code></td><td><code>a</code></td><td><code>dbo:FictionalCharacter</code></td><td>Mythological figures get this too — see callout below</td></tr>
+        <tr><td><code>gow:baldur</code></td><td><code>gow:reinterprets</code></td><td><code>wd:Q131658</code></td><td>Mythological figure — coined property, not sameAs</td></tr>
+        <tr><td><code>gow:odin</code></td><td><code>dcterms:subject</code></td><td><code>gow:norse-mythology</code></td><td>Each deity's own link to the pantheon concept, not just the game's</td></tr>
+        <tr><td><code>gow:freyja</code></td><td><code>schema:children</code></td><td><code>gow:baldur</code></td><td>In-game genealogy that departs from myth</td></tr>
+        <tr><td><code>gow:loki</code></td><td><code>schema:children</code></td><td><code>gow:jormungandr</code></td><td>Myth-derived relation closing the fiction↔myth loop</td></tr>
+        <tr><td><code>gow:norse-mythology</code></td><td><code>skos:exactMatch</code></td><td><code>wd:Q128285</code></td><td>Concept reconciliation via SKOS</td></tr>
+        <tr><td><code>gow:reinterprets</code></td><td><code>rdfs:subPropertyOf</code></td><td><code>dcterms:relation</code></td><td>The coined property's own placement in the hierarchy</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <p class="callout-title">Why gow:baldur has two rdf:type triples</p>
+      <p>Every one of the six mythological figures carries both <code>foaf:Person</code> and <code>dbo:FictionalCharacter</code> — not because they're ambiguous, but because both are true at once. <code>foaf:Person</code> says what kind of thing Baldur is in general (a person, as opposed to an organisation or a place); <code>dbo:FictionalCharacter</code> says that this particular Baldur is encountered as an active character within the game's narrative, exactly like Kratos and Atreus, rather than a background reference. The practical payoff is that <code>gow:reinterprets</code> then has one consistent domain class across all six figures, instead of needing a domain that silently varies by which character is involved.</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Why each deity also gets its own dcterms:subject</p>
+      <p>Originally only the game itself (<code>gow:god-of-war-2018 dcterms:subject gow:norse-mythology</code>) was linked to the pantheon concept. That leaves an implicit gap: nothing in the graph directly says that Odin, Thor, Freyja, Baldur, Loki, and Jörmungandr <em>individually</em> belong to Norse mythology — a query for "who is part of the Norse pantheon" would have to route through the game first. Giving each of the six mythological figures its own <code>dcterms:subject</code> triple to <code>gow:norse-mythology</code> closes that gap directly, without needing <code>skos:narrower</code> to do work it structurally can't do (that property only connects <code>skos:Concept</code> to <code>skos:Concept</code>, and individual deities aren't modelled as concepts here — they're characters).</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">A number worth a second look, and why it's actually fine</p>
+      <p>The <code>viaf:6865153289917732770006</code> triple above looks suspicious at first glance — standard VIAF identifiers are usually 8–12 digits, and a 22-digit string looks like two identifiers pasted together by mistake. It isn't: Wikidata's own documentation for the <a href="https://www.wikidata.org/wiki/Property:P214" target="_blank" rel="noopener">VIAF cluster ID property</a> specifies a format of "up to 22 digits", precisely because a VIAF cluster ID can represent the merge of several source authority records into one cluster. Cory Barlog's Wikidata entry (<a href="https://www.wikidata.org/wiki/Q5173545" target="_blank" rel="noopener">Q5173545</a>) genuinely carries this value. This is kept in as a small worked example of why every surprising-looking identifier in this graph was checked against its source rather than assumed to be a typo — the two failure modes (an actual copy-paste error vs. an unusual but valid format) look identical until verified.</p>
+    </div>
+
+    <h2>Reconciliation, three ways</h2>
+
+    <p>The single most consequential decision in this phase is how each entity is linked to its Wikidata counterpart. A uniform choice — say, using <code>owl:sameAs</code> everywhere — would be operationally simple but semantically wrong for the mythological figures, as explained in <a href="conceptual-model.html#the-coined-property">the previous phase</a>. The script therefore differentiates the reconciliation property by entity type, producing three families of assertion in the graph.</p>
+
+    <table>
+      <thead><tr><th>Reconciliation property</th><th>Count</th><th>Applied to</th></tr></thead>
       <tbody>
         <tr>
-          <td>The game itself</td>
-          <td><code>schema:VideoGame</code></td>
           <td><code>owl:sameAs</code></td>
+          <td>12</td>
+          <td>The game itself, real people (Barlog, McCreary), organisations (SMS, Sony IE), fictional characters whose Wikidata entry is about the game character (Kratos, Atreus), and the PlayStation 4. Real people and organisations additionally receive a second <code>owl:sameAs</code> assertion pointing to their VIAF record.</td>
         </tr>
         <tr>
-          <td>Real people (director, composer)</td>
-          <td><code>foaf:Person</code></td>
-          <td><code>owl:sameAs</code> (to Wikidata and VIAF)</td>
-        </tr>
-        <tr>
-          <td>Organisations (developer, publisher)</td>
-          <td><code>foaf:Organization</code></td>
-          <td><code>owl:sameAs</code> (to Wikidata and VIAF)</td>
-        </tr>
-        <tr>
-          <td>Fictional characters (Kratos, Atreus)</td>
-          <td><code>foaf:Person</code>, <code>dbo:FictionalCharacter</code></td>
-          <td><code>owl:sameAs</code></td>
-        </tr>
-        <tr>
-          <td>Mythological figures (Odin, Thor, …)</td>
-          <td><code>foaf:Person</code>, <code>dbo:FictionalCharacter</code></td>
           <td><code>gow:reinterprets</code></td>
+          <td>6</td>
+          <td>The six mythological figures (Odin, Thor, Freyja, Baldur, Loki, Jörmungandr). Their Wikidata entries describe the myth versions, so an <code>owl:sameAs</code> assertion would incorrectly conflate the game portrayal with the source figure.</td>
         </tr>
         <tr>
-          <td>Object (PlayStation 4)</td>
-          <td><code>schema:Product</code></td>
-          <td><code>owl:sameAs</code></td>
-        </tr>
-        <tr>
-          <td>Concepts (Norse mythology, Greek mythology)</td>
-          <td><code>skos:Concept</code></td>
           <td><code>skos:exactMatch</code></td>
+          <td>2</td>
+          <td>The two subject concepts, Norse mythology and Greek mythology. <code>skos:exactMatch</code> is the SKOS-preferred way to say that two concepts in different concept schemes carry the same meaning; using <code>owl:sameAs</code> between concepts is technically valid but is discouraged by the SKOS specification.</td>
         </tr>
       </tbody>
     </table>
 
-    <p>Production relations between the game and the entities reuse the specific properties that Wikidata's mapping community has aligned to each role: <code>schema:director</code> for Barlog, <code>dbo:developer</code> for Santa Monica Studio, <code>dcterms:publisher</code> for Sony Interactive Entertainment, <code>schema:musicBy</code> for McCreary, and <code>schema:gamePlatform</code> for the PlayStation 4. Characters are attached to the game with <code>schema:character</code>, subjects with <code>dcterms:subject</code>, and family relations between characters (in and out of the game's narrative) with <code>schema:children</code>. Data properties are limited to <code>dcterms:title</code> (range <code>xsd:string</code>) and <code>dcterms:date</code> (range <code>xsd:date</code>).</p>
+    <p>The 12 / 6 / 2 breakdown is not decorative: it partitions the graph's external-facing surface into three semantic categories, each with its own consumption story. A downstream consumer that only cares about identity can follow <code>owl:sameAs</code>. A consumer building a mythography can follow <code>gow:reinterprets</code> to reach the source tradition. A consumer aligning subject vocabularies can follow <code>skos:exactMatch</code>.</p>
+
+    <h2>Game-level relations</h2>
+
+    <p>Nine assertions attach the game to its production entities, characters, and subjects. Each property is chosen from the vocabulary that most specifically expresses the role.</p>
+
+<pre><code><span class="ns">gow:</span>god-of-war-2018 <span class="kw">a</span> <span class="ns">schema:</span>VideoGame ;
+    <span class="ns">dcterms:</span>title <span class="st">"God of War"</span>@en ;
+    <span class="ns">dcterms:</span>date <span class="st">"2018-04-20"</span>^^<span class="ns">xsd:</span>date ;
+    <span class="ns">owl:</span>sameAs <span class="ns">wd:</span>Q18345138 ;
+    <span class="ns">schema:</span>director <span class="ns">gow:</span>cory-barlog ;
+    <span class="ns">dbo:</span>developer <span class="ns">gow:</span>santa-monica-studio ;
+    <span class="ns">dcterms:</span>publisher <span class="ns">gow:</span>sony-ie ;
+    <span class="ns">schema:</span>musicBy <span class="ns">gow:</span>bear-mccreary ;
+    <span class="ns">schema:</span>gamePlatform <span class="ns">gow:</span>playstation-4 ;
+    <span class="ns">schema:</span>character <span class="ns">gow:</span>kratos , <span class="ns">gow:</span>atreus ;
+    <span class="ns">dcterms:</span>subject <span class="ns">gow:</span>norse-mythology , <span class="ns">gow:</span>greek-mythology .</code></pre>
+
+    <p>Using both <code>schema:director</code> for Barlog and <code>dbo:developer</code> for Santa Monica Studio (rather than falling back on <code>dcterms:contributor</code> for both) preserves the distinction between the roles that a downstream query might want to disambiguate. The same reasoning underlies the choice of <code>schema:musicBy</code> over the more generic <code>dcterms:creator</code> for the composer credit.</p>
+
+    <h2 id="family-relations">Family relations and the fiction↔myth loop</h2>
+
+    <p>Five <code>schema:children</code> assertions carry the genealogies that connect the mythological layer to the fictional one and expose where the game diverges from its source. These are the triples that turn a static catalogue into a graph with narrative structure.</p>
+
+<pre><code><span class="cm"># In-game: the two protagonists</span>
+<span class="ns">gow:</span>kratos <span class="ns">schema:</span>children <span class="ns">gow:</span>atreus .
+
+<span class="cm"># In-game genealogy: Odin and Freyja are Baldur's parents</span>
+<span class="cm"># NOTE: Freyja-as-Baldur's-mother is a game-specific change from myth,</span>
+<span class="cm">#       where Frigg (not Freyja) is Baldur's mother.</span>
+<span class="ns">gow:</span>odin   <span class="ns">schema:</span>children <span class="ns">gow:</span>baldur .
+<span class="ns">gow:</span>freyja <span class="ns">schema:</span>children <span class="ns">gow:</span>baldur .
+
+<span class="cm"># Thor is Baldur's half-brother, both are Odin's sons</span>
+<span class="ns">gow:</span>odin <span class="ns">schema:</span>children <span class="ns">gow:</span>thor .
+
+<span class="cm"># Myth-derived: Loki fathers Jörmungandr.</span>
+<span class="ns">gow:</span>loki <span class="ns">schema:</span>children <span class="ns">gow:</span>jormungandr .</code></pre>
+
+    <p>The last triple is the one that closes the loop. Within the game's narrative, the young Atreus is revealed to be Loki — a fact the source text records but which is deliberately left unmodelled at the identity level (asserting <code>gow:atreus owl:sameAs gow:loki</code> would collapse two entities that the graph benefits from keeping distinct, and would blur the fact that "Loki" only enters the story as a reveal at the end). The Loki-fathers-Jörmungandr triple is a mythological fact that the game does not restate as such, but the game <em>does</em> stage the encounter between the three characters (Kratos, Atreus, Jörmungandr) on the boat. Read together, these separate triples let a downstream consumer trace a loop that the game itself only implies: fiction refers back to myth precisely where it diverges from it and precisely where it encounters it.</p>
 
     <div class="callout">
-      <p class="callout-title">Why mythological figures are also dbo:FictionalCharacter</p>
-      <p>Odin, Thor, Freyja, Baldur, Loki, and Jörmungandr are not just names cited in passing — they appear, speak, and act within the game's own narrative, exactly as Kratos and Atreus do. Typing them <code>dbo:FictionalCharacter</code> as well as <code>foaf:Person</code> makes that explicit, and it has a direct payoff for the model: it gives <code>gow:reinterprets</code> a single, uniform domain class instead of splitting the property's subjects across two different types depending on which character happens to be mid-conversation with which god. The alternative — leaving the six mythological figures as plain <code>foaf:Person</code> — would have worked too, but would have made "who reinterprets a myth" a property of an arbitrary subset of persons rather than a property of characters specifically, which is the claim the project actually wants to make.</p>
+      <p class="callout-title">Why keep two Baldur mothers in the graph</p>
+      <p>The graph asserts that in the game Freyja is Baldur's mother, and (through <code>gow:reinterprets</code>) that this Baldur is a reinterpretation of the mythological figure whose canonical mother is Frigg. Neither assertion projects onto the other. The former is a fact about the game world; the latter is a fact about the game's relation to its source. Uncoupling the two is only possible because reconciliation is done with <code>gow:reinterprets</code> instead of <code>owl:sameAs</code>.</p>
     </div>
 
-    <p>The same reasoning extends one step further: each mythological figure also carries its own <code>dcterms:subject</code> triple to <code>gow:norse-mythology</code> — not just the game as a whole. Without it, the graph would only say "the game is about Norse mythology", leaving the individual deities' membership in that pantheon implicit. <code>skos:narrower</code> — visible as a self-loop on <code>skos:Concept</code> in the diagram below — cannot carry that link itself: it only connects two <code>skos:Concept</code> instances, and the deities are modelled as characters, not concepts. It stays in the diagram because it is a genuine part of the SKOS vocabulary this project reuses (a concept scheme can always have narrower concepts), even though no triple currently instantiates it.</p>
+    <h2>Graph visualisation</h2>
 
-    <h2>The conceptual diagram</h2>
-
-    <p>The conceptual model is drawn using <a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener">Graffoo</a>, a graphical notation for OWL ontologies, diagrammed in <a href="https://www.yworks.com/products/yed" target="_blank" rel="noopener">yEd Graph Editor</a> using Graffoo's own official yEd palette. Classes are yellow rectangles, object properties are labelled blue arrows between classes, and data properties are green arrows to XSD datatypes. This is a class-level (TBox) diagram only — no individuals are shown; those belong to the RDF graph itself, covered in <a href="knowledge-representation.html">Phase 3</a>. One box breaks the yellow-class convention on purpose: the dashed, unfilled "external resource (Wikidata, untyped)" box that <code>gow:reinterprets</code> points to is not a class in this ontology at all — it marks that the property's range is an external, untyped identifier, and dashing it visually distinguishes "resource we don't own" from "class we defined". <code>dcterms:subject</code> appears twice, from two different sources into <code>skos:Concept</code> — once from the game as a whole, once from each individual mythological figure — reflecting the two-level subject link discussed above. Self-loops on <code>schema:children</code> (character to character) and <code>skos:narrower</code> (concept to concept) express relations that can hold between two instances of the same class.</p>
+    <p>Rendering the full graph produces a diagram that is dense enough to be worth walking through slowly. The image below was generated by pasting the full contents of <code>gow.ttl</code> into <a href="https://www.ldf.fi/service/rdf-grapher" target="_blank" rel="noopener">rdf-grapher</a>, a free web service that parses Turtle input and renders it as an SVG using Graphviz. It shows every triple in the graph, including <code>rdf:type</code> declarations and full datatype/property URIs — nothing is filtered out, which is why the diagram is dense: it is a complete, literal picture of the 104 triples, not a simplified summary of them.</p>
 
     <figure>
-      <img src="assets/graffoo.png" alt="Graffoo conceptual model diagram showing classes, object properties, and data properties, with an external untyped resource box for gow:reinterprets.">
-      <figcaption>Graffoo diagram of the conceptual model: classes (yellow), object properties (blue arrows), data properties (green arrows), external/untyped resource (dashed box). Click to zoom.</figcaption>
+      <img src="assets/rdf-graph.svg" alt="RDF graph visualisation showing entities as nodes, relations as labelled edges, and reconciliation links to Wikidata.">
+      <figcaption>Full RDF graph: 18 subjects, 104 triples, three families of reconciliation link. Click to zoom.</figcaption>
     </figure>
 
-    <h2>The coined property: <code>gow:reinterprets</code></h2>
+    <h2>SPARQL queries</h2>
 
-    <p>The single new term in the ontology is the property <code>gow:reinterprets</code>. It is declared as an <code>owl:ObjectProperty</code> and as a subproperty of <code>dcterms:relation</code>, and its intended reading is: the subject character (as portrayed in the game) is a fictional reinterpretation of the object entity (as attested in the mythological tradition).</p>
+    <p>Three sample queries illustrate the kinds of question the graph can answer. They use the standard prefixes bound in the Turtle file.</p>
 
-<pre><code><span class="ns">gow:</span>reinterprets <span class="kw">a</span> <span class="ns">owl:</span>ObjectProperty ;
-    <span class="ns">rdfs:</span>subPropertyOf <span class="ns">dcterms:</span>relation ;
-    <span class="ns">rdfs:</span>label <span class="st">"reinterprets"</span>@en ;
-    <span class="ns">rdfs:</span>comment <span class="st">"Relates a character in the game to the mythological figure they are based on. Used instead of owl:sameAs when the Wikidata entry describes the myth figure, not the fictional character."</span>@en .</code></pre>
+    <h3>Q1 — Which mythological figures does the game reinterpret?</h3>
 
-    <p>Two questions naturally arise here: why coin a new property at all, and if a new property is needed, why place it below <code>dcterms:relation</code> in the hierarchy rather than below something more specific?</p>
+<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/</span>&gt;
+<span class="kw">PREFIX</span> <span class="ns">rdfs:</span> &lt;<span class="st">http://www.w3.org/2000/01/rdf-schema#</span>&gt;
 
-    <h3>Why a new property is needed</h3>
+<span class="kw">SELECT</span> ?character ?mythFigure <span class="kw">WHERE</span> {
+  ?character <span class="ns">gow:</span>reinterprets ?mythFigure ;
+             <span class="ns">rdfs:</span>label ?characterLabel .
+}
+<span class="kw">ORDER BY</span> ?characterLabel</code></pre>
 
-    <p>The obvious candidates from standard vocabularies all miss the target in one direction or another.</p>
+    <p>Returns the six pairs (in-game character, Wikidata myth figure). This is the query that operationally defines the fictional-adaptation angle of the whole project.</p>
 
-    <p><strong><code>owl:sameAs</code></strong> would say that the game's Baldur is the same individual as the mythological Baldur. This is convenient (all the myth-derived triples become facts about the game character as well) but semantically wrong: the game's Baldur is Odin's son by Freyja, whereas the mythological Baldur is Odin's son by Frigg. If <code>owl:sameAs</code> held, an OWL reasoner would deduce that the game character had two different mothers, or that Freyja and Frigg were the same individual (they are not — Frigg is Odin's wife in the Æsir, Freyja is a Vanir goddess and Njord's daughter). The whole modelling point is precisely that the game <em>differs</em> from the myth on this genealogy, and <code>owl:sameAs</code> would erase the difference.</p>
+    <h3>Q2 — What family relations hold within the graph?</h3>
 
-    <p><strong><code>schema:isBasedOn</code></strong> is close in spirit but its domain and range are <code>CreativeWork</code> — it says that a work is derived from another work, not that a character is derived from a figure. Coercing it onto individuals would misuse the property.</p>
+<pre><code><span class="kw">PREFIX</span> <span class="ns">schema:</span> &lt;<span class="st">https://schema.org/</span>&gt;
+<span class="kw">PREFIX</span> <span class="ns">rdfs:</span> &lt;<span class="st">http://www.w3.org/2000/01/rdf-schema#</span>&gt;
 
-    <p><strong><code>dcterms:source</code></strong> is defined as "a related resource from which the described resource is derived". Its domain is not restricted, so it could apply, but its semantics as usually understood is bibliographic — a text has a source text, a translation has a source language. Applying it to a character-to-figure relation would be a stretch and would obscure the specifically <em>fictional-adaptation</em> nature of the link.</p>
+<span class="kw">SELECT</span> ?parentLabel ?childLabel <span class="kw">WHERE</span> {
+  ?parent <span class="ns">schema:</span>children ?child .
+  ?parent <span class="ns">rdfs:</span>label ?parentLabel .
+  ?child  <span class="ns">rdfs:</span>label ?childLabel .
+}
+<span class="kw">ORDER BY</span> ?parentLabel</code></pre>
 
-    <p><strong><code>skos:closeMatch</code></strong> or <strong><code>skos:relatedMatch</code></strong> apply only to <code>skos:Concept</code> instances, and the entities in question are typed as <code>foaf:Person</code>, not as concepts.</p>
+    <p>Returns five parent-child pairs. Notice that Freyja appears as Baldur's parent even though Wikidata's Freyja has no such assertion — that is the game's alternative genealogy speaking, not the myth's.</p>
 
-    <p>So the field is empty in exactly the shape this project needs. A new property, declared with a clear <code>rdfs:comment</code>, closes the gap.</p>
+    <h3>Q3 — What is Barlog credited for?</h3>
 
-    <h3>Why below <code>dcterms:relation</code></h3>
+<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/</span>&gt;
+<span class="kw">PREFIX</span> <span class="ns">rdfs:</span> &lt;<span class="st">http://www.w3.org/2000/01/rdf-schema#</span>&gt;
 
-    <p><code>dcterms:relation</code> is the most generic "these two things are meaningfully connected" property in the DCMI vocabulary and its use is not restricted by class. Placing <code>gow:reinterprets</code> as its subproperty is a conservative choice: any SPARQL query that asks for <code>dcterms:relation</code> triples will also surface the <code>gow:reinterprets</code> ones, preserving the graph's readability from a naive consumer's point of view, while the more specific label remains available to consumers who understand it. The alternative — declaring <code>gow:reinterprets</code> as a top-level property with no parent — would have made it invisible to any query that did not know it by name.</p>
+<span class="kw">SELECT</span> ?work ?role <span class="kw">WHERE</span> {
+  ?work ?role <span class="ns">gow:</span>cory-barlog ;
+        <span class="ns">rdfs:</span>label ?workLabel .
+}</code></pre>
 
-    <div class="callout">
-      <p class="callout-title">The interpretive payoff</p>
-      <p>With <code>gow:reinterprets</code> in place, the graph can carry two facts about Baldur that would otherwise be in tension. It can say <code>gow:baldur gow:reinterprets wd:Q131658</code> (the game's Baldur is a reinterpretation of Norse Baldur), and simultaneously <code>gow:freyja schema:children gow:baldur</code> (in the game, Freyja is Baldur's mother). Nothing about the second triple projects onto the mythological Baldur at Wikidata; nothing about the first triple imports Frigg's motherhood into the game. The two identities remain distinct, and the specific way the game <em>diverges from</em> its source becomes a stateable fact rather than an implicit narrative choice.</p>
-    </div>
-
-    <h2>Where the model goes next</h2>
-
-    <p>The conceptual model is the blueprint; the actual RDF graph is the building. <a href="knowledge-representation.html">Phase 3</a> walks through how the model is instantiated as concrete triples: which Wikidata identifiers are attached to which entities, which properties fire between the game and its production, and how the family relations that follow from the mythological figures close the fiction↔myth loop.</p>
+    <p>Returns the game as <code>?work</code> and <code>schema:director</code> as <code>?role</code>. Useful as a template: swapping the object URI generalises the query to any production credit.</p>
 
   </article>
 </main>
