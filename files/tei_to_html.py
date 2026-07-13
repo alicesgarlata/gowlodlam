@@ -334,26 +334,37 @@ CSS = r"""
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  color: #222;
-  background: #f7f5f0;
+  font-family: 'Crimson Pro', Georgia, "Times New Roman", serif;
+  color: #1c2530;
+  background:
+    radial-gradient(ellipse at top, #171e28 0%, #0f131a 62%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 7px);
+  background-attachment: fixed;
   line-height: 1.65;
 }
 
 .site-header {
   padding: 2rem 3rem 1.2rem;
-  background: #2b3542;
-  color: #f5f5f2;
-  border-bottom: 4px solid #c9a86a;
+  background: #1a212b;
+  color: #e7ecec;
+  border-bottom: 3px solid #4e7f97;
+  box-shadow: 0 2px 0 0 #4f7f6b;
 }
-.site-header h1 { margin: 0; font-size: 1.7rem; font-weight: normal; }
-.source-link { margin: 0.5rem 0 0; font-size: 0.85rem; color: #d0d0cc; }
-.source-link a { color: #d9bd85; text-decoration: none; border-bottom: 1px dotted #d9bd85; }
+.site-header h1 {
+  margin: 0;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.source-link { margin: 0.6rem 0 0; font-size: 0.85rem; color: #93a3ac; font-family: system-ui, sans-serif; }
+.source-link a { color: #7fb8cc; text-decoration: none; border-bottom: 1px dotted #7fb8cc; }
 
 .layout {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  max-width: 1200px;
+  grid-template-columns: 250px 1fr;
+  max-width: 1340px;
   margin: 0 auto;
   padding: 2rem 1.5rem;
   gap: 2.5rem;
@@ -368,51 +379,67 @@ body {
   font-size: 0.9rem;
 }
 .toc h2 {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: #666;
+  letter-spacing: 0.1em;
+  color: #57666e;
   margin: 0 0 0.5rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 .toc ul { list-style: none; padding: 0; margin: 0 0 1.8rem; }
 .toc li { margin: 0.15rem 0; }
 .toc a {
-  color: #2b3542;
+  color: #1c2530;
   text-decoration: none;
   display: block;
   padding: 0.2rem 0 0.2rem 0.6rem;
   border-left: 2px solid transparent;
   transition: border-color 0.15s, color 0.15s;
 }
-.toc a:hover { border-left-color: #c9a86a; color: #000; }
+.toc a:hover { border-left-color: #4e7f97; color: #000; }
 
 .legend { list-style: none; padding: 0; font-size: 0.85rem; }
 .legend li { margin: 0.35rem 0; }
 
 /* ---- main content ------------------------------------------- */
 .content {
-  background: white;
-  padding: 2.5rem 3.2rem;
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  background: #dee6e6;
+  padding: 2.6rem 3.4rem;
+  border-radius: 3px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.3), 0 0 0 1px #b7c5c6;
 }
 .content h2 {
-  font-size: 1.5rem;
-  color: #2b3542;
-  border-bottom: 2px solid #c9a86a;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #22384a;
+  border-bottom: 3px solid #4e7f97;
   padding-bottom: 0.35rem;
-  margin: 2.2rem 0 1rem;
+  margin: 2.4rem 0 1.1rem;
+  position: relative;
+}
+.content h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 36px;
+  height: 2px;
+  background: #a2472f;
 }
 .content h2:first-child { margin-top: 0; }
 .content h3 {
-  font-size: 1.15rem;
-  color: #444;
-  margin: 1.6rem 0 0.8rem;
+  font-family: 'Cinzel', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3d6779;
+  margin: 1.8rem 0 0.8rem;
 }
-.content p { margin: 1rem 0; text-align: justify; }
+.content p { margin: 1rem 0; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 
-/* ---- entities: colour by type ------------------------------- */
+/* ---- entities: colour by type (cold pigment palette) --------- */
 .entity {
   padding: 1px 4px;
   border-radius: 3px;
@@ -426,18 +453,18 @@ body {
   box-shadow: 0 1px 0 rgba(0,0,0,0.15);
 }
 
-.entity.person  { background: #dceffd; color: #0a4b78; border-bottom: 1px dotted #0a4b78; }
-.entity.org     { background: #fde5c8; color: #7a3d00; border-bottom: 1px dotted #7a3d00; }
-.entity.object  { background: #ecdcf5; color: #4d1a68; border-bottom: 1px dotted #4d1a68; }
-.entity.concept { background: #d8f0d3; color: #1e5814; border-bottom: 1px dotted #1e5814; }
-.entity.place   { background: #f0e6d2; color: #5c4a24; border-bottom: 1px dotted #5c4a24; font-style: italic; }
+.entity.person  { background: #d2e0e6; color: #1f4a5c; border-bottom: 1px dotted #1f4a5c; }
+.entity.org     { background: #e2dcc4; color: #5a5023; border-bottom: 1px dotted #5a5023; }
+.entity.object  { background: #d7dbe1; color: #37414d; border-bottom: 1px dotted #37414d; }
+.entity.concept { background: #d1e2d7; color: #29563f; border-bottom: 1px dotted #29563f; }
+.entity.place   { background: #e3d6cc; color: #5f4432; border-bottom: 1px dotted #5f4432; font-style: italic; }
 
 /* ---- quotes ------------------------------------------------ */
-.quote { font-style: italic; color: #333; }
+.quote { font-style: italic; color: #33404a; }
 .quote.attributed {
-  background: #fdf6e3;
+  background: #dbe8ec;
   padding: 1px 5px;
-  border-left: 3px solid #c9a86a;
+  border-left: 3px solid #4e7f97;
   border-radius: 0 2px 2px 0;
   cursor: help;
 }
@@ -445,15 +472,15 @@ body {
 /* ---- citations -------------------------------------------- */
 .citation {
   font-size: 0.72em;
-  color: #999;
+  color: #8a97a0;
   margin-left: 1px;
   font-family: system-ui, sans-serif;
 }
 
 /* ---- titles ---------------------------------------------- */
-.title-italic { font-style: italic; color: #333; }
-.title-quoted { color: #333; }
-.title-link { color: inherit; text-decoration: none; border-bottom: 1px dashed #999; }
+.title-italic { font-style: italic; color: #33404a; }
+.title-quoted { color: #33404a; }
+.title-link { color: inherit; text-decoration: none; border-bottom: 1px dashed #8a97a0; }
 .title-link:hover { border-bottom-style: solid; }
 
 /* ---- footer ---------------------------------------------- */
@@ -462,8 +489,9 @@ footer {
   padding: 2rem 1rem;
   font-family: system-ui, sans-serif;
   font-size: 0.85rem;
-  color: #888;
-  border-top: 1px solid #e0e0e0;
+  color: #93a3ac;
+  background: #1a212b;
+  border-top: 3px solid #4e7f97;
   margin-top: 1rem;
 }
 
@@ -481,6 +509,9 @@ HTML_TEMPLATE = """<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{page_title}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 {css}
 </style>
