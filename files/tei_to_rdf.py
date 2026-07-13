@@ -55,7 +55,7 @@ XML_NS = "http://www.w3.org/XML/1998/namespace"
 # Project namespace — change this to your actual base URL if you publish
 # the ontology online. All coined terms (gow:reinterprets) and all
 # individual resources (gow:kratos, gow:god-of-war-2018, …) live here.
-GOW = Namespace("https://alicebologna.github.io/lodlam-gow/")
+GOW = Namespace("https://alicesgarlata.github.io/gowlodlam/")
 
 WD = Namespace("http://www.wikidata.org/entity/")
 VIAF = Namespace("http://viaf.org/viaf/")
