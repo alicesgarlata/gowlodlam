@@ -1,7 +1,7 @@
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix gow: <https://alicebologna.github.io/lodlam-gow/> .
+@prefix gow: <https://alicesgarlata.github.io/gowlodlam/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix schema: <https://schema.org/> .
@@ -10,7 +10,7 @@
 @prefix wd: <http://www.wikidata.org/entity/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-<https://alicebologna.github.io/lodlam-gow> a owl:Ontology ;
+<https://alicesgarlata.github.io/gowlodlam> a owl:Ontology ;
     rdfs:label "God of War (2018) LODLAM ontology"@en ;
     rdfs:comment "Ontology for the LODLAM project on the God of War (2018) Wikipedia page. Reuses schema.org, dcterms, FOAF, SKOS, and DBO; adds one coined property (gow:reinterprets) for the fictional-adaptation-of-myth relation."@en .
 
