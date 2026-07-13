@@ -72,6 +72,10 @@
             g.add((uri, OWL.sameAs, WD[wikidata]))  <span class="cm"># Wikidata IS the game character</span>
 
     <span class="kw">elif</span> role == <span class="st">"mythological-figure"</span>:
+        <span class="cm"># Mythological figures act as characters within the game's own</span>
+        <span class="cm"># narrative too, so they get the same typing as Kratos and Atreus —</span>
+        <span class="cm"># this gives gow:reinterprets one uniform domain class.</span>
+        g.add((uri, RDF.type, DBO.FictionalCharacter))
         <span class="kw">if</span> wikidata:
             <span class="cm"># Wikidata describes the MYTH figure, not the game's version —</span>
             <span class="cm"># owl:sameAs would incorrectly merge the two identities.</span>
@@ -83,7 +87,7 @@
         <span class="kw">if</span> viaf:
             g.add((uri, OWL.sameAs, VIAF[viaf_id_only(viaf)]))</code></pre>
 
-    <p>The inline comments in the actual script mark exactly this: that the branch is not a stylistic choice but a semantic necessity, forced by what a Wikidata entry represents for each role. This branching logic is what produces the 12 / 6 / 2 split documented below — it is the direct, mechanical consequence of the TEI encoding's <code>@role</code> attribute, set back in <a href="knowledge-organization.html">Phase 1</a> when each mythological figure was tagged <code>role="mythological-figure"</code> rather than left the same as a real person.</p>
+    <p>The inline comments in the actual script mark exactly this: that the branch is not a stylistic choice but a semantic necessity, forced by what a Wikidata entry represents for each role. This branching logic is what produces the 12 / 6 / 2 reconciliation split documented below — it is the direct, mechanical consequence of the TEI encoding's <code>@role</code> attribute, set back in <a href="knowledge-organization.html">Phase 1</a> when each mythological figure was tagged <code>role="mythological-figure"</code> rather than left the same as a real person. The <code>dbo:FictionalCharacter</code> typing on the <code>elif</code> branch is what makes <code>gow:reinterprets</code> have a single domain class in the <a href="conceptual-model.html">conceptual model</a>, rather than splitting its subjects across <code>foaf:Person</code> for some characters and <code>dbo:FictionalCharacter</code> for others.</p>
 
     <h3>Step 3 — Add the fixed game-level and family relations</h3>
 
@@ -106,13 +110,13 @@ g.add((GOW[<span class="st">"freyja"</span>], SCHEMA.children, GOW[<span class="
 <span class="cm"># verification, run separately:</span>
 g2 = Graph()
 g2.parse(output_path, format=<span class="st">"turtle"</span>)
-<span class="kw">assert</span> <span class="kw">len</span>(g2) == <span class="kw">len</span>(g)  <span class="cm"># 92 == 92</span></code></pre>
+<span class="kw">assert</span> <span class="kw">len</span>(g2) == <span class="kw">len</span>(g)  <span class="cm"># 104 == 104</span></code></pre>
 
-    <p>The resulting file is 92 triples across 18 subjects. It round-trips through <code>rdflib</code> — reparsing the serialised Turtle yields the same triple count, so the file is syntactically valid Turtle by round-trip verification, not just by visual inspection.</p>
+    <p>The resulting file is 104 triples across 18 subjects. It round-trips through <code>rdflib</code> — reparsing the serialised Turtle yields the same triple count, so the file is syntactically valid Turtle by round-trip verification, not just by visual inspection.</p>
 
     <h2>What the graph actually contains</h2>
 
-    <p>Rather than only describing the graph in the abstract, here are ten real triples taken directly from the generated <code>gow.ttl</code>, chosen to show one example of each pattern discussed above:</p>
+    <p>Rather than only describing the graph in the abstract, here are twelve real triples taken directly from the generated <code>gow.ttl</code>, chosen to show one example of each pattern discussed above:</p>
 
     <table>
       <thead><tr><th>Subject</th><th>Predicate</th><th>Object</th><th>Pattern illustrated</th></tr></thead>
@@ -122,13 +126,25 @@ g2.parse(output_path, format=<span class="st">"turtle"</span>)
         <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>wd:Q5173545</code></td><td>Real person → Wikidata</td></tr>
         <tr><td><code>gow:cory-barlog</code></td><td><code>owl:sameAs</code></td><td><code>viaf:6865153289917732770006</code></td><td>Real person → VIAF (22-digit cluster ID, verified against Wikidata)</td></tr>
         <tr><td><code>gow:kratos</code></td><td><code>a</code></td><td><code>dbo:FictionalCharacter</code></td><td>Fictional-character typing</td></tr>
+        <tr><td><code>gow:baldur</code></td><td><code>a</code></td><td><code>dbo:FictionalCharacter</code></td><td>Mythological figures get this too — see callout below</td></tr>
         <tr><td><code>gow:baldur</code></td><td><code>gow:reinterprets</code></td><td><code>wd:Q131658</code></td><td>Mythological figure — coined property, not sameAs</td></tr>
+        <tr><td><code>gow:odin</code></td><td><code>dcterms:subject</code></td><td><code>gow:norse-mythology</code></td><td>Each deity's own link to the pantheon concept, not just the game's</td></tr>
         <tr><td><code>gow:freyja</code></td><td><code>schema:children</code></td><td><code>gow:baldur</code></td><td>In-game genealogy that departs from myth</td></tr>
         <tr><td><code>gow:loki</code></td><td><code>schema:children</code></td><td><code>gow:jormungandr</code></td><td>Myth-derived relation closing the fiction↔myth loop</td></tr>
         <tr><td><code>gow:norse-mythology</code></td><td><code>skos:exactMatch</code></td><td><code>wd:Q128285</code></td><td>Concept reconciliation via SKOS</td></tr>
         <tr><td><code>gow:reinterprets</code></td><td><code>rdfs:subPropertyOf</code></td><td><code>dcterms:relation</code></td><td>The coined property's own placement in the hierarchy</td></tr>
       </tbody>
     </table>
+
+    <div class="callout">
+      <p class="callout-title">Why gow:baldur has two rdf:type triples</p>
+      <p>Every one of the six mythological figures carries both <code>foaf:Person</code> and <code>dbo:FictionalCharacter</code> — not because they're ambiguous, but because both are true at once. <code>foaf:Person</code> says what kind of thing Baldur is in general (a person, as opposed to an organisation or a place); <code>dbo:FictionalCharacter</code> says that this particular Baldur is encountered as an active character within the game's narrative, exactly like Kratos and Atreus, rather than a background reference. The practical payoff is that <code>gow:reinterprets</code> then has one consistent domain class across all six figures, instead of needing a domain that silently varies by which character is involved.</p>
+    </div>
+
+    <div class="callout">
+      <p class="callout-title">Why each deity also gets its own dcterms:subject</p>
+      <p>Originally only the game itself (<code>gow:god-of-war-2018 dcterms:subject gow:norse-mythology</code>) was linked to the pantheon concept. That leaves an implicit gap: nothing in the graph directly says that Odin, Thor, Freyja, Baldur, Loki, and Jörmungandr <em>individually</em> belong to Norse mythology — a query for "who is part of the Norse pantheon" would have to route through the game first. Giving each of the six mythological figures its own <code>dcterms:subject</code> triple to <code>gow:norse-mythology</code> closes that gap directly, without needing <code>skos:narrower</code> to do work it structurally can't do (that property only connects <code>skos:Concept</code> to <code>skos:Concept</code>, and individual deities aren't modelled as concepts here — they're characters).</p>
+    </div>
 
     <div class="callout">
       <p class="callout-title">A number worth a second look, and why it's actually fine</p>
@@ -212,7 +228,7 @@ g2.parse(output_path, format=<span class="st">"turtle"</span>)
 
     <figure>
       <img src="assets/rdf-graph.svg" alt="RDF graph visualisation showing entities as nodes, relations as labelled edges, and reconciliation links to Wikidata.">
-      <figcaption>Full RDF graph: 18 subjects, 92 triples, three families of reconciliation link.</figcaption>
+      <figcaption>Full RDF graph: 18 subjects, 104 triples, three families of reconciliation link.</figcaption>
     </figure>
 
     <h2>SPARQL queries</h2>
