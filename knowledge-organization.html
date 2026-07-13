@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Knowledge Organization — God of War (2018) LOD Project</title>
+<title>Conceptual Model — God of War (2018) LOD Project</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Runic&display=swap" rel="stylesheet">
@@ -21,9 +21,9 @@
     <nav class="site-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
-        <li><a href="knowledge-organization.html" class="current">Knowledge Organization</a></li>
+        <li><a href="knowledge-organization.html">Knowledge Organization</a></li>
         <li><a href="html-rendering.html">HTML Rendering</a></li>
-        <li><a href="conceptual-model.html">Conceptual Model</a></li>
+        <li><a href="conceptual-model.html" class="current">Conceptual Model</a></li>
         <li><a href="knowledge-representation.html">Knowledge Representation</a></li>
         <li><a href="resources.html">Resources</a></li>
       </ul>
@@ -34,220 +34,114 @@
 <main class="content">
 
   <div class="hero">
-    <h1>Knowledge Organization</h1>
-    <p class="subtitle">Phase 1 — selecting the topic, identifying entities, and encoding them in TEI/XML with authority reconciliation.</p>
+    <h1>Conceptual Model</h1>
+    <p class="subtitle">Phase 2 — mapping the entities and relations onto standard vocabularies, and coining the one term that is missing.</p>
   </div>
 
   <article>
 
-    <h2>Choosing the topic</h2>
+    <h2>Reuse first, coin only when necessary</h2>
 
-    <p>The task of the exam project was to pick a single Wikipedia article and lift its content into a Linked Open Data workflow. Wikipedia is uneven terrain for this: some pages are dense with well-catalogued entities (historical figures, works of art) and some are thin (recent events, niche subcultures). A good candidate needs enough named entities to reach the ten-entity threshold set in the guidelines, but it also needs a story worth telling — an angle where the exercise of formalising the article's content into RDF exposes something that plain prose does not.</p>
+    <p>The starting principle for the conceptual model is that shared vocabularies are almost always preferable to invented ones. A graph that draws on <a href="https://schema.org/" target="_blank" rel="noopener">schema.org</a>, <a href="http://purl.org/dc/terms/" target="_blank" rel="noopener">DCMI Terms</a>, <a href="http://xmlns.com/foaf/0.1/" target="_blank" rel="noopener">FOAF</a>, <a href="http://www.w3.org/2004/02/skos/core#" target="_blank" rel="noopener">SKOS</a> and <a href="http://dbpedia.org/ontology/" target="_blank" rel="noopener">DBpedia (DBO)</a> can be consumed by any tool that already knows those vocabularies, and its assertions inherit whatever cross-vocabulary alignment those tools already carry. A graph that leans heavily on a local ontology only interoperates with itself.</p>
 
-    <p>The 2018 <em>God of War</em> Wikipedia article is such a candidate for two reasons. First, it is populated with well-attested entities: real people involved in production (Cory Barlog as director, Bear McCreary as composer), organisations (Santa Monica Studio, Sony Interactive Entertainment), the hardware platform (PlayStation 4), fictional protagonists (Kratos and Atreus), and a large cast of figures drawn from Norse mythology — all of whom have Wikidata entries, and the human production credits also carry VIAF identifiers. Second, and more interestingly, the article's central narrative device is the game's transition from Greek to Norse mythology and its subsequent <em>reinterpretation</em> of the source myths — a semantic move that turns out to be modellable but not with any single standard property. That gap is where the interesting work of this project happens.</p>
-
-    <h2>Identifying the entities</h2>
-
-    <p>Fifteen entities were selected across three layers of narrative distance from the game, plus two subject concepts. Entities were chosen on the criterion that (a) they are explicitly mentioned in the selected portion of the Wikipedia text, and (b) they carry a stable identifier in Wikidata that can serve as an anchor for reconciliation.</p>
-
-    <h3>Production layer (5)</h3>
-
-    <p>These are the real-world people and organisations that made the game, together with the hardware platform on which it was released.</p>
+    <p>The concrete mapping between the entity types identified in <a href="knowledge-organization.html">Phase 1</a> and the classes and properties they instantiate is summarised below.</p>
 
     <table>
-      <thead><tr><th>Entity</th><th>Type</th><th>Role</th><th>Wikidata</th></tr></thead>
+      <thead><tr><th>Entity type</th><th>Class(es)</th><th>Reconciliation property</th></tr></thead>
       <tbody>
-        <tr><td>Cory Barlog</td><td><span class="entity-swatch person">Person</span></td><td>Director</td><td><code>Q5173545</code></td></tr>
-        <tr><td>Bear McCreary</td><td><span class="entity-swatch person">Person</span></td><td>Composer</td><td><code>Q621437</code></td></tr>
-        <tr><td>Santa Monica Studio</td><td><span class="entity-swatch org">Organisation</span></td><td>Developer</td><td><code>Q656710</code></td></tr>
-        <tr><td>Sony Interactive Entertainment</td><td><span class="entity-swatch org">Organisation</span></td><td>Publisher</td><td><code>Q18594</code></td></tr>
-        <tr><td>PlayStation 4</td><td><span class="entity-swatch object">Object</span></td><td>Platform</td><td><code>Q5014725</code></td></tr>
+        <tr>
+          <td>The game itself</td>
+          <td><code>schema:VideoGame</code></td>
+          <td><code>owl:sameAs</code></td>
+        </tr>
+        <tr>
+          <td>Real people (director, composer)</td>
+          <td><code>foaf:Person</code></td>
+          <td><code>owl:sameAs</code> (to Wikidata and VIAF)</td>
+        </tr>
+        <tr>
+          <td>Organisations (developer, publisher)</td>
+          <td><code>foaf:Organization</code></td>
+          <td><code>owl:sameAs</code> (to Wikidata and VIAF)</td>
+        </tr>
+        <tr>
+          <td>Fictional characters (Kratos, Atreus)</td>
+          <td><code>foaf:Person</code>, <code>dbo:FictionalCharacter</code></td>
+          <td><code>owl:sameAs</code></td>
+        </tr>
+        <tr>
+          <td>Mythological figures (Odin, Thor, …)</td>
+          <td><code>foaf:Person</code>, <code>dbo:FictionalCharacter</code></td>
+          <td><code>gow:reinterprets</code></td>
+        </tr>
+        <tr>
+          <td>Object (PlayStation 4)</td>
+          <td><code>schema:Product</code></td>
+          <td><code>owl:sameAs</code></td>
+        </tr>
+        <tr>
+          <td>Concepts (Norse mythology, Greek mythology)</td>
+          <td><code>skos:Concept</code></td>
+          <td><code>skos:exactMatch</code></td>
+        </tr>
       </tbody>
     </table>
 
-    <h3>Fictional layer (2)</h3>
-
-    <p>These are the two protagonists — the entities the article treats as protagonists of the game's narrative. Wikidata's entries for both refer to the game characters themselves.</p>
-
-    <table>
-      <thead><tr><th>Entity</th><th>Type</th><th>Wikidata</th></tr></thead>
-      <tbody>
-        <tr><td>Kratos</td><td><span class="entity-swatch person">Fictional character</span></td><td><code>Q2291154</code></td></tr>
-        <tr><td>Atreus</td><td><span class="entity-swatch person">Fictional character</span></td><td><code>Q54896805</code></td></tr>
-      </tbody>
-    </table>
-
-    <h3>Mythological layer (6)</h3>
-
-    <p>These are the six Norse figures the game features. Wikidata's entries for these refer to the mythological figures as attested in the source tradition — <em>not</em> to their in-game portrayals. This distinction becomes central to the modelling choices in <a href="conceptual-model.html">Phase 2</a>.</p>
-
-    <table>
-      <thead><tr><th>Entity</th><th>Type</th><th>Wikidata</th></tr></thead>
-      <tbody>
-        <tr><td>Odin</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q43610</code></td></tr>
-        <tr><td>Thor</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q42952</code></td></tr>
-        <tr><td>Freyja</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q1647325</code></td></tr>
-        <tr><td>Baldur</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q131658</code></td></tr>
-        <tr><td>Loki</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q133147</code></td></tr>
-        <tr><td>Jörmungandr</td><td><span class="entity-swatch person">Mythological figure</span></td><td><code>Q181227</code></td></tr>
-      </tbody>
-    </table>
-
-    <h3>Concepts (2)</h3>
-
-    <p>Two subject concepts appear across the article and organise the mythological figures under coherent schemes.</p>
-
-    <table>
-      <thead><tr><th>Concept</th><th>Wikidata</th></tr></thead>
-      <tbody>
-        <tr><td>Norse mythology</td><td><code>Q128285</code></td></tr>
-        <tr><td>Greek mythology</td><td><code>Q34726</code></td></tr>
-      </tbody>
-    </table>
-
-    <h3>Entities considered and discarded</h3>
-
-    <p>Two entities were initially in the set but were dropped or exchanged during the encoding pass, and the reasoning is worth recording because it says something about how entity selection should relate to actual textual anchors.</p>
-
-    <p><strong>Runes</strong> were included in the first entity list as a recurring concept of the game — they appear as etchings on Kratos's Leviathan Axe and as symbols throughout the visual design. But when the Wikipedia text was selected for TEI encoding, none of the chosen sections mentioned runes explicitly. Keeping the entity would have meant defining it in the taxonomy without any inline <code>ref</code> pointing to a text mention, which weakens the entity's status: an entity without a textual anchor is data-warehouse padding, not something the article actually organises. Runes were removed from the entity set on this ground.</p>
-
-    <p><strong>Greek mythology</strong> was not in the initial set — the project's angle was Norse — but appears four times in the selected text (Introduction, Setting, and Development twice). It also carries interpretive weight: the game's whole narrative pivots on the transition from Greek to Norse mythology, and Kratos himself is described in the text as "the former Greek God of War". Modelling both mythologies as siblings under <code>skos:Concept</code> and both as <code>dcterms:subject</code> of the game produces a cleaner symmetric account than modelling only one. Greek mythology was added to replace Runes.</p>
-
-    <h2>Theoretical model</h2>
-
-    <p>The theoretical model captures, at a domain-agnostic level, the entities and relations that the encoded text needs to represent. It is expressed as a mind map produced in <a href="https://miro.com/" target="_blank" rel="noopener">Miro</a>, organised in three colour-coded layers (purple for production, green for concepts, pink/blue for fictional and mythological figures). Arrows are labelled with the natural-language relation they carry — "is directed by", "is developed by", "has fictional character", "reinterprets the mythological figure", "is father of", and so on. The mythological figures are grouped inside a dashed sub-container within the outer Norse mythology concept scheme so that the six <em>reinterprets</em> arrows do not fan out individually; a single arrow ("reinterprets the mythological figures") points at the sub-container, and the interior structure carries the genealogical relations that survive to the RDF phase — including the game's altered Freyja/Baldur motherhood and the Atreus-is-Loki reveal, drawn as a single long arc labelled "reinterprets the mythological figure" connecting Atreus directly to Loki.</p>
-
-    <figure>
-      <img src="assets/mind-map.png" alt="Theoretical model mind map: three colour-coded layers of entities with labelled relation arrows, and a dashed sub-container grouping the six mythological figures.">
-      <figcaption>Theoretical model: entities across three layers with their labelled relations. Purple = production, green = concepts, pink = fictional characters, blue = mythological figures. Click to zoom.</figcaption>
-    </figure>
-
-    <h2>TEI/XML encoding</h2>
-
-    <p>The article was encoded in TEI/XML with a separation between metadata, entity definitions, and running text. The <code>teiHeader</code> declares the source bibliography (the Wikipedia permalink, the consultation date, and the responsible parties) and, inside <code>encodingDesc/classDecl</code>, a <code>taxonomy</code> that carries the two subject concepts (Norse mythology and Greek mythology) with their Wikidata URIs expressed via <code>@corresp</code> attributes.</p>
-
-    <p>Individual entities live in a <code>&lt;standOff&gt;</code> block. Each real person and organisation carries an <code>&lt;idno type="Wikidata"&gt;</code> and, where applicable, an <code>&lt;idno type="VIAF"&gt;</code>. Fictional characters carry only Wikidata (VIAF does not describe fictional entities). Mythological figures likewise carry only Wikidata, but semantically these identifiers point to the myth version, not the game version — a distinction that is honoured in Phase 3 by using a different reconciliation property. The taxonomy is used for the two concepts because <code>&lt;category&gt;</code> in TEI does not accept <code>&lt;idno&gt;</code> as a child element; <code>@corresp</code> on the category itself is the sanctioned workaround.</p>
+    <p>Production relations between the game and the entities reuse the specific properties that Wikidata's mapping community has aligned to each role: <code>schema:director</code> for Barlog, <code>dbo:developer</code> for Santa Monica Studio, <code>dcterms:publisher</code> for Sony Interactive Entertainment, <code>schema:musicBy</code> for McCreary, and <code>schema:gamePlatform</code> for the PlayStation 4. Characters are attached to the game with <code>schema:character</code>, subjects with <code>dcterms:subject</code>, and family relations between characters (in and out of the game's narrative) with <code>schema:children</code>. Data properties are limited to <code>dcterms:title</code> (range <code>xsd:string</code>) and <code>dcterms:date</code> (range <code>xsd:date</code>).</p>
 
     <div class="callout">
-      <p class="callout-title">Two small encoding traps worth noting</p>
-      <p>The TEI namespace URI is <code>http://www.tei-c.org/ns/1.0</code>, not <code>http://tei-c.org</code> — using the latter is the single most common newcomer mistake and produces silently invalid files that no downstream tool will parse as TEI. Second, the <code>&amp;</code> in the Wikipedia permalink (<code>?title=…&amp;oldid=…</code>) must be escaped as <code>&amp;amp;</code> inside XML attribute values; a raw ampersand is a syntax error.</p>
+      <p class="callout-title">Why mythological figures are also dbo:FictionalCharacter</p>
+      <p>Odin, Thor, Freyja, Baldur, Loki, and Jörmungandr are not just names cited in passing — they appear, speak, and act within the game's own narrative, exactly as Kratos and Atreus do. Typing them <code>dbo:FictionalCharacter</code> as well as <code>foaf:Person</code> makes that explicit, and it has a direct payoff for the model: it gives <code>gow:reinterprets</code> a single, uniform domain class instead of splitting the property's subjects across two different types depending on which character happens to be mid-conversation with which god. The alternative — leaving the six mythological figures as plain <code>foaf:Person</code> — would have worked too, but would have made "who reinterprets a myth" a property of an arbitrary subset of persons rather than a property of characters specifically, which is the claim the project actually wants to make.</p>
     </div>
 
-    <p>Inline annotation in the body follows a uniform pattern: every mention of one of the 15 entities is wrapped in the appropriate TEI element (<code>persName</code>, <code>orgName</code>, <code>objectName</code>, or <code>rs type="concept"</code>) with an <code>@ref</code> attribute pointing to the local <code>xml:id</code> defined in the standoff. This gives the graph a clean two-step: from an inline mention, follow <code>@ref</code> to the standoff entry, then follow <code>idno</code> or <code>@corresp</code> to the external authority.</p>
+    <p>The same reasoning extends one step further: each mythological figure also carries its own <code>dcterms:subject</code> triple to <code>gow:norse-mythology</code> — not just the game as a whole. Without it, the graph would only say "the game is about Norse mythology", leaving the individual deities' membership in that pantheon implicit. <code>skos:narrower</code> — visible as a self-loop on <code>skos:Concept</code> in the diagram below — cannot carry that link itself: it only connects two <code>skos:Concept</code> instances, and the deities are modelled as characters, not concepts. It stays in the diagram because it is a genuine part of the SKOS vocabulary this project reuses (a concept scheme can always have narrower concepts), even though no triple currently instantiates it.</p>
 
-    <h3>Textual phenomena</h3>
+    <h2>The conceptual diagram</h2>
 
-    <p>Beyond entities, the guidelines require the encoding of textual phenomena — quotations and citations. Direct-speech quotations from Cory Barlog and Bear McCreary are wrapped in <code>&lt;quote&gt;</code> elements with a <code>@who</code> attribute pointing to the speaker's standoff <code>xml:id</code>. This gives the HTML rendering a place to visually distinguish attributed speech from unattributed quoted phrases, and it gives any downstream RDF extraction a way to represent the utterance as a triple in its own right. Wikipedia footnote markers ("[26]", "[10]") are preserved as <code>&lt;ref type="citation"&gt;</code> and rendered as small superscript in the HTML.</p>
+    <p>The conceptual model is drawn using <a href="https://essepuntato.it/graffoo/" target="_blank" rel="noopener">Graffoo</a>, a graphical notation for OWL ontologies, diagrammed in <a href="https://www.yworks.com/products/yed" target="_blank" rel="noopener">yEd Graph Editor</a> using Graffoo's own official yEd palette. Classes are yellow rectangles, object properties are labelled blue arrows between classes, and data properties are green arrows to XSD datatypes. This is a class-level (TBox) diagram only — no individuals are shown; those belong to the RDF graph itself, covered in <a href="knowledge-representation.html">Phase 3</a>. One box breaks the yellow-class convention on purpose: the dashed, unfilled "external resource (Wikidata, untyped)" box that <code>gow:reinterprets</code> points to is not a class in this ontology at all — it marks that the property's range is an external, untyped identifier, and dashing it visually distinguishes "resource we don't own" from "class we defined". <code>dcterms:subject</code> appears twice, from two different sources into <code>skos:Concept</code> — once from the game as a whole, once from each individual mythological figure — reflecting the two-level subject link discussed above. Self-loops on <code>schema:children</code> (character to character) and <code>skos:narrower</code> (concept to concept) express relations that can hold between two instances of the same class.</p>
 
-    <h2>HTML transformation</h2>
+    <figure>
+      <img src="assets/graffoo.png" alt="Graffoo conceptual model diagram showing classes, object properties, and data properties, with an external untyped resource box for gow:reinterprets.">
+      <figcaption>Graffoo diagram of the conceptual model: classes (yellow), object properties (blue arrows), data properties (green arrows), external/untyped resource (dashed box). Click to zoom.</figcaption>
+    </figure>
 
-    <p>Both a Python script and an XSLT stylesheet were viable options for the TEI→HTML step; XSLT is arguably the more idiomatic choice for TEI specifically, since it is designed to transform XML tree structures declaratively and many TEI toolchains ship XSLT stylesheets out of the box. Python with <code>lxml</code> was chosen instead for two practical reasons: it keeps the whole pipeline (TEI parsing, HTML generation, and the later RDF serialisation) in a single language the author is already fluent in, which matters when the transformation logic needs to be extended or debugged under time pressure; and it makes it straightforward to share code between the two transformation scripts — both <code>tei_to_html.py</code> and <code>tei_to_rdf.py</code> use the same entity-extraction function shape, so a change to how entities are read from the standoff only has to be reasoned about once, even though the two scripts remain separate files. The trade-off accepted is that the script re-implements, in Python, some of the tree-walking that XSLT would have given for free through template matching.</p>
+    <h2>The coined property: <code>gow:reinterprets</code></h2>
 
-    <p>The TEI file is transformed into a self-contained HTML document by a Python script (<code>tei_to_html.py</code>) that uses <code>lxml</code> for parsing. A sticky sidebar carries the table of contents and a legend of the entity colour scheme. The transformation runs in four steps, each shown below with the actual code and the reasoning behind it. The output of this exact script, running against the current <code>tei.xml</code>, is embedded live on the <a href="html-rendering.html">HTML Rendering page</a> — not just linked as a download.</p>
+    <p>The single new term in the ontology is the property <code>gow:reinterprets</code>. It is declared as an <code>owl:ObjectProperty</code> and as a subproperty of <code>dcterms:relation</code>, and its intended reading is: the subject character (as portrayed in the game) is a fictional reinterpretation of the object entity (as attested in the mythological tradition).</p>
 
-    <h3>Step 1 — Extract entities from the standoff</h3>
+<pre><code><span class="ns">gow:</span>reinterprets <span class="kw">a</span> <span class="ns">owl:</span>ObjectProperty ;
+    <span class="ns">rdfs:</span>subPropertyOf <span class="ns">dcterms:</span>relation ;
+    <span class="ns">rdfs:</span>label <span class="st">"reinterprets"</span>@en ;
+    <span class="ns">rdfs:</span>comment <span class="st">"Relates a character in the game to the mythological figure they are based on. Used instead of owl:sameAs when the Wikidata entry describes the myth figure, not the fictional character."</span>@en .</code></pre>
 
-    <p>Before any text can be rendered, the script needs a lookup table: given an <code>xml:id</code> like <code>baldur</code>, what is this entity's display name, its role, and its authority identifiers? This is built once by walking <code>&lt;listPerson&gt;</code>, <code>&lt;listOrg&gt;</code>, <code>&lt;listObject&gt;</code>, and the taxonomy's <code>&lt;category&gt;</code> elements, and collecting the result into a plain Python dictionary keyed by <code>xml:id</code>.</p>
+    <p>Two questions naturally arise here: why coin a new property at all, and if a new property is needed, why place it below <code>dcterms:relation</code> in the hierarchy rather than below something more specific?</p>
 
-<pre><code><span class="kw">def</span> extract_entities(root) -&gt; <span class="kw">dict</span>:
-    entities = {}
-    <span class="kw">for</span> person <span class="kw">in</span> root.iter(_q(<span class="st">"person"</span>)):
-        pid = _xml_id(person)
-        <span class="kw">if not</span> pid:
-            <span class="kw">continue</span>
-        name_el = person.find(_q(<span class="st">"persName"</span>))
-        wikidata = viaf = <span class="st">""</span>
-        <span class="kw">for</span> idno <span class="kw">in</span> person.findall(_q(<span class="st">"idno"</span>)):
-            <span class="kw">if</span> idno.get(<span class="st">"type"</span>) == <span class="st">"Wikidata"</span>:
-                wikidata = clean_id(idno.text)
-            <span class="kw">elif</span> idno.get(<span class="st">"type"</span>) == <span class="st">"VIAF"</span>:
-                viaf = clean_id(idno.text)
-        entities[pid] = {
-            <span class="st">"type"</span>: <span class="st">"person"</span>,
-            <span class="st">"name"</span>: name_el.text <span class="kw">if</span> name_el <span class="kw">is not</span> <span class="kw">None</span> <span class="kw">else</span> pid,
-            <span class="st">"role"</span>: person.get(<span class="st">"role"</span>, <span class="st">""</span>),
-            <span class="st">"wikidata"</span>: wikidata,
-            <span class="st">"viaf"</span>: viaf,
-        }
-    <span class="cm"># … same pattern repeats for &lt;org&gt;, &lt;object&gt;, &lt;category&gt;
-    # (concepts get skos-style fields instead of role/viaf)</span>
-    <span class="kw">return</span> entities</code></pre>
+    <h3>Why a new property is needed</h3>
 
-    <p>This function is deliberately identical in shape to the one used in <code>tei_to_rdf.py</code> (see the <a href="knowledge-representation.html">Knowledge Representation page</a>): both scripts need the same lookup table, just to feed different output formats downstream. Keeping the extraction logic in one recognisable shape across both scripts means a correction to how, say, VIAF identifiers are cleaned only has to be made — and re-verified — once per script, with the same mental model applying to both.</p>
+    <p>The obvious candidates from standard vocabularies all miss the target in one direction or another.</p>
 
-    <h3>Step 2 — Build the hover tooltip text</h3>
+    <p><strong><code>owl:sameAs</code></strong> would say that the game's Baldur is the same individual as the mythological Baldur. This is convenient (all the myth-derived triples become facts about the game character as well) but semantically wrong: the game's Baldur is Odin's son by Freyja, whereas the mythological Baldur is Odin's son by Frigg. If <code>owl:sameAs</code> held, an OWL reasoner would deduce that the game character had two different mothers, or that Freyja and Frigg were the same individual (they are not — Frigg is Odin's wife in the Æsir, Freyja is a Vanir goddess and Njord's daughter). The whole modelling point is precisely that the game <em>differs</em> from the myth on this genealogy, and <code>owl:sameAs</code> would erase the difference.</p>
 
-    <p>Each entity's tooltip needs to combine whatever fields are actually present — not every entity has a role, not every entity has a VIAF — without producing an awkward string with empty gaps. A small helper function assembles the tooltip conditionally:</p>
+    <p><strong><code>schema:isBasedOn</code></strong> is close in spirit but its domain and range are <code>CreativeWork</code> — it says that a work is derived from another work, not that a character is derived from a figure. Coercing it onto individuals would misuse the property.</p>
 
-<pre><code><span class="kw">def</span> tooltip_for(entity: <span class="kw">dict</span>) -&gt; <span class="kw">str</span>:
-    parts = [entity[<span class="st">"name"</span>]]
-    <span class="kw">if</span> entity[<span class="st">"role"</span>]:
-        parts.append(<span class="st">f"({entity['role'].replace('-', ' ')})"</span>)
-    tail = []
-    <span class="kw">if</span> entity[<span class="st">"wikidata"</span>]:
-        tail.append(<span class="st">f"Wikidata: {entity['wikidata']}"</span>)
-    <span class="kw">if</span> entity[<span class="st">"viaf"</span>]:
-        tail.append(<span class="st">f"VIAF: {viaf_display(entity['viaf'])}"</span>)
-    <span class="kw">if</span> tail:
-        <span class="kw">return</span> <span class="st">f"{' '.join(parts)} — {' · '.join(tail)}"</span>
-    <span class="kw">return</span> <span class="st">" "</span>.join(parts)</code></pre>
+    <p><strong><code>dcterms:source</code></strong> is defined as "a related resource from which the described resource is derived". Its domain is not restricted, so it could apply, but its semantics as usually understood is bibliographic — a text has a source text, a translation has a source language. Applying it to a character-to-figure relation would be a stretch and would obscure the specifically <em>fictional-adaptation</em> nature of the link.</p>
 
-    <p>For example, hovering over Baldur produces <code>"Baldur (mythological figure) — Wikidata: Q131658"</code> — no VIAF clause, since mythological figures don't carry one — while hovering over Cory Barlog produces both clauses. This is why the function branches on presence rather than always concatenating four fixed fields: a fixed-format string would print empty labels for entities missing a field.</p>
+    <p><strong><code>skos:closeMatch</code></strong> or <strong><code>skos:relatedMatch</code></strong> apply only to <code>skos:Concept</code> instances, and the entities in question are typed as <code>foaf:Person</code>, not as concepts.</p>
 
-    <h3>Step 3 — Walk the TEI tree and dispatch by tag</h3>
+    <p>So the field is empty in exactly the shape this project needs. A new property, declared with a clear <code>rdfs:comment</code>, closes the gap.</p>
 
-    <p>The core of the transformation is a recursive function that walks every element in the TEI <code>&lt;body&gt;</code> and decides what HTML to emit based on the element's tag name. Structural elements (<code>div</code>, <code>head</code>, <code>p</code>) become their HTML equivalents; entity elements (<code>persName</code>, <code>orgName</code>, <code>rs</code>) are looked up in the dictionary built in Step 1 and wrapped in a coloured, tooltipped span or link:</p>
+    <h3>Why below <code>dcterms:relation</code></h3>
 
-<pre><code><span class="kw">def</span> render_element(el, entities: <span class="kw">dict</span>) -&gt; <span class="kw">str</span>:
-    tag = etree.QName(el).localname
+    <p><code>dcterms:relation</code> is the most generic "these two things are meaningfully connected" property in the DCMI vocabulary and its use is not restricted by class. Placing <code>gow:reinterprets</code> as its subproperty is a conservative choice: any SPARQL query that asks for <code>dcterms:relation</code> triples will also surface the <code>gow:reinterprets</code> ones, preserving the graph's readability from a naive consumer's point of view, while the more specific label remains available to consumers who understand it. The alternative — declaring <code>gow:reinterprets</code> as a top-level property with no parent — would have made it invisible to any query that did not know it by name.</p>
 
-    <span class="kw">if</span> tag == <span class="st">"persName"</span>:
-        ref = el.get(<span class="st">"ref"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
-        <span class="kw">return</span> render_entity_span(<span class="st">"person"</span>, render_children(el, entities), ref, entities)
+    <div class="callout">
+      <p class="callout-title">The interpretive payoff</p>
+      <p>With <code>gow:reinterprets</code> in place, the graph can carry two facts about Baldur that would otherwise be in tension. It can say <code>gow:baldur gow:reinterprets wd:Q131658</code> (the game's Baldur is a reinterpretation of Norse Baldur), and simultaneously <code>gow:freyja schema:children gow:baldur</code> (in the game, Freyja is Baldur's mother). Nothing about the second triple projects onto the mythological Baldur at Wikidata; nothing about the first triple imports Frigg's motherhood into the game. The two identities remain distinct, and the specific way the game <em>diverges from</em> its source becomes a stateable fact rather than an implicit narrative choice.</p>
+    </div>
 
-    <span class="kw">if</span> tag == <span class="st">"quote"</span>:
-        who = el.get(<span class="st">"who"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
-        inner = render_children(el, entities)
-        <span class="kw">if</span> who <span class="kw">and</span> who <span class="kw">in</span> entities:
-            speaker = entities[who][<span class="st">"name"</span>]
-            <span class="kw">return</span> (<span class="st">f'&lt;span class="quote attributed" title="Attributed to {speaker}"&gt;'</span>
-                    <span class="st">f'&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>)
-        <span class="kw">return</span> <span class="st">f'&lt;span class="quote"&gt;&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>
-    <span class="cm"># … one branch per TEI tag the encoding uses (orgName, objectName,
-    # rs, placeName, title, ref, hi); unrecognised tags fall through
-    # to rendering just their children, so the transformation never
-    # crashes on an unexpected element — it degrades to plain text.</span></code></pre>
+    <h2>Where the model goes next</h2>
 
-    <p>The <code>quote</code> branch is the clearest example of why a dispatch-by-tag design pays off: it is the only place in the script that needs to know about the <code>@who</code> attribute and the standoff lookup for attributed speech, and it can decide, per quote, whether to render the frost-bordered "attributed" style or the plain italic style — a decision the TEI encoding already made explicit by including or omitting <code>@who</code>.</p>
-
-    <h3>Step 4 — Assemble the page and write it out</h3>
-
-    <p>The last step collects the rendered body, the table of contents (built by scanning top-level <code>&lt;div&gt;</code> elements for their <code>&lt;head&gt;</code> text), and the document metadata (title, source URL, consultation date, all read straight from <code>teiHeader</code>) into the HTML template, and writes the result to disk:</p>
-
-<pre><code>toc = extract_toc(body)
-body_html = render_children(body, entities)
-html = HTML_TEMPLATE.format(
-    page_title=escape(page_title),
-    source_url=escape(source_url),
-    toc_items=toc_items,
-    body=body_html,
-    css=CSS,
-)
-Path(output_path).write_text(html, encoding=<span class="st">"utf-8"</span>)</code></pre>
-
-    <p>Nothing about the title, the source link, or the table of contents is hand-typed into the HTML template — all three are derived from the TEI file at run time, which is what makes the transformation reproducible: editing <code>tei.xml</code> and re-running the script regenerates a consistent page without anyone having to remember to also update a separately maintained HTML file.</p>
-
-    <p>The five entity types have distinct colour treatments so the density and distribution of entities across sections is visible at a glance:</p>
-
-    <ul>
-      <li><span class="entity-swatch person">Person</span> — real people, fictional characters, and mythological figures</li>
-      <li><span class="entity-swatch org">Organisation</span> — Santa Monica Studio, Sony Interactive Entertainment</li>
-      <li><span class="entity-swatch object">Object</span> — PlayStation 4</li>
-      <li><span class="entity-swatch concept">Concept</span> — Norse mythology, Greek mythology</li>
-      <li><span class="entity-swatch place">Mythical place</span> — Midgard, Asgard, Jötunheim, and the other six realms; not modelled as first-class entities but marked in the text</li>
-    </ul>
-
-    <p>The <a href="resources.html">Resources</a> page links to the raw TEI file, the transformation script, and the generated HTML.</p>
+    <p>The conceptual model is the blueprint; the actual RDF graph is the building. <a href="knowledge-representation.html">Phase 3</a> walks through how the model is instantiated as concrete triples: which Wikidata identifiers are attached to which entities, which properties fire between the game and its production, and how the family relations that follow from the mythological figures close the fiction↔myth loop.</p>
 
   </article>
 </main>
