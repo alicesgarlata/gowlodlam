@@ -521,6 +521,82 @@ td code { font-size: 0.85em; }
   border-bottom: 1px dotted var(--color-frost);
 }
 
+/* --- Lightbox (click-to-zoom images) ------------------------------ */
+
+figure img.zoomable-img {
+  cursor: zoom-in;
+  transition: opacity 0.15s, box-shadow 0.15s;
+}
+figure img.zoomable-img:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+figure img.zoomable-img:focus-visible {
+  outline: 2px solid var(--color-frost);
+  outline-offset: 2px;
+}
+
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 19, 26, 0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  overflow: hidden;
+}
+.lightbox-overlay.open {
+  display: flex;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  cursor: zoom-in;
+  transition: transform 0.05s linear;
+  transform-origin: center center;
+  user-select: none;
+  -webkit-user-drag: none;
+  background: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--color-bone);
+  font-size: 2.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.3rem 0.8rem;
+  border-radius: 3px;
+  transition: color 0.15s, background 0.15s;
+}
+.lightbox-close:hover,
+.lightbox-close:focus-visible {
+  color: var(--color-frost);
+  background: rgba(255,255,255,0.06);
+}
+.lightbox-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-bone-muted);
+  letter-spacing: 0.02em;
+  text-align: center;
+  pointer-events: none;
+}
+@media (max-width: 700px) {
+  .lightbox-hint { font-size: 0.68rem; padding: 0 1rem; }
+  .lightbox-close { top: 1rem; right: 1rem; font-size: 1.8rem; }
+}
+
 /* --- Mobile ------------------------------------------------------- */
 
 @media (max-width: 700px) {
