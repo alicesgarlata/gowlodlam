@@ -1,1 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TEI encoding of the selected Wikipedia text for the LODLAM project on
+  God of War (2018 video game).
 
+  Source permalink: https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&oldid=1357494264
+
+  All 15 entities in the standoff and taxonomy are reconciled to Wikidata
+  (and VIAF, where applicable). Transformations: tei_to_html.py produces
+  the HTML rendering, tei_to_rdf.py produces the RDF/Turtle graph (gow.ttl).
+--><TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>God of War (2018 video game) — TEI encoding</title>
+        <respStmt>
+          <resp>Original text by</resp>
+          <name>Wikipedia contributors</name>
+        </respStmt>
+        <respStmt>
+          <resp>TEI encoding by</resp>
+          <persName>Alice</persName>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <p>Encoded for the LODLAM project of the Information Science and Cultural Heritage course
+        (a.y. 2025-2026, University of Bologna).</p>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl>
+          <title>God of War (2018 video game)</title>
+          <publisher>Wikipedia</publisher>
+          <ref target="https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&amp;oldid=1357494264">Permanent version</ref>
+          <date type="consultation" when="2026-07-03">3 July 2026, 16:26</date>
+        </bibl>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <classDecl>
+        <taxonomy xml:id="concepts">
+          <bibl>Concepts referenced in the text</bibl>
+          <category xml:id="norse-mythology" corresp="Q128285">
+            <catDesc>Norse mythology — body of myths of the North Germanic peoples</catDesc>
+          </category>
+          <category xml:id="greek-mythology" corresp="Q34726">
+            <catDesc>Greek mythology — body of myths originally told by the ancient Greeks</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+    </encodingDesc>
+  </teiHeader>
+
+  <standOff>
+    <listPerson>
+      <!-- Production: real persons -->
+      <person xml:id="cory-barlog" role="director">
+        <persName>Cory Barlog</persName>
+        <idno type="Wikidata">Q5173545</idno>
+        <idno type="VIAF">http://viaf.org/viaf/6865153289917732770006</idno>
+      </person>
+      <person xml:id="bear-mccreary" role="composer">
+        <persName>Bear McCreary</persName>
+        <idno type="Wikidata">Q621437</idno>
+        <idno type="VIAF">http://viaf.org/viaf/91158885</idno>
+      </person>
+
+      <!-- Fictional characters -->
+      <person xml:id="kratos" role="fictional-character">
+        <persName>Kratos</persName>
+        <idno type="Wikidata">Q2291154</idno>
+      </person>
+      <person xml:id="atreus" role="fictional-character">
+        <persName>Atreus</persName>
+        <idno type="Wikidata">Q54896805</idno>
+      </person>
+
+      <!-- Mythological figures -->
+      <person xml:id="odin" role="mythological-figure">
+        <persName>Odin</persName>
+        <idno type="Wikidata">Q43610</idno>
+      </person>
+      <person xml:id="thor" role="mythological-figure">
+        <persName>Thor</persName>
+        <idno type="Wikidata">Q42952</idno>
+      </person>
+      <person xml:id="freyja" role="mythological-figure">
+        <persName>Freyja</persName>
+        <idno type="Wikidata">Q1647325</idno>
+      </person>
+      <person xml:id="baldur" role="mythological-figure">
+        <persName>Baldur</persName>
+        <idno type="Wikidata">Q131658</idno>
+      </person>
+      <person xml:id="loki" role="mythological-figure">
+        <persName>Loki</persName>
+        <idno type="Wikidata">Q133147</idno>
+      </person>
+      <person xml:id="jormungandr" role="mythological-figure">
+        <persName>Jörmungandr</persName>
+        <idno type="Wikidata">Q181227</idno>
+      </person>
+    </listPerson>
+
+    <listOrg>
+      <org xml:id="santa-monica-studio">
+        <orgName>Santa Monica Studio</orgName>
+        <idno type="Wikidata">Q656710</idno>
+        <idno type="VIAF">http://viaf.org/viaf/232483995</idno>
+      </org>
+      <org xml:id="sony-ie">
+        <orgName>Sony Interactive Entertainment</orgName>
+        <idno type="Wikidata">Q18594</idno>
+        <idno type="VIAF">http://viaf.org/viaf/145689777</idno>
+      </org>
+    </listOrg>
+
+    <listObject>
+      <object xml:id="playstation-4">
+        <objectIdentifier>
+          <objectName>PlayStation 4</objectName>
+        </objectIdentifier>
+        <idno type="Wikidata">Q5014725</idno>
+      </object>
+    </listObject>
+  </standOff>
+
+  <text>
+    <body>
+
+      <!-- ================ INTRODUCTION ================ -->
+      <div type="introduction" xml:id="intro">
+        <p><title rend="italic" ref="https://en.wikipedia.org/wiki/God_of_War_(2018_video_game)">God of War</title> is a 2018 action-adventure game developed by <orgName ref="#santa-monica-studio">Santa Monica Studio</orgName> and published by <orgName ref="#sony-ie">Sony Interactive Entertainment</orgName>. The game was released worldwide for the <objectName ref="#playstation-4">Playstation 4</objectName> in April 2018, with a Windows port released in January 2022. It is the eighth installment in the <title ref="https://en.wikipedia.org/wiki/God_of_War_(series)">God of War series</title>, the ninth chronologically, and the sequel to 2010's <title ref="https://en.wikipedia.org/wiki/God_of_War_III">God of War III</title>.</p>
+
+        <p>Unlike previous games, which were loosely based on <rs type="concept" ref="#greek-mythology">Greek mythology</rs>, the installment transitioned the series to <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, with the majority of it set in mythical ancient Scandinavia in the realm of <placeName type="mythical">Midgard</placeName>. For the first time in the series, there are two protagonists: <persName ref="#kratos">Kratos</persName>, the former Greek God of War who remains the only playable character, and his young son <persName ref="#atreus">Atreus</persName>. Following the death of <persName ref="#kratos">Kratos</persName>'s second wife and <persName ref="#atreus">Atreus</persName>'s mother, Faye, the two embark on a deeply personal journey to fulfill her request that her ashes be spread from the highest peak of the nine realms. <persName ref="#kratos">Kratos</persName> keeps his troubled past a secret from <persName ref="#atreus">Atreus</persName>, who is unaware of his divine nature. Along their journey, they come into conflict with monsters and gods of the Norse world.</p>
+
+        <p>Described by the creative director <persName ref="#cory-barlog">Cory Barlog</persName> as a reimagining of the franchise, a major gameplay change is that <persName ref="#kratos">Kratos</persName> makes prominent use of a magical battle axe known as the Levathan Axe instead of his signature double-chained Blades of Chaos.</p>
+
+        <p><title rend="italic">God of War</title> received <quote>universal acclaim</quote> from critics for its story, world design, art direction, music, graphics, combat system, and characters, in particular the dynamic between <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName>. It was names Game of the Year by numerous media outlets and has been cited as among the greatest video games ever made. The game also performed well commercially, selling over 5 million units within a month of its release and 23 million units sold by November 2022, making it one of the best-selling <objectName ref="#playstation-4">Playstation 4</objectName> games and the best-selling game in the series. A novelization was released in August 2018, followed by a prequel comic series published from November 2018 to June 2021, while a live-action television series is in development for Amazon Prime Video. A sequel, <title rend="italic">God of War Ragnarök</title>, was released for the <objectName ref="#playstation-4">PlayStation 4</objectName> and PlayStation 5 in November 2022, and for Windows in 2024.</p>
+      </div>
+
+      <!-- ================ GAMEPLAY ================ -->
+      <div type="section" xml:id="gameplay">
+        <head>Gameplay</head>
+        <p><title rend="italic">God of War</title> is a third-person action-adventure video game. It features an over-the-shoulder free camera (a departure from the previous installments which featured a fixed cinematic camera, with the exception of 2007's two-dimensional side-scroller <title rend="italic">Betrayal</title>). Cinematographically, the game is presented in a continuous shot, with no camera cuts or loading screens. Although the previous main installment, <title rend="italic">Ascension</title> (2013), introduced multiplayer to the series, this installment is single-player-only. Regarding the level structure, creative director <persName ref="#cory-barlog">Cory Barlog</persName> said <quote who="#cory-barlog">it's open, but it is not an open world.</quote> Due to its openness, a fast travel feature is unlocked later in the game. Swimming, an ability in previous games, was cut; players instead use a boat to traverse bodies of water. Unlike previous games, which allowed players to jump freely at any time, jumping can now only be done at designated areas, such as at a rock face or ledge. Throughout the game, players battle Norse mythological foes, like dark elves, wulvers, and draugrs, as well as Gullveig and the revenants, beings warped by seiðr magic, among many others. Valkyries appear as optional secret boss battles throughout the six playable locations. Among the many side quests, players can free the imprisoned dragons Fáfnir, Otr, and Reginn—dwarves who were turned into dragons—in addition to battling one called Hræzlyr, a story-based boss battle.</p>
+      </div>
+
+      <!-- ================ SYNOPSIS ================ -->
+      <div type="section" xml:id="synopsis">
+        <head>Synopsis</head>
+
+        <div type="subsection" xml:id="setting">
+          <head>Setting</head>
+          <p>While the first seven games were loosely based on <rs type="concept" ref="#greek-mythology">Greek mythology</rs>, this installment is loosely inspired by <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, taking place at least 150 years after <title rend="italic">God of War III</title> (2010). Six of the nine realms of <rs type="concept" ref="#norse-mythology">Norse mythology</rs> can be explored. Predating the Vikings, most of the game takes place in ancient Scandinavia in the realm of <placeName type="mythical">Midgard</placeName>, which is inhabited by humans and other creatures. It is the same realm in which the Greek world existed. As more dangerous creatures began appearing, many humans fled. Other realms visited as part of the story include <placeName type="mythical">Alfheim</placeName>, the mystical home of the light and dark elves; <placeName type="mythical">Helheim</placeName>, the icy land of the dead; and <placeName type="mythical">Jötunheim</placeName>, the mountainous land of the Giants. Optional explorable realms include <placeName type="mythical">Niflheim</placeName>, a realm of poisonous fog with a maze-like structure of rewards; and the fire realm <placeName type="mythical">Muspelheim</placeName>, featuring the six Trials of Muspelheim—completing each trial grants rewards and advances <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName> closer to the top of a large volcano, facing off Göndul, one of the nine Valkyries. Access to the other three realms—<placeName type="mythical">Asgard</placeName>, home of the Æsir gods; <placeName type="mythical">Vanaheim</placeName>, home of the Vanir gods; and <placeName type="mythical">Svartalfheim</placeName>, home of the dwarves—has been blocked by <persName ref="#odin">Odin</persName>, the ruler of Asgard and the Æsir gods. At the center of the realms is the mythical tree Yggdrasil, which connects each realm. Although each realm is a different world, they exist simultaneously in the same space. Travel to and from realms can be done by using the Bifröst from a root of Yggdrasil contained within Týr's Temple at the center of the Lake of the Nine. The temple was created by its namesake, Týr, a peaceful God of War who traveled to other lands and learned about their mythologies; it was told that <persName ref="#odin">Odin</persName> had him killed as he believed Týr was secretly aiding the Giants and would try to overthrow him.</p>
+        </div>
+
+        <div type="subsection" xml:id="characters">
+          <head>Characters</head>
+          <p>The game's protagonists are <persName ref="#kratos">Kratos</persName> (Christopher Judge) and his young son <persName ref="#atreus">Atreus</persName> (Sunny Suljic). <persName ref="#kratos">Kratos</persName> is a warrior originally from Sparta who became the Greek God of War and is a son of Zeus. After ending up in ancient Scandinavia following his war against Olympus, he met his second wife, Laufey (addressed as Faye), who died from an unknown cause shortly before the start of the game. She bore their son, <persName ref="#atreus">Atreus</persName>, who at the start of the game does not know about <persName ref="#kratos">Kratos</persName>'s past or his divine nature but can hear other beings' thoughts. The main antagonist is the Æsir god <persName ref="#baldur">Baldur</persName> (Jeremy Davies), the half-brother of <persName ref="#thor">Thor</persName>, whose sons Modi and Magni (Nolan North and Troy Baker, respectively) assist him. <persName ref="#baldur">Baldur</persName>'s parents are <persName ref="#odin">Odin</persName>, the Allfather and King of the Æsir, and the Vanir goddess <persName ref="#freyja">Freya</persName> (Danielle Bisutti), the former Queen of the Valkyries. <persName ref="#freyja">Freya</persName> tried leaving <persName ref="#odin">Odin</persName> after he began corrupting her Vanir magic, but he in turn stripped her of her Valkyrie wings, banished her to <placeName type="mythical">Midgard</placeName>, and cast a spell on her that prevented her from causing harm to others and from leaving the realm. She then hid her identity under an alias, the Witch of the Woods. To protect her son from a prophecy that foretold his death, <persName ref="#freyja">Freya</persName> cast a spell of immortality on <persName ref="#baldur">Baldur</persName>, which also prevented him from feeling pain or pleasure. The effects of the spell caused <persName ref="#baldur">Baldur</persName> to greatly resent his mother. The only thing capable of harming him was mistletoe, a fact which <persName ref="#freyja">Freya</persName> kept secret.</p>
+
+          <p>Other characters include Mímir (Alastair Duncan), who claims to be the smartest man alive, and the Huldra Brothers—Brok (Robert Craighead) and Sindri (Adam J. Harrington)—dwarves who appear at various points in the world and assist <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName> by forging new gear. Weapons forged by the Huldra Brothers, including <persName ref="#thor">Thor</persName>'s hammer Mjölnir, were used by the Æsir gods. They also forged <persName ref="#kratos">Kratos</persName>'s Leviathan Axe, which originally belonged to Faye, who also gifted <persName ref="#kratos">Kratos</persName> her Guardian Shield. The spirit of the Greek goddess Athena (Carole Ruggier) makes a cameo appearance, and Zeus (Corey Burton) appears to <persName ref="#kratos">Kratos</persName> as an illusion in <placeName type="mythical">Helheim</placeName>.</p>
+        </div>
+
+        <div type="subsection" xml:id="plot">
+          <head>Plot</head>
+          <p>Many years after defeating the Olympian gods, <persName ref="#kratos">Kratos</persName> has been living with his wife Faye and their son <persName ref="#atreus">Atreus</persName> in <placeName type="mythical">Midgard</placeName>. Soon after Faye dies, <persName ref="#kratos">Kratos</persName> cremates her body, and is confronted by a stranger with godly powers. The two battle and <persName ref="#kratos">Kratos</persName> seemingly kills the stranger, after which <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName> begin their journey to honor Faye's last wish: to scatter her ashes at the highest peak in the nine realms. They encounter the Dwarves Brok and Sindri, the kindly Witch of the Woods, who recognizes <persName ref="#kratos">Kratos</persName>'s godhood, and <persName ref="#jormungandr">Jörmungandr</persName>, the World Serpent. When their path is blocked by impenetrable black mist, the Witch instructs them to travel to <placeName type="mythical">Alfheim</placeName> and secure its magical light to extinguish the mist. Successful, they reach <placeName type="mythical">Midgard</placeName>'s peak and overhear a conversation between the stranger—revealed to be <persName ref="#baldur">Baldur</persName>—and his nephews, Modi and Magni, as well as the imprisoned Mímir. Mímir reveals the highest peak is actually in <placeName type="mythical">Jötunheim</placeName>, but the Giants have blocked travel there.</p>
+
+          <p>Knowing of another passage, Mímir instructs <persName ref="#kratos">Kratos</persName> to behead him and have his head revived by the Witch of the Woods, whom, upon resurrection, he reveals to be the goddess <persName ref="#freyja">Freya</persName>. <persName ref="#kratos">Kratos</persName>'s longstanding hatred of gods causes him to distrust her, but both <persName ref="#freyja">Freya</persName> and Mímir warn him he must tell <persName ref="#atreus">Atreus</persName> about his true nature. <persName ref="#kratos">Kratos</persName>, <persName ref="#atreus">Atreus</persName>, and Mímir are attacked by Modi and Magni. After <persName ref="#kratos">Kratos</persName> kills Magni, Modi flees but later ambushes the trio. <persName ref="#kratos">Kratos</persName> fends him off, but <persName ref="#atreus">Atreus</persName> collapses, overcome by illness due to the contradiction of a god believing himself to be mortal. <persName ref="#freyja">Freya</persName> instructs <persName ref="#kratos">Kratos</persName> to retrieve the heart of a troll in <placeName type="mythical">Helheim</placeName>; however, his frost-based Leviathan Axe is useless in the icy realm. <persName ref="#kratos">Kratos</persName> returns home to unearth his old weapons, the fiery Blades of Chaos, and is haunted by Athena's spirit. After retrieving the heart, he has a haunting vision of Zeus. <persName ref="#freyja">Freya</persName> revives <persName ref="#atreus">Atreus</persName>, and <persName ref="#kratos">Kratos</persName> tells him they are gods. <persName ref="#atreus">Atreus</persName> becomes increasingly arrogant and, against <persName ref="#kratos">Kratos</persName>'s orders, murders a weakened Modi, who was beaten by <persName ref="#thor">Thor</persName> for not avenging Magni. At <placeName type="mythical">Midgard</placeName>'s peak, <persName ref="#baldur">Baldur</persName> ambushes <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName>, resulting in <placeName type="mythical">Jötunheim</placeName>'s portal being destroyed. Their battle descends to Týr's Temple, and the group ends up in <placeName type="mythical">Helheim</placeName>.</p>
+
+          <p><persName ref="#atreus">Atreus</persName> makes amends with <persName ref="#kratos">Kratos</persName> after being reprimanded. They learn of <persName ref="#freyja">Freya</persName> and <persName ref="#baldur">Baldur</persName>'s familial relationship and the spell of invulnerability she cast on him. Returning to <placeName type="mythical">Midgard</placeName>, Mímir realizes another way to reach <placeName type="mythical">Jötunheim</placeName>, but needs his missing eye. After obtaining it, the group are attacked by <persName ref="#baldur">Baldur</persName> once more, but <persName ref="#freyja">Freya</persName> intervenes to protect her son. <persName ref="#baldur">Baldur</persName> is pierced by <persName ref="#atreus">Atreus</persName>'s mistletoe arrow, breaking <persName ref="#freyja">Freya</persName>'s spell. Though defeated, <persName ref="#kratos">Kratos</persName> spares him on the condition he leave both them and <persName ref="#freyja">Freya</persName> alone; <persName ref="#baldur">Baldur</persName> attempts to strangle <persName ref="#freyja">Freya</persName>, causing <persName ref="#kratos">Kratos</persName> to kill him. A grief-stricken <persName ref="#freyja">Freya</persName> vows revenge on <persName ref="#kratos">Kratos</persName>, and leaves with <persName ref="#baldur">Baldur</persName>'s corpse, but not before taunting him about the past he has not yet told his son. <persName ref="#kratos">Kratos</persName> tells <persName ref="#atreus">Atreus</persName> about his own past and how he killed many people including his own father. <persName ref="#atreus">Atreus</persName> laments this cycle of violence, and <persName ref="#kratos">Kratos</persName> tells him they should not repeat the mistakes of their predecessors, including those made by <persName ref="#kratos">Kratos</persName> himself.</p>
+
+          <p><persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName> reach <placeName type="mythical">Jötunheim</placeName>. They find an abandoned temple with a mural depicting their adventures, showing that the Giants, renowned for their gift of prophecy, had foretold their journey. They discover Faye was a Giant who had decided to stay in <placeName type="mythical">Midgard</placeName>, making <persName ref="#atreus">Atreus</persName> half Giant, one-quarter god, and one-quarter mortal. Their fight with <persName ref="#baldur">Baldur</persName> is shown, revealing he sought Faye the whole time under <persName ref="#odin">Odin</persName>'s orders, unaware she was dead and <persName ref="#atreus">Atreus</persName> was referred to as <persName ref="#loki">Loki</persName> by his mother and the Giants. <persName ref="#kratos">Kratos</persName> chooses to ignore a covered mural depicting what appears to be him dying in <persName ref="#atreus">Atreus</persName>'s arms. They fulfill their promise and spread Faye's ashes at the peak. Afterward, <persName ref="#kratos">Kratos</persName> reveals to <persName ref="#atreus">Atreus</persName> that his given name was that of a compassionate Spartan comrade. Returning to <placeName type="mythical">Midgard</placeName>, they retrieve Mímir, who warns them <persName ref="#baldur">Baldur</persName>'s death has caused the three-year-long Fimbulwinter to begin nearly a century earlier than prophesized, meaning Ragnarök is soon to follow.</p>
+
+          <p>Returning home, the pair slumbers, in which <persName ref="#atreus">Atreus</persName> has a vision of <persName ref="#thor">Thor</persName> arriving at the end of Fimbulwinter to confront them.</p>
+        </div>
+      </div>
+
+      <!-- ================ DEVELOPMENT ================ -->
+      <div type="section" xml:id="development">
+        <head>Development</head>
+        <p>Development on the next <title rend="italic">God of War</title> began in 2014. This was confirmed by <orgName ref="#santa-monica-studio">Santa Monica Studio</orgName>'s creative director <persName ref="#cory-barlog">Cory Barlog</persName> at the inaugural PlayStation Experience on December 6 that year, where <persName ref="#cory-barlog">Barlog</persName> said the game was in very early development and that it would not be a prequel but possibly a reboot. In April 2016, concept art was leaked that showed images of <persName ref="#kratos">Kratos</persName> in the world of <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, a concept originally considered by series creator David Jaffe after <persName ref="#kratos">Kratos</persName> eliminated the Greek gods. The game's official announcement came at the 2016 Electronic Entertainment Expo (E3) with a gameplay demo that confirmed the setting. The demo showed a fully bearded <persName ref="#kratos">Kratos</persName> teaching his son how to hunt. The pair also battled a troll. The end of the demo showed the title <title rend="italic">God of War</title> and confirmed it was in development for the <objectName ref="#playstation-4">PlayStation 4</objectName> (PS4). The E3 announcement also confirmed that <persName ref="#cory-barlog">Barlog</persName> had returned to the series as game director for the new installment. Since the original 2005 game, <persName ref="#cory-barlog">Barlog</persName> had been a major contributor in the development of the series, previously most notably as the director of <title rend="italic">God of War II</title> (2007); this installment was his fifth <title rend="italic">God of War</title> game.</p>
+
+        <p><persName ref="#cory-barlog">Barlog</persName> said the game was titled <title rend="italic">God of War</title> with no numeral or subtitle because, although it was a continuation of the series, <quote who="#cory-barlog">we ... [reimagined] everything</quote>.<ref type="citation">[26][24]</ref> Head of <orgName ref="#santa-monica-studio">Santa Monica Studio</orgName>, Shannon Studstill, and <persName ref="#cory-barlog">Barlog</persName> said that <orgName ref="#sony-ie">Sony Interactive Entertainment</orgName> had to be convinced to do another <title rend="italic">God of War</title> game as many people at Sony wanted the series to <quote>sleep and rest</quote> due to the lackluster response to the previous game, <title rend="italic">Ascension</title>. In explaining why <persName ref="#cory-barlog">Barlog</persName> was brought back, Studstill said he knew the series very well, <quote>and bringing in someone that understands that history is the respect the franchise deserves</quote>. <persName ref="#cory-barlog">Barlog</persName> responded, <quote who="#cory-barlog">You gotta know the rules to break the rules</quote>.</p>
+
+        <p>In explaining the transition from <rs type="concept" ref="#greek-mythology">Greek mythology</rs> to <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, <persName ref="#cory-barlog">Barlog</persName> said: <quote who="#cory-barlog">It's kind of this BC–AD change over kind of thing. We're moving and starting from zero and kind of moving forward on that</quote>. In adapting the Norse myths, <persName ref="#cory-barlog">Barlog</persName> said there were many different translations and interpretations, and the writing team read the <title>Prose Edda</title> to learn how the myths were translated and told. Just like they did with <rs type="concept" ref="#greek-mythology">Greek mythology</rs> in the previous games, they found ways to parallel path things from the Norse myths to fit their story. Before settling on <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, Egyptian mythology was also considered. <persName ref="#cory-barlog">Barlog</persName> said that half of the team was for it, but because Egypt has <quote>a lot more about civilization – it's less isolated, less barren</quote>, he decided on the Norse setting to keep the game focused on <persName ref="#kratos">Kratos</persName>. <persName ref="#cory-barlog">Barlog</persName> explained further: <quote who="#cory-barlog">Having too much around distracts from that central theme of a stranger in a strange land</quote>. To explain why <persName ref="#kratos">Kratos</persName> was now in the Norse world, <persName ref="#cory-barlog">Barlog</persName> said that different cultures' belief systems coexisted, but they were <quote who="#cory-barlog">separated by geography</quote>, suggesting that <persName ref="#kratos">Kratos</persName> traveled from Greece to Norway (Scandinavia) after the conclusion of <title rend="italic">God of War III</title>. Clarifying the conclusion of that game, <persName ref="#cory-barlog">Barlog</persName> said that <persName ref="#kratos">Kratos</persName> did not destroy what was believed to be the entire world, but only the portion ruled over by the Greek pantheon.<ref type="citation">[10]</ref> <persName ref="#cory-barlog">Barlog</persName> also said the newer game predated the Vikings, taking place in the time when their gods walked the Earth.</p>
+
+        <p>A new trailer was shown at E3 2017, featuring new gameplay, cinematics, and characters. In it, <persName ref="#kratos">Kratos</persName> is shown using a shield offensively and defensively. At one point, <persName ref="#kratos">Kratos</persName> finds a Greek vase with himself on it, wielding his infamous double-chained blades. During the trailer, an unnamed woman warns <persName ref="#kratos">Kratos</persName> about the Norse gods, as they knew what he did to the Greek gods, while a pair of wolves are also shown. The trailer ends with <persName ref="#kratos">Kratos</persName> and <persName ref="#atreus">Atreus</persName> encountering the World Serpent. <persName ref="#atreus">Atreus</persName> is able to translate its request to help the pair. It was confirmed that the game would release in early 2018. Until the game's launch, Santa Monica included a section on the <title rend="italic">God of War</title> website titled <title>The Lost Pages</title>, detailing some of the lore of <title rend="italic">God of War</title>'s Nordic world. In January 2018, the game's release date was confirmed for April 20, 2018. A trailer was also released that showed that the mythological character Mímir would have a role in the game. <title rend="italic">God of War</title> went gold on March 22.</p>
+      </div>
+
+      <!-- ================ SOUNDTRACK ================ -->
+      <div type="section" xml:id="soundtrack">
+        <head>Soundtrack</head>
+        <p><title rend="italic">God of War (PlayStation Soundtrack)</title> was released on April 20, 2018, by Sony Classical Records. It was composed by <persName ref="#bear-mccreary">Bear McCreary</persName>, who is best known for his work on television shows like <title rend="italic">Battlestar Galactica</title> and <title rend="italic">The Walking Dead</title>. <persName ref="#bear-mccreary">McCreary</persName> was called into <orgName ref="#santa-monica-studio">Santa Monica Studio</orgName> in November 2014 to meet with music producers Peter Scaturro and Keith Leary to discuss <quote>a secret project</quote>; <persName ref="#bear-mccreary">McCreary</persName> had previously collaborated with Scaturro and Leary on 2011's <title rend="italic">SOCOM 4: U.S. Navy SEALs</title>. Ideas of folk music, mythology, Nordic ethnic instruments, vocal writing, and classical thematic development were discussed; <persName ref="#bear-mccreary">McCreary</persName> correctly guessed that the discussions were about a new <title rend="italic">God of War</title>. <persName ref="#bear-mccreary">McCreary</persName> met with <persName ref="#cory-barlog">Barlog</persName> early on to discuss his narrative vision for the game. After meeting with him, <persName ref="#bear-mccreary">McCreary</persName> felt the franchise was in good hands because <title rend="italic">God of War II</title>, which <persName ref="#cory-barlog">Barlog</persName> also directed, was his favorite installment.</p>
+
+        <p>During the initial discussions, <persName ref="#bear-mccreary">McCreary</persName> realized he needed to compose completely new music for the game and not reuse any previous music from the series. He said that although he loved those games, he <quote who="#bear-mccreary">would not describe them as emotionally dynamic</quote>. Based on his memory of the earlier games' music, however, he was inspired by their sounds, such as <quote who="#bear-mccreary">deep choirs, pounding drums, and shrieking brass</quote>, and reinvented them for the Nordic setting. To ensure the music represented the setting, <persName ref="#bear-mccreary">McCreary</persName> spent months researching and listening to Viking folk music, which resulted in him using <quote who="#bear-mccreary">exotic instrumentation and languages from various Northern European folk traditions</quote>. He also wanted the score to be huge and varied, <quote who="#bear-mccreary">full of peaks and valleys, tiny incantations and gigantic set pieces</quote>. The main <persName ref="#kratos">Kratos</persName> theme in particular features low orchestral instruments, an Icelandic choir, deep male vocals, powerful female vocals (in particular Faroese singer Eivør Pálsdóttir), folk percussion, and Nordic stringed instruments, like the nyckelharpa and hurdy gurdy. The track <title>Witch of the Woods</title> uses a renaissance and baroque instrument called a viola da gamba, which is an ancestor of the modern cello. The Stranger's theme, found in the track <title>Deliverance</title>, uses a Hardanger fiddle.</p>
+      </div>
+
+      <!-- ================ RECEPTION ================ -->
+      <div type="section" xml:id="reception">
+        <head>Reception</head>
+
+        <div type="subsection" xml:id="reviews">
+          <head>Reviews</head>
+          <p><title rend="italic">God of War</title> received <quote>universal acclaim</quote> from critics, according to review aggregator website Metacritic, tying it with the original <title rend="italic">God of War</title> for the highest score in the franchise. It has the fourth-highest score of all-time for a <objectName ref="#playstation-4">PlayStation 4</objectName> game, and the highest score for an original, non-remastered <objectName ref="#playstation-4">PlayStation 4</objectName> exclusive. It was the highest rated <objectName ref="#playstation-4">PlayStation 4</objectName> game of 2018 until the release of <title rend="italic">Red Dead Redemption 2</title> in October, which pushed <title rend="italic">God of War</title> to second. It is also tied with the Xbox One version of <title rend="italic">Celeste</title> for the second-highest score of 2018 regardless of platform. <title rend="italic">God of War</title> received particular praise for its art direction, graphics, combat system, music, story, use of <rs type="concept" ref="#norse-mythology">Norse mythology</rs>, characters, and cinematic feeling. Many reviewers felt it had successfully revitalized the series without losing the core identity of its predecessors.</p>
+        </div>
+      </div>
+
+    </body>
+  </text>
+</TEI>
