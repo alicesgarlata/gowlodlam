@@ -1,42 +1,45 @@
 /* =====================================================================
    LODLAM God of War (2018) — report site stylesheet
-   Design direction: "runestone at dusk" — a dark basalt/night-sky field
-   holding a pale vellum manuscript panel, styled after Norse rune-stone
-   carving conventions (word-divider interpuncts, carved double-rule
-   headings) with a classical-inscription display face that also nods to
-   the Greek half of the project. Design tokens + shared layout across
-   all pages.
+   Design direction: "frost and rune-stone" — a cold Nordic palette
+   (ice, steel, patina-green, deep fjord night) with a single warm ember
+   accent used sparingly, echoing the Norse cosmology where the world is
+   born between the ice of Niflheim and the fire of Muspelheim. Classical
+   inscriptional display face nods to the Greek half of the project;
+   rune-stone conventions (word-divider interpuncts, carved double-rule
+   headings) run through the whole site.
    ===================================================================== */
 
 :root {
   /* -- stone / night-sky field ------------------------------------- */
-  --color-stone-900: #12151c;
-  --color-stone-800: #1c212b;
-  --color-bone: #eae3d2;
-  --color-bone-muted: #a9a08c;
+  --color-stone-900: #0f131a;
+  --color-stone-800: #1a212b;
+  --color-bone: #e7ecec;
+  --color-bone-muted: #93a3ac;
 
-  /* -- vellum content panel ------------------------------------------ */
-  --color-parchment: #e8e1cc;
-  --color-parchment-dark: #cdc3a4;
-  --color-ink: #241f18;
-  --color-ink-muted: #6b6152;
+  /* -- ice/parchment content panel ------------------------------------ */
+  --color-parchment: #dee6e6;
+  --color-parchment-dark: #b7c5c6;
+  --color-ink: #1c2530;
+  --color-ink-muted: #57666e;
 
-  /* -- accents -------------------------------------------------------- */
+  /* -- accents: cold primary, single warm ember spark ------------------ */
   --color-verdigris: #4f7f6b;
   --color-verdigris-hover: #3f6a58;
-  --color-ember: #a63f28;
-  --color-ember-soft: #f3ded4;
-  --color-ember-title: #7a2f1d;
+  --color-frost: #4e7f97;
+  --color-frost-hover: #3d6779;
+  --color-frost-soft: #dbe8ec;
+  --color-steel-title: #22384a;
+  --color-ember: #a2472f;
   --color-link: #35617f;
   --color-link-border: #9db8c6;
 
-  /* -- code block (dark tablet, own small palette) -------------------- */
-  --color-code-bg: #0e1116;
-  --color-code-text: #e2ddce;
-  --color-code-kw: #cba135;
-  --color-code-cm: #7f8fa3;
-  --color-code-st: #9fc98a;
-  --color-code-ns: #86b4d1;
+  /* -- code block (dark tablet, own small cool palette) ---------------- */
+  --color-code-bg: #0b0e13;
+  --color-code-text: #dbe2e2;
+  --color-code-kw: #7ec8d8;
+  --color-code-cm: #6c7a86;
+  --color-code-st: #93c39f;
+  --color-code-ns: #8fa8d6;
 
   --font-display: 'Cinzel', Georgia, serif;
   --font-runic: 'Noto Sans Runic', sans-serif;
@@ -44,7 +47,7 @@
   --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "SF Mono", Menlo, Monaco, Consolas, monospace;
 
-  --max-width: 900px;
+  --max-width: 1140px;
 }
 
 * { box-sizing: border-box; }
@@ -54,7 +57,7 @@ body {
   font-family: var(--font-serif);
   color: var(--color-bone);
   background:
-    radial-gradient(ellipse at top, #1a202b 0%, var(--color-stone-900) 62%),
+    radial-gradient(ellipse at top, #171e28 0%, var(--color-stone-900) 62%),
     repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 7px);
   background-attachment: fixed;
   line-height: 1.7;
@@ -64,12 +67,12 @@ body {
 
 .site-header {
   background: var(--color-stone-800);
-  border-bottom: 3px solid var(--color-verdigris);
-  box-shadow: 0 2px 0 0 var(--color-ember);
+  border-bottom: 3px solid var(--color-frost);
+  box-shadow: 0 2px 0 0 var(--color-verdigris);
   color: var(--color-bone);
 }
 .header-inner {
-  max-width: 1100px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 1.6rem 2rem;
   display: flex;
@@ -88,7 +91,7 @@ body {
   font-family: var(--font-runic);
   font-size: 1.05rem;
   letter-spacing: 0.2em;
-  color: var(--color-verdigris);
+  color: var(--color-frost);
   margin-bottom: 0.3rem;
 }
 .site-title-main {
@@ -102,7 +105,7 @@ body {
 }
 .site-title-year {
   font-size: 0.6em;
-  color: var(--color-ember);
+  color: var(--color-verdigris);
   margin-left: 0.5em;
   letter-spacing: 0.1em;
 }
@@ -129,10 +132,10 @@ body {
 .site-nav li { display: flex; align-items: center; }
 .site-nav li + li::before {
   content: "·";
-  color: var(--color-verdigris);
+  color: var(--color-frost);
   font-size: 1.3em;
   margin: 0 1.1rem;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 .site-nav a {
   color: var(--color-bone);
@@ -141,18 +144,18 @@ body {
   border-bottom: 2px solid transparent;
   transition: border-color 0.15s, color 0.15s;
 }
-.site-nav a:hover { border-bottom-color: var(--color-verdigris); }
+.site-nav a:hover { border-bottom-color: var(--color-frost); }
 .site-nav a.current {
-  border-bottom-color: var(--color-ember);
-  color: var(--color-ember-soft);
+  border-bottom-color: var(--color-verdigris);
+  color: var(--color-bone);
 }
 
-/* --- Main content (vellum panel) ----------------------------------- */
+/* --- Main content (ice/parchment panel) ----------------------------------- */
 
 .content {
   max-width: var(--max-width);
   margin: 3rem auto;
-  padding: 2.6rem 3rem;
+  padding: 2.8rem 4rem;
   background: var(--color-parchment);
   color: var(--color-ink);
   border-radius: 3px;
@@ -167,19 +170,20 @@ body {
 }
 .hero h1 {
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 600;
   margin: 0 0 0.6rem;
-  color: var(--color-ember-title);
+  color: var(--color-steel-title);
   line-height: 1.25;
   letter-spacing: 0.01em;
+  max-width: 46ch;
 }
 .hero .subtitle {
   font-family: var(--font-sans);
   font-size: 1.02rem;
   color: var(--color-ink-muted);
   margin: 0;
-  max-width: 640px;
+  max-width: 60ch;
 }
 
 /* hero emblem watermark (home page only) */
@@ -189,7 +193,7 @@ body {
   right: -1rem;
   width: 160px;
   height: 160px;
-  opacity: 0.09;
+  opacity: 0.1;
   pointer-events: none;
 }
 @media (max-width: 700px) { .hero-emblem { display: none; } }
@@ -200,18 +204,20 @@ article h2 {
   font-weight: 600;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--color-ember-title);
-  border-bottom: 3px solid var(--color-verdigris);
+  color: var(--color-steel-title);
+  border-bottom: 3px solid var(--color-frost);
   padding-bottom: 0.4rem;
   margin: 3rem 0 1.3rem;
   position: relative;
 }
 article h2::after {
+  /* the single warm ember spark, amid an otherwise cold palette —
+     a small nod to Muspelheim's fire against Niflheim's ice */
   content: "";
   position: absolute;
   left: 0;
   bottom: -7px;
-  width: 46px;
+  width: 40px;
   height: 2px;
   background: var(--color-ember);
 }
@@ -220,14 +226,19 @@ article h3 {
   font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--color-verdigris-hover);
+  color: var(--color-frost-hover);
   margin: 2.2rem 0 0.8rem;
 }
 article h2:first-child, article h3:first-child { margin-top: 0; }
 
-article p { margin: 1rem 0; }
+article p {
+  margin: 1rem 0;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
 article ul, article ol { margin: 1rem 0; padding-left: 1.5rem; }
-article li { margin: 0.4rem 0; }
+article li { margin: 0.4rem 0; text-align: left; }
 
 article a {
   color: var(--color-link);
@@ -237,18 +248,18 @@ article a {
 }
 article a:hover { border-bottom-color: var(--color-link); }
 
-article strong { color: var(--color-ember-title); }
+article strong { color: var(--color-steel-title); }
 
 /* --- Callout box (illuminated-manuscript marginal note) ------------ */
 
 .callout {
-  background: var(--color-ember-soft);
-  border-left: 4px solid var(--color-ember);
+  background: var(--color-frost-soft);
+  border-left: 4px solid var(--color-frost);
   padding: 1rem 1.5rem;
   margin: 1.8rem 0;
   border-radius: 0 3px 3px 0;
 }
-.callout p { margin: 0.5rem 0; }
+.callout p { margin: 0.5rem 0; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
 .callout p:first-child { margin-top: 0; }
 .callout p:last-child { margin-bottom: 0; }
 .callout .callout-title {
@@ -256,7 +267,7 @@ article strong { color: var(--color-ember-title); }
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--color-ember-title);
+  color: var(--color-steel-title);
   margin: 0 0 0.5rem;
   font-weight: 700;
   display: flex;
@@ -274,11 +285,11 @@ article strong { color: var(--color-ember-title); }
 
 code {
   font-family: var(--font-mono);
-  background: rgba(36, 31, 24, 0.08);
+  background: rgba(28, 37, 48, 0.08);
   padding: 1px 5px;
   border-radius: 3px;
   font-size: 0.88em;
-  color: var(--color-ember-title);
+  color: var(--color-steel-title);
 }
 pre {
   background: var(--color-code-bg);
@@ -286,7 +297,7 @@ pre {
   padding: 1.2rem 1.5rem;
   overflow-x: auto;
   border-radius: 3px;
-  border: 1px solid #262c36;
+  border: 1px solid #232a33;
   font-family: var(--font-mono);
   font-size: 0.85rem;
   line-height: 1.55;
@@ -315,7 +326,7 @@ figure img {
   border: 1px solid var(--color-parchment-dark);
   border-radius: 3px;
   padding: 6px;
-  background: #fbf8ee;
+  background: #f2f6f5;
 }
 figcaption {
   font-family: var(--font-sans);
@@ -326,8 +337,8 @@ figcaption {
 }
 .figure-placeholder {
   padding: 3rem 2rem;
-  background: rgba(36, 31, 24, 0.05);
-  border: 2px dashed #a99d7c;
+  background: rgba(28, 37, 48, 0.05);
+  border: 2px dashed #9aabad;
   border-radius: 3px;
   color: var(--color-ink-muted);
   font-family: var(--font-sans);
@@ -349,8 +360,8 @@ th, td {
   border-bottom: 1px solid var(--color-parchment-dark);
 }
 th {
-  background: rgba(79, 127, 107, 0.12);
-  color: var(--color-ember-title);
+  background: rgba(78, 127, 151, 0.14);
+  color: var(--color-steel-title);
   font-weight: 700;
   font-family: var(--font-sans);
   font-size: 0.78rem;
@@ -359,7 +370,7 @@ th {
 }
 td code { font-size: 0.85em; }
 
-/* --- Entity swatches (natural-dye palette) ------------------------- */
+/* --- Entity swatches (cold natural-pigment palette) ------------------------- */
 
 .entity-swatch {
   display: inline-block;
@@ -368,11 +379,11 @@ td code { font-size: 0.85em; }
   font-size: 0.9em;
   font-family: var(--font-serif);
 }
-.entity-swatch.person  { background: #d7e2e6; color: #234a58; }
-.entity-swatch.org     { background: #ecdcb4; color: #6b4a17; }
-.entity-swatch.object  { background: #dbdde3; color: #3c4249; }
-.entity-swatch.concept { background: #d6e6da; color: #2c5940; }
-.entity-swatch.place   { background: #ecd7c8; color: #6b3b26; font-style: italic; }
+.entity-swatch.person  { background: #d2e0e6; color: #1f4a5c; }
+.entity-swatch.org     { background: #e2dcc4; color: #5a5023; }
+.entity-swatch.object  { background: #d7dbe1; color: #37414d; }
+.entity-swatch.concept { background: #d1e2d7; color: #29563f; }
+.entity-swatch.place   { background: #e3d6cc; color: #5f4432; font-style: italic; }
 
 /* --- Section-index cards on the home page ------------------------ */
 
@@ -383,7 +394,7 @@ td code { font-size: 0.85em; }
   margin: 2rem 0;
 }
 .section-card {
-  background: #fbf8ee;
+  background: #eef3f2;
   border: 1px solid var(--color-parchment-dark);
   border-radius: 3px;
   padding: 1.4rem 1.6rem;
@@ -393,7 +404,7 @@ td code { font-size: 0.85em; }
   transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 .section-card:hover {
-  border-color: var(--color-verdigris);
+  border-color: var(--color-frost);
   box-shadow: 0 3px 10px rgba(0,0,0,0.12);
   transform: translateY(-1px);
 }
@@ -402,7 +413,7 @@ td code { font-size: 0.85em; }
   margin: 0 0 0.5rem;
   font-size: 1rem;
   letter-spacing: 0.02em;
-  color: var(--color-ember-title);
+  color: var(--color-steel-title);
 }
 .section-card p {
   font-family: var(--font-sans);
@@ -414,7 +425,7 @@ td code { font-size: 0.85em; }
 .section-card .step-number {
   font-family: var(--font-runic);
   font-size: 0.85rem;
-  color: var(--color-verdigris);
+  color: var(--color-frost);
   letter-spacing: 0.15em;
   display: block;
   margin-bottom: 0.5rem;
@@ -429,7 +440,7 @@ td code { font-size: 0.85em; }
   margin: 1.5rem 0;
 }
 .download-card {
-  background: #fbf8ee;
+  background: #eef3f2;
   border: 1px solid var(--color-parchment-dark);
   border-radius: 3px;
   padding: 1.2rem 1.4rem;
@@ -439,7 +450,7 @@ td code { font-size: 0.85em; }
 .download-card .type-label {
   font-family: var(--font-sans);
   font-size: 0.72rem;
-  color: var(--color-verdigris);
+  color: var(--color-frost);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin-bottom: 0.5rem;
@@ -448,7 +459,7 @@ td code { font-size: 0.85em; }
   font-family: var(--font-display);
   margin: 0 0 0.5rem;
   font-size: 1.02rem;
-  color: var(--color-ember-title);
+  color: var(--color-steel-title);
 }
 .download-card p {
   font-family: var(--font-sans);
@@ -464,7 +475,7 @@ td code { font-size: 0.85em; }
   font-weight: 600;
   text-decoration: none;
   color: var(--color-bone);
-  background: var(--color-verdigris);
+  background: var(--color-frost);
   padding: 0.5rem 1rem;
   border-radius: 3px;
   align-self: flex-start;
@@ -472,7 +483,7 @@ td code { font-size: 0.85em; }
   transition: background 0.15s;
   letter-spacing: 0.02em;
 }
-.download-card a.download-link:hover { background: var(--color-verdigris-hover); }
+.download-card a.download-link:hover { background: var(--color-frost-hover); }
 
 /* --- Embedded iframe (live HTML rendering) ------------------------ */
 
@@ -495,7 +506,7 @@ td code { font-size: 0.85em; }
 
 .site-footer {
   background: var(--color-stone-800);
-  border-top: 3px solid var(--color-verdigris);
+  border-top: 3px solid var(--color-frost);
   color: var(--color-bone-muted);
   padding: 2rem;
   text-align: center;
@@ -505,9 +516,9 @@ td code { font-size: 0.85em; }
 }
 .site-footer p { margin: 0.4rem 0; }
 .site-footer a {
-  color: var(--color-verdigris);
+  color: var(--color-frost);
   text-decoration: none;
-  border-bottom: 1px dotted var(--color-verdigris);
+  border-bottom: 1px dotted var(--color-frost);
 }
 
 /* --- Mobile ------------------------------------------------------- */
