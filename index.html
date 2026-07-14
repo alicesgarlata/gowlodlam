@@ -53,9 +53,11 @@
 
     <p>For each figure, the traditional depiction and the game's portrayal are shown together, with a short note on where the game follows its source and where it departs from it — the same distinction that <code>gow:reinterprets</code> and <code>schema:children</code> keep separate in the RDF graph. A few slots are still open (no game render exists for Odin or Thor in this installment; no traditional depiction was sourced yet for Baldur) — those stay as placeholders until filled.</p>
 
-    <div class="myth-game-grid">
-
-      <div class="myth-game-card">
+<div class="myth-slideshow" aria-roledescription="carousel" aria-label="Myth and game character gallery">
+    <div class="slideshow-viewport">
+      <div class="slideshow-track">
+ 
+        <div class="slide">
         <h3>Kratos</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -70,7 +72,7 @@
         <p class="comparison-text">The name itself is the reinterpretation. In Greek myth, Kratos (Κράτος, "Strength") is a minor god, son of the Titan Pallas and the river Styx, best known from Aeschylus's <em>Prometheus Bound</em> as the enforcer who drags Prometheus to his punishment on Zeus's orders — power with no will of its own, purely instrumental. The game's Kratos starts as the inversion of that: rage acting entirely on its own account, answerable to no one. The 2018 game pushes him a third way, toward a man trying to stop being an instrument of his own violence for his son's sake — a namesake he spends three decades trying to outgrow.</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Odin</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -85,7 +87,7 @@
         <p class="comparison-text">Myth's Odin is the Allfather: one-eyed (the price of wisdom at Mímir's well), attended by his ravens Huginn and Muninn, obsessively gathering knowledge to delay Ragnarök. The 2018 game keeps him almost entirely offscreen — known only through his actions: surveilling Faye's family, engineering Týr's death. His hunger for knowledge survives the adaptation, recast as control rather than wisdom-seeking. No in-game render is included here yet since Odin's design isn't properly revealed until the sequel.</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Thor</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -100,7 +102,7 @@
         <p class="comparison-text">This particular engraving crowns Thor and poses him like a thunder-king closer to Zeus than to the brawling, impulsive Thor of the Eddas — a reminder that "the mythological Thor" is itself already a layered reception history before the game ever touches it. The 2018 game keeps him almost entirely withheld, glimpsed only in a closing vision; what's already established, through his sons Modi and Magni, is a figure whose approval is violently sought and rarely given — the game's version of Thor is built out of the shadow he casts before he ever appears.</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Freyja</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -115,7 +117,7 @@
         <p class="comparison-text">Traditionally a Vanir goddess of love, fertility, and war who receives half the battle-slain in her hall Fólkvangr — independent, powerful, married to the enigmatic Óðr. The game keeps her power and her Vanir origin but gives her a role that belongs to a different goddess in the sources: Baldur's mother. In the <em>Prose Edda</em> that role is Frigg's, not Freyja's. This is the clearest case in the whole project of the game collapsing two distinct figures into one — see the RDF graph's <code>gow:freyja schema:children gow:baldur</code> triple, which states the game's genealogy directly rather than importing it as fact about the mythological Freyja.</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Baldur</h3>
         <div class="image-pair">
           <div class="image-slot">
@@ -130,7 +132,7 @@
         <p class="comparison-text">Myth's Baldur is the most beloved of the Æsir, radiant and mourned by all creation when he dies; the game's Baldur — rune-tattooed, embittered, numb rather than beloved — inverts that emotional register almost entirely while keeping the one structural detail that matters: invulnerable to everything except mistletoe, and killed by it either way. What changes is the meaning: myth's mistletoe death starts the grief that precedes Ragnarök; the game's mistletoe death ends a rage nobody in the story is sorry to see go.</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Loki</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -145,7 +147,7 @@
         <p class="comparison-text">The manuscript shown here depicts Loki with a fishing net nearby — his own invention, from the myth in which he is finally caught hiding from the gods after Baldur's death, then bound with his son's entrails until Ragnarök. The game defers that entire arc: its Loki is a child at the very start of his story, known to the player as Atreus until the final revelation. Nothing about the bound, punished trickster of the myths has happened yet — the game's fiction↔myth loop closes narratively (Atreus is Loki) without yet closing consequentially (this Loki hasn't done anything the myths punish him for).</p>
       </div>
 
-      <div class="myth-game-card">
+      <div class="slide">
         <h3>Jörmungandr</h3>
         <div class="image-pair">
           <div class="image-slot filled">
@@ -159,7 +161,20 @@
         </div>
         <p class="comparison-text">The most dramatic tonal inversion of any figure in the game. In myth, Jörmungandr is a world-ending threat, fated to kill and be killed by Thor at Ragnarök — the manuscript shown fixes it in a static heraldic coil, an emblem of doom. The game instead makes it a character with dialogue (translated by Atreus) who treats Kratos and Atreus as old friends, thanks to the story's nonlinear sense of time — from apocalyptic monster to companion, without changing its size, its name, or its place in the family tree that <code>gow:loki schema:children gow:jormungandr</code> still records.</p>
       </div>
-
+    </div>
+  </div>
+      <button type="button" class="slide-arrow slide-prev" aria-label="Previous character">&#8249;</button>
+      <button type="button" class="slide-arrow slide-next" aria-label="Next character">&#8250;</button>
+ 
+      <div class="slide-dots">
+        <button type="button" class="slide-dot" aria-label="Go to Kratos"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Odin"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Thor"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Freyja"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Baldur"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Loki"></button>
+        <button type="button" class="slide-dot" aria-label="Go to Jörmungandr"></button>
+      </div>
     </div>
 
     <h2>How to read this site</h2>
