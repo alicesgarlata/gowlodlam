@@ -110,7 +110,7 @@ def extract_entities(root) -> dict:
             continue
         name_el = obj.find(f"{_q('objectIdentifier')}/{_q('objectName')}")
         wikidata = ""
-        for idno in obj.findall(_q("idno")):
+        for idno in obj.findall(f".//{_q('idno')}"):
             if idno.get("type") == "Wikidata":
                 wikidata = clean_id(idno.text)
         entities[oid] = {
