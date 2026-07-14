@@ -107,11 +107,13 @@
 
     <h3>Entities considered and discarded</h3>
 
-    <p>Two entities were initially in the set but were dropped or exchanged during the encoding pass, and the reasoning is worth recording because it says something about how entity selection should relate to actual textual anchors.</p>
+    <p>Three entities were considered but dropped or deliberately kept out of the formal set during the encoding pass, and the reasoning is worth recording because it says something about how entity selection should relate to actual textual anchors and to genuine conceptual overlap, not just a shared name.</p>
 
     <p><strong>Runes</strong> were included in the first entity list as a recurring concept of the game — they appear as etchings on Kratos's Leviathan Axe and as symbols throughout the visual design. But when the Wikipedia text was selected for TEI encoding, none of the chosen sections mentioned runes explicitly. Keeping the entity would have meant defining it in the taxonomy without any inline <code>ref</code> pointing to a text mention, which weakens the entity's status: an entity without a textual anchor is data-warehouse padding, not something the article actually organises. Runes were removed from the entity set on this ground.</p>
 
     <p><strong>Greek mythology</strong> was not in the initial set — the project's angle was Norse — but appears four times in the selected text (Introduction, Setting, and Development twice). It also carries interpretive weight: the game's whole narrative pivots on the transition from Greek to Norse mythology, and Kratos himself is described in the text as "the former Greek God of War". Modelling both mythologies as siblings under <code>skos:Concept</code> and both as <code>dcterms:subject</code> of the game produces a cleaner symmetric account than modelling only one. Greek mythology was added to replace Runes.</p>
+
+    <p><strong>Κράτος (Cratos), the Greek personification of strength</strong>, was deliberately <em>not</em> added as an entity, despite being discussed on the <a href="index.html#myth-and-reinterpretation">home page's character gallery</a> as the source of the protagonist's name. The gallery text there is an etymological and thematic observation — the name is an ironic echo, since the game's Kratos becomes the inversion of a minor deity defined entirely by service to someone else's will — not a claim that the game meaningfully reworks that deity's myth the way it reworks Baldur's or Freyja's. Unlike the six Norse figures, where the game redraws specific mythological relationships (genealogy, fate, role), Cratos-the-deity and Kratos-the-character share only the name and a loose thematic contrast; there is no genealogy, event, or trait from the Aeschylus source that the game revises or reuses. Formalising that as a <code>gow:reinterprets</code> triple would overstate a connection that the game itself never develops beyond the name.</p>
 
     <h2>Theoretical model</h2>
 
