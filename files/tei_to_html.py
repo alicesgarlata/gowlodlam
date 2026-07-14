@@ -1,21 +1,3 @@
-"""
-tei_to_html.py — TEI/XML → HTML transformation for the God of War (2018)
-LODLAM project. Reads a TEI file with entities defined in <standOff> and
-concepts in <taxonomy>, and produces a self-contained HTML document with:
-  - article text, section headings, paragraphs
-  - entities colour-highlighted by type (person / org / object / concept / place)
-  - hover tooltips showing name + role + Wikidata QID + VIAF (where available)
-  - external links to Wikidata on entity click
-  - sticky sidebar with table of contents
-  - attributed quotes (Barlog, McCreary) visually distinct
-  - citation markers as small superscript
-
-Usage:
-    python tei_to_html.py <input.xml> <output.html>
-
-Requires: lxml  (pip install lxml)
-"""
-
 import sys
 from html import escape
 from pathlib import Path
