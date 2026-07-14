@@ -49,7 +49,7 @@
     <p>Before any entity is processed, the script writes the graph's self-description: an <code>owl:Ontology</code> resource with a label and comment, and the declaration of <code>gow:reinterprets</code> itself as an <code>owl:ObjectProperty</code> with its <code>rdfs:subPropertyOf</code> link to <code>dcterms:relation</code> (the reasoning for this specific placement is argued in full on the <a href="conceptual-model.html">Conceptual Model page</a>). This runs first so that the coined term is defined in the graph before anything uses it.</p>
 
 <pre><code><span class="kw">def</span> add_ontology_header(g: Graph) -&gt; <span class="kw">None</span>:
-    ont = URIRef(<span class="kw">str</span>(GOW).rstrip(<span class="st">"/"</span>))
+    ont = URIRef(<span class="st">"https://alicesgarlata.github.io/gowlodlam/"</span>)
     g.add((ont, RDF.type, OWL.Ontology))
     g.add((ont, RDFS.label, Literal(<span class="st">"God of War (2018) LODLAM ontology"</span>, lang=<span class="st">"en"</span>)))
 
@@ -237,7 +237,7 @@ g2.parse(output_path, format=<span class="st">"turtle"</span>)
 
     <h3>Q1 — Which mythological figures does the game reinterpret?</h3>
 
-<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/</span>&gt;
+<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/html-rendering.html#</span>&gt;
 <span class="kw">PREFIX</span> <span class="ns">rdfs:</span> &lt;<span class="st">http://www.w3.org/2000/01/rdf-schema#</span>&gt;
 
 <span class="kw">SELECT</span> ?character ?mythFigure <span class="kw">WHERE</span> {
@@ -264,7 +264,7 @@ g2.parse(output_path, format=<span class="st">"turtle"</span>)
 
     <h3>Q3 — What is Barlog credited for?</h3>
 
-<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/</span>&gt;
+<pre><code><span class="kw">PREFIX</span> <span class="ns">gow:</span> &lt;<span class="st">https://alicesgarlata.github.io/gowlodlam/html-rendering.html#</span>&gt;
 <span class="kw">PREFIX</span> <span class="ns">rdfs:</span> &lt;<span class="st">http://www.w3.org/2000/01/rdf-schema#</span>&gt;
 
 <span class="kw">SELECT</span> ?work ?role <span class="kw">WHERE</span> {
