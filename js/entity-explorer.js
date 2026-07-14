@@ -91,7 +91,9 @@
     var header = el("div", "entity-detail-header");
     var label = el("span", "entity-layer entity-layer-" + entity.layer, entity.layerLabel);
     var heading = el("h3", "", entity.name);
-    var uri = el("code", "entity-uri", entity.uri);
+    var uri = el("a", "entity-uri", entity.uri);
+    uri.href = entity.uri;
+    uri.title = "Open this entity's shareable URI";
     header.appendChild(label);
     header.appendChild(heading);
     header.appendChild(uri);
@@ -197,10 +199,28 @@
     });
   }
 
+  function setEntityFragment(entityId) {
+    if (!window.history || !window.history.replaceState) return;
+    var nextUrl = entityId
+      ? "#" + encodeURIComponent(entityId)
+      : window.location.pathname + window.location.search;
+    window.history.replaceState(null, "", nextUrl);
+  }
+
+  function entityIdFromFragment() {
+    if (!window.location.hash) return "";
+    try {
+      return decodeURIComponent(window.location.hash.slice(1));
+    } catch (error) {
+      return "";
+    }
+  }
+
   function selectEntity(entityId, shouldScroll) {
     var entity = entities.find(function (item) { return item.id === entityId; });
     if (!entity) return;
     selectedId = entityId;
+    setEntityFragment(entityId);
     setSelectedButton();
     renderDetail(entity);
     setViewerView("rendered");
@@ -214,6 +234,7 @@
   function clearSelection() {
     selectedId = "";
     pendingId = "";
+    setEntityFragment("");
     setSelectedButton();
     clearArticleHighlight();
     renderEmptyDetail();
@@ -328,13 +349,32 @@
       .then(function (data) {
         entities = data;
         renderEntityButtons();
-        if (status) status.textContent = entities.length + " entities loaded from the TEI and RDF graph.";
+        var requestedId = entityIdFromFragment();
+        var requestedEntity = entities.find(function (entity) {
+          return entity.id === requestedId;
+        });
+        if (requestedEntity) {
+          selectEntity(requestedId, false);
+        } else if (status) {
+          status.textContent = entities.length + " entities loaded from the TEI and RDF graph.";
+        }
       })
       .catch(function (error) {
         if (entityList) entityList.textContent = "Could not load entity data.";
         if (status) status.textContent = "Entity explorer unavailable: " + error.message;
       });
   }
+
+  window.addEventListener("hashchange", function () {
+    var requestedId = entityIdFromFragment();
+    if (!requestedId) {
+      clearSelection();
+      return;
+    }
+    if (entities.some(function (entity) { return entity.id === requestedId; })) {
+      selectEntity(requestedId, false);
+    }
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initExplorer);
