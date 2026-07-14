@@ -33,10 +33,37 @@
 
 <main class="content">
 
-  <div class="hero">
-    <h1>Modelling a fictional adaptation of Norse myth</h1>
-    <p class="subtitle">A LODLAM project on the Wikipedia article for <em>God of War</em> (2018).</p>
-  </div>
+  <section class="hero hero-home" aria-labelledby="home-title">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Information Science · Cultural Heritage · LODLAM</p>
+      <h1 id="home-title">Modelling a fictional adaptation of Norse myth</h1>
+      <p class="subtitle">A Linked Open Data project on the Wikipedia article for <em>God of War</em> (2018).</p>
+
+      <dl class="hero-stats" aria-label="Project at a glance">
+        <div><dt>104</dt><dd>triples</dd></div>
+        <div><dt>18</dt><dd>subjects</dd></div>
+        <div><dt>3</dt><dd>narrative layers</dd></div>
+      </dl>
+
+      <a class="hero-link" href="conceptual-model.html">Explore the conceptual model <span aria-hidden="true">&#8594;</span></a>
+    </div>
+
+    <div class="hero-image" role="img" aria-label="Kratos and Atreus crossing the Lake of Nine in God of War (2018)">
+      <div class="graph-fragment" aria-label="Atreus is modelled as a reinterpretation of the mythological Loki">
+        <span class="graph-node graph-node-game"><small>game entity</small>gow:atreus</span>
+        <span class="graph-edge"><b>gow:reinterprets</b><i aria-hidden="true"></i></span>
+        <span class="graph-node graph-node-myth"><small>mythological entity</small>wd:Q207392 · Loki</span>
+      </div>
+    </div>
+  </section>
+
+  <aside class="model-question" aria-labelledby="model-question-title">
+    <span class="model-question-mark" aria-hidden="true">?</span>
+    <div>
+      <p id="model-question-title">The modelling question</p>
+      <h2>How can a knowledge graph represent a fictional character as a reinterpretation of a mythological figure—without claiming that the two are identical?</h2>
+    </div>
+  </aside>
 
   <article>
 
