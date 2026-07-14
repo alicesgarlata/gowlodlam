@@ -139,7 +139,7 @@
 
     <h3>Textual phenomena</h3>
 
-    <p>Beyond entities, the guidelines require the encoding of textual phenomena — quotations and citations. Direct-speech quotations from Cory Barlog and Bear McCreary are wrapped in <code>&lt;quote&gt;</code> elements with a <code>@who</code> attribute pointing to the speaker's standoff <code>xml:id</code>. This gives the HTML rendering a place to visually distinguish attributed speech from unattributed quoted phrases, and it gives any downstream RDF extraction a way to represent the utterance as a triple in its own right. Wikipedia footnote markers ("[26]", "[10]") are preserved as <code>&lt;ref type="citation"&gt;</code> and rendered as small superscript in the HTML.</p>
+    <p>Beyond entities, the guidelines require the encoding of textual phenomena — quotations and citations. Direct speech attributed to Cory Barlog and Bear McCreary is wrapped in <code>&lt;said&gt;</code> with a <code>@who</code> attribute pointing to the speaker's standoff <code>xml:id</code>. Unattributed quoted phrases remain encoded as <code>&lt;quote&gt;</code>. This follows the TEI distinction between speech assigned to a speaker and other quoted material, while allowing the HTML rendering to distinguish attributed speech visually. Wikipedia footnote markers ("[26]", "[10]") are preserved as <code>&lt;ref type="citation"&gt;</code> and rendered as small superscript text.</p>
 
     <h2>HTML transformation</h2>
 
@@ -207,7 +207,7 @@
         ref = el.get(<span class="st">"ref"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
         <span class="kw">return</span> render_entity_span(<span class="st">"person"</span>, render_children(el, entities), ref, entities)
 
-    <span class="kw">if</span> tag == <span class="st">"quote"</span>:
+    <span class="kw">if</span> tag == <span class="st">"said"</span>:
         who = el.get(<span class="st">"who"</span>, <span class="st">""</span>).lstrip(<span class="st">"#"</span>)
         inner = render_children(el, entities)
         <span class="kw">if</span> who <span class="kw">and</span> who <span class="kw">in</span> entities:
@@ -215,12 +215,15 @@
             <span class="kw">return</span> (<span class="st">f'&lt;span class="quote attributed" title="Attributed to {speaker}"&gt;'</span>
                     <span class="st">f'&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>)
         <span class="kw">return</span> <span class="st">f'&lt;span class="quote"&gt;&amp;ldquo;{inner}&amp;rdquo;&lt;/span&gt;'</span>
+
+    <span class="kw">if</span> tag == <span class="st">"quote"</span>:
+        <span class="kw">return</span> <span class="st">f'&lt;span class="quote"&gt;&amp;ldquo;{render_children(el, entities)}&amp;rdquo;&lt;/span&gt;'</span>
     <span class="cm"># … one branch per TEI tag the encoding uses (orgName, objectName,
     # rs, placeName, title, ref, hi); unrecognised tags fall through
     # to rendering just their children, so the transformation never
     # crashes on an unexpected element — it degrades to plain text.</span></code></pre>
 
-    <p>The <code>quote</code> branch is the clearest example of why a dispatch-by-tag design pays off: it is the only place in the script that needs to know about the <code>@who</code> attribute and the standoff lookup for attributed speech, and it can decide, per quote, whether to render the frost-bordered "attributed" style or the plain italic style — a decision the TEI encoding already made explicit by including or omitting <code>@who</code>.</p>
+    <p>The separate <code>said</code> and <code>quote</code> branches show why a dispatch-by-tag design pays off. Only <code>said</code> needs to read <code>@who</code> and consult the standoff to identify the speaker, so it receives the frost-bordered attributed style and an attribution tooltip. A plain <code>quote</code> is rendered with quotation marks and the non-attributed style. The visual distinction therefore follows the semantic distinction already encoded in the TEI.</p>
 
     <h3>Step 4 — Assemble the page and write it out</h3>
 
