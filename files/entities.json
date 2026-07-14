@@ -1,0 +1,871 @@
+[
+  {
+    "id": "cory-barlog",
+    "name": "Cory Barlog",
+    "type": "Director",
+    "layer": "production",
+    "layerLabel": "Production",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/cory-barlog",
+    "wikidata": "Q5173545",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q5173545",
+    "viaf": "http://viaf.org/viaf/6865153289917732770006",
+    "viafUrl": "https://viaf.org/viaf/6865153289917732770006",
+    "mentionCount": 19,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:cory-barlog",
+        "predicate": "foaf:name",
+        "object": "\"Cory Barlog\"@en"
+      },
+      {
+        "subject": "gow:cory-barlog",
+        "predicate": "owl:sameAs",
+        "object": "viaf:6865153289917732770006"
+      },
+      {
+        "subject": "gow:cory-barlog",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q5173545"
+      },
+      {
+        "subject": "gow:cory-barlog",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:cory-barlog",
+        "predicate": "rdfs:label",
+        "object": "\"Cory Barlog\"@en"
+      },
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "schema:director",
+        "object": "gow:cory-barlog"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "bear-mccreary",
+    "name": "Bear McCreary",
+    "type": "Composer",
+    "layer": "production",
+    "layerLabel": "Production",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/bear-mccreary",
+    "wikidata": "Q621437",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q621437",
+    "viaf": "http://viaf.org/viaf/91158885",
+    "viafUrl": "https://viaf.org/viaf/91158885",
+    "mentionCount": 8,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:bear-mccreary",
+        "predicate": "foaf:name",
+        "object": "\"Bear McCreary\"@en"
+      },
+      {
+        "subject": "gow:bear-mccreary",
+        "predicate": "owl:sameAs",
+        "object": "viaf:91158885"
+      },
+      {
+        "subject": "gow:bear-mccreary",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q621437"
+      },
+      {
+        "subject": "gow:bear-mccreary",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:bear-mccreary",
+        "predicate": "rdfs:label",
+        "object": "\"Bear McCreary\"@en"
+      },
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "schema:musicBy",
+        "object": "gow:bear-mccreary"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "kratos",
+    "name": "Kratos",
+    "type": "Fictional character",
+    "layer": "fictional",
+    "layerLabel": "Fictional character",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/kratos",
+    "wikidata": "Q2291154",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q2291154",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 50,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "schema:character",
+        "object": "gow:kratos"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "foaf:name",
+        "object": "\"Kratos\"@en"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q2291154"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "rdfs:label",
+        "object": "\"Kratos\"@en"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "schema:children",
+        "object": "gow:atreus"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "atreus",
+    "name": "Atreus",
+    "type": "Fictional character",
+    "layer": "fictional",
+    "layerLabel": "Fictional character",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/atreus",
+    "wikidata": "Q54896805",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q54896805",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 28,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:atreus",
+        "predicate": "foaf:name",
+        "object": "\"Atreus\"@en"
+      },
+      {
+        "subject": "gow:atreus",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q54896805"
+      },
+      {
+        "subject": "gow:atreus",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:atreus",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:atreus",
+        "predicate": "rdfs:label",
+        "object": "\"Atreus\"@en"
+      },
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "schema:character",
+        "object": "gow:atreus"
+      },
+      {
+        "subject": "gow:kratos",
+        "predicate": "schema:children",
+        "object": "gow:atreus"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "odin",
+    "name": "Odin",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/odin",
+    "wikidata": "Q43610",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q43610",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 5,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:odin",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "foaf:name",
+        "object": "\"Odin\"@en"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q43610"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "rdfs:label",
+        "object": "\"Odin\"@en"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "schema:children",
+        "object": "gow:baldur"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "schema:children",
+        "object": "gow:thor"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/odinmyth.png"
+      },
+      {
+        "label": "In the game",
+        "src": "assets/odingame.png"
+      }
+    ]
+  },
+  {
+    "id": "thor",
+    "name": "Thor",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/thor",
+    "wikidata": "Q42952",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q42952",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 4,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:odin",
+        "predicate": "schema:children",
+        "object": "gow:thor"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "foaf:name",
+        "object": "\"Thor\"@en"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q42952"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "rdfs:label",
+        "object": "\"Thor\"@en"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/thormyth.png"
+      },
+      {
+        "label": "In the game",
+        "src": "assets/thorgame.png"
+      }
+    ]
+  },
+  {
+    "id": "freyja",
+    "name": "Freyja",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/freyja",
+    "wikidata": "Q1647325",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q1647325",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 14,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:freyja",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "foaf:name",
+        "object": "\"Freyja\"@en"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q1647325"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "rdfs:label",
+        "object": "\"Freyja\"@en"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "schema:children",
+        "object": "gow:baldur"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/freyjamyth.png"
+      },
+      {
+        "label": "In the game",
+        "src": "assets/freya.png"
+      }
+    ]
+  },
+  {
+    "id": "baldur",
+    "name": "Baldur",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/baldur",
+    "wikidata": "Q131658",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q131658",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 13,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:baldur",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:baldur",
+        "predicate": "foaf:name",
+        "object": "\"Baldur\"@en"
+      },
+      {
+        "subject": "gow:baldur",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q131658"
+      },
+      {
+        "subject": "gow:baldur",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:baldur",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:baldur",
+        "predicate": "rdfs:label",
+        "object": "\"Baldur\"@en"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "schema:children",
+        "object": "gow:baldur"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "schema:children",
+        "object": "gow:baldur"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/baldurmyth.png"
+      },
+      {
+        "label": "In the game",
+        "src": "assets/balduergow.png"
+      }
+    ]
+  },
+  {
+    "id": "loki",
+    "name": "Loki",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/loki",
+    "wikidata": "Q133147",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q133147",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 1,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:loki",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "foaf:name",
+        "object": "\"Loki\"@en"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q133147"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "rdfs:label",
+        "object": "\"Loki\"@en"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "schema:children",
+        "object": "gow:jormungandr"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/loki.png"
+      },
+      {
+        "label": "In the game (Atreus)",
+        "src": "assets/atreusgow.png"
+      }
+    ]
+  },
+  {
+    "id": "jormungandr",
+    "name": "Jörmungandr",
+    "type": "Mythological figure",
+    "layer": "mythological",
+    "layerLabel": "Mythological figure",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/jormungandr",
+    "wikidata": "Q181227",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q181227",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 1,
+    "reconciliation": {
+      "property": "gow:reinterprets",
+      "note": "The in-game portrayal is linked to the mythological figure without asserting identity."
+    },
+    "triples": [
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "foaf:name",
+        "object": "\"Jörmungandr\"@en"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "gow:reinterprets",
+        "object": "wd:Q181227"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "rdf:type",
+        "object": "dbo:FictionalCharacter"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "rdf:type",
+        "object": "foaf:Person"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "rdfs:label",
+        "object": "\"Jörmungandr\"@en"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "schema:children",
+        "object": "gow:jormungandr"
+      }
+    ],
+    "images": [
+      {
+        "label": "Mythology",
+        "src": "assets/jormungandrmyth.png"
+      },
+      {
+        "label": "In the game",
+        "src": "assets/jormungandrgow.jpg"
+      }
+    ]
+  },
+  {
+    "id": "santa-monica-studio",
+    "name": "Santa Monica Studio",
+    "type": "Organisation",
+    "layer": "production",
+    "layerLabel": "Production",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/santa-monica-studio",
+    "wikidata": "Q656710",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q656710",
+    "viaf": "http://viaf.org/viaf/232483995",
+    "viafUrl": "https://viaf.org/viaf/232483995",
+    "mentionCount": 4,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "dbo:developer",
+        "object": "gow:santa-monica-studio"
+      },
+      {
+        "subject": "gow:santa-monica-studio",
+        "predicate": "foaf:name",
+        "object": "\"Santa Monica Studio\"@en"
+      },
+      {
+        "subject": "gow:santa-monica-studio",
+        "predicate": "owl:sameAs",
+        "object": "viaf:232483995"
+      },
+      {
+        "subject": "gow:santa-monica-studio",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q656710"
+      },
+      {
+        "subject": "gow:santa-monica-studio",
+        "predicate": "rdf:type",
+        "object": "foaf:Organization"
+      },
+      {
+        "subject": "gow:santa-monica-studio",
+        "predicate": "rdfs:label",
+        "object": "\"Santa Monica Studio\"@en"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "sony-ie",
+    "name": "Sony Interactive Entertainment",
+    "type": "Organisation",
+    "layer": "production",
+    "layerLabel": "Production",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/sony-ie",
+    "wikidata": "Q18594",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q18594",
+    "viaf": "http://viaf.org/viaf/145689777",
+    "viafUrl": "https://viaf.org/viaf/145689777",
+    "mentionCount": 2,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "dcterms:publisher",
+        "object": "gow:sony-ie"
+      },
+      {
+        "subject": "gow:sony-ie",
+        "predicate": "foaf:name",
+        "object": "\"Sony Interactive Entertainment\"@en"
+      },
+      {
+        "subject": "gow:sony-ie",
+        "predicate": "owl:sameAs",
+        "object": "viaf:145689777"
+      },
+      {
+        "subject": "gow:sony-ie",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q18594"
+      },
+      {
+        "subject": "gow:sony-ie",
+        "predicate": "rdf:type",
+        "object": "foaf:Organization"
+      },
+      {
+        "subject": "gow:sony-ie",
+        "predicate": "rdfs:label",
+        "object": "\"Sony Interactive Entertainment\"@en"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "playstation-4",
+    "name": "PlayStation 4",
+    "type": "Object",
+    "layer": "production",
+    "layerLabel": "Production",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/playstation-4",
+    "wikidata": "Q5014725",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q5014725",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 7,
+    "reconciliation": {
+      "property": "owl:sameAs",
+      "note": "The local resource is reconciled with the authority record that describes the same entity."
+    },
+    "triples": [
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "schema:gamePlatform",
+        "object": "gow:playstation-4"
+      },
+      {
+        "subject": "gow:playstation-4",
+        "predicate": "owl:sameAs",
+        "object": "wd:Q5014725"
+      },
+      {
+        "subject": "gow:playstation-4",
+        "predicate": "rdf:type",
+        "object": "schema:Product"
+      },
+      {
+        "subject": "gow:playstation-4",
+        "predicate": "rdfs:label",
+        "object": "\"PlayStation 4\"@en"
+      },
+      {
+        "subject": "gow:playstation-4",
+        "predicate": "schema:name",
+        "object": "\"PlayStation 4\"@en"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "norse-mythology",
+    "name": "Norse mythology",
+    "type": "Concept",
+    "layer": "concepts",
+    "layerLabel": "Concept",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/norse-mythology",
+    "wikidata": "Q128285",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q128285",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 7,
+    "reconciliation": {
+      "property": "skos:exactMatch",
+      "note": "The local subject concept is aligned with the corresponding Wikidata concept."
+    },
+    "triples": [
+      {
+        "subject": "gow:baldur",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:freyja",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:jormungandr",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:loki",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:norse-mythology",
+        "predicate": "rdf:type",
+        "object": "skos:Concept"
+      },
+      {
+        "subject": "gow:norse-mythology",
+        "predicate": "rdfs:label",
+        "object": "\"Norse mythology\"@en"
+      },
+      {
+        "subject": "gow:norse-mythology",
+        "predicate": "skos:exactMatch",
+        "object": "wd:Q128285"
+      },
+      {
+        "subject": "gow:norse-mythology",
+        "predicate": "skos:prefLabel",
+        "object": "\"Norse mythology\"@en"
+      },
+      {
+        "subject": "gow:odin",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      },
+      {
+        "subject": "gow:thor",
+        "predicate": "dcterms:subject",
+        "object": "gow:norse-mythology"
+      }
+    ],
+    "images": []
+  },
+  {
+    "id": "greek-mythology",
+    "name": "Greek mythology",
+    "type": "Concept",
+    "layer": "concepts",
+    "layerLabel": "Concept",
+    "uri": "https://alicesgarlata.github.io/gowlodlam/greek-mythology",
+    "wikidata": "Q34726",
+    "wikidataUrl": "https://www.wikidata.org/wiki/Q34726",
+    "viaf": "",
+    "viafUrl": "",
+    "mentionCount": 4,
+    "reconciliation": {
+      "property": "skos:exactMatch",
+      "note": "The local subject concept is aligned with the corresponding Wikidata concept."
+    },
+    "triples": [
+      {
+        "subject": "gow:god-of-war-2018",
+        "predicate": "dcterms:subject",
+        "object": "gow:greek-mythology"
+      },
+      {
+        "subject": "gow:greek-mythology",
+        "predicate": "rdf:type",
+        "object": "skos:Concept"
+      },
+      {
+        "subject": "gow:greek-mythology",
+        "predicate": "rdfs:label",
+        "object": "\"Greek mythology\"@en"
+      },
+      {
+        "subject": "gow:greek-mythology",
+        "predicate": "skos:exactMatch",
+        "object": "wd:Q34726"
+      },
+      {
+        "subject": "gow:greek-mythology",
+        "predicate": "skos:prefLabel",
+        "object": "\"Greek mythology\"@en"
+      }
+    ],
+    "images": []
+  }
+]
