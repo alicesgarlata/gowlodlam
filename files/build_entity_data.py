@@ -37,6 +37,74 @@ IMAGE_PAIRS = {
 }
 
 
+ANIMATIONS = {
+    "kratos": {
+        "src": "assets/gifs/kratos-atreus.gif",
+        "poster": "assets/Kratos.png",
+        "alt": "Kratos and Atreus standing together in God of War (2018).",
+        "label": "Kratos and Atreus in the game",
+        "sourceLabel": "Giphy",
+        "source": "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDlieWZyM28zdjg1cGNlMTJqZ3ZlZ3F5ZW9xbzRwMXJjdmJzNWI1dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nPsp5do4LX9yPOaogy/giphy.gif",
+    },
+    "atreus": {
+        "src": "assets/gifs/atreus.gif",
+        "poster": "assets/atreusgow.png",
+        "alt": "Atreus preparing his bow in God of War (2018).",
+        "label": "Atreus in the game",
+        "sourceLabel": "Tumblr",
+        "source": "https://64.media.tumblr.com/a7fc1fb3b70e1e94e1940d0c51363055/2897c3454d1f868b-d0/s400x600/e063e01ee44177a0fe339dde9d064d76ec78e858.gif",
+    },
+    "odin": {
+        "src": "assets/gifs/odin.gif",
+        "poster": "assets/odingame.png",
+        "alt": "Odin as depicted in God of War Ragnarök (2022).",
+        "label": "Odin — visual reference from God of War Ragnarök (2022)",
+        "sourceLabel": "Tenor",
+        "source": "https://media.tenor.com/yvIad9M8sNEAAAAM/odin-god-of-war.gif",
+    },
+    "thor": {
+        "src": "assets/gifs/thor.gif",
+        "poster": "assets/thorgame.png",
+        "alt": "Thor as depicted in God of War Ragnarök (2022).",
+        "label": "Thor — visual reference from God of War Ragnarök (2022)",
+        "sourceLabel": "Tenor",
+        "source": "https://media.tenor.com/j24GHQ2kkv8AAAAM/thor-god-of-war-thor-god-of-war-ragnarok.gif",
+    },
+    "freyja": {
+        "src": "assets/gifs/freya.gif",
+        "poster": "assets/freya.png",
+        "alt": "Freyja in God of War (2018).",
+        "label": "Freyja in the game",
+        "sourceLabel": "Tenor",
+        "source": "https://media.tenor.com/U7VKX-rfTZoAAAAM/freya-god-of-war.gif",
+    },
+    "baldur": {
+        "src": "assets/gifs/baldur.gif",
+        "poster": "assets/balduergow.png",
+        "alt": "Baldur in God of War (2018).",
+        "label": "Baldur in the game",
+        "sourceLabel": "Tenor",
+        "source": "https://media.tenor.com/UsD6Gl0yfGQAAAAM/god-of-war-baldur.gif",
+    },
+    "loki": {
+        "src": "assets/gifs/atreus.gif",
+        "poster": "assets/atreusgow.png",
+        "alt": "Atreus, who is revealed to be Loki in God of War (2018).",
+        "label": "Atreus, revealed as Loki in the game",
+        "sourceLabel": "Tumblr",
+        "source": "https://64.media.tumblr.com/a7fc1fb3b70e1e94e1940d0c51363055/2897c3454d1f868b-d0/s400x600/e063e01ee44177a0fe339dde9d064d76ec78e858.gif",
+    },
+    "jormungandr": {
+        "src": "assets/gifs/jormungandr.gif",
+        "poster": "assets/jormungandrgow.jpg",
+        "alt": "Kratos facing Jörmungandr in God of War (2018).",
+        "label": "Jörmungandr in the game",
+        "sourceLabel": "Pinterest",
+        "source": "https://i.pinimg.com/originals/2a/d7/09/2ad7095637f69b3280e55192adafa5b2.gif",
+    },
+}
+
+
 def layer_for(entity: dict) -> tuple[str, str]:
     role = entity["role"]
     if role == "fictional-character":
@@ -136,6 +204,7 @@ def main(tei_path: str, ttl_path: str, output_path: str) -> None:
             "reconciliation": reconciliation_for(entity),
             "triples": triples,
             "images": IMAGE_PAIRS.get(entity_id, []),
+            "animation": ANIMATIONS.get(entity_id),
         })
 
     Path(output_path).write_text(
