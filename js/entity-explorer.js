@@ -116,6 +116,45 @@
     appendLink(authorities, entity.viaf ? "VIAF ↗" : "", entity.viafUrl);
     if (authorities.children.length) detail.appendChild(authorities);
 
+    if (entity.animation) {
+      var animation = entity.animation;
+      var animationFigure = el("figure", "entity-animation-card");
+      var animationLink = el("a", "");
+      animationLink.href = animation.src;
+      animationLink.target = "_blank";
+      animationLink.rel = "noopener";
+
+      var picture = el("picture", "");
+      if (animation.poster) {
+        var reducedMotionSource = el("source", "");
+        reducedMotionSource.media = "(prefers-reduced-motion: reduce)";
+        reducedMotionSource.srcset = animation.poster;
+        picture.appendChild(reducedMotionSource);
+      }
+
+      var animationImage = el("img", "");
+      animationImage.src = animation.src;
+      animationImage.alt = animation.alt || entity.name + " — animated game excerpt";
+      animationImage.loading = "lazy";
+      animationImage.decoding = "async";
+      picture.appendChild(animationImage);
+      animationLink.appendChild(picture);
+      animationFigure.appendChild(animationLink);
+
+      var animationCaption = el("figcaption", "");
+      animationCaption.appendChild(document.createTextNode(animation.label || "Animated game excerpt"));
+      if (animation.source) {
+        animationCaption.appendChild(document.createTextNode(" · Source: "));
+        var sourceLink = el("a", "", animation.sourceLabel || "original GIF");
+        sourceLink.href = animation.source;
+        sourceLink.target = "_blank";
+        sourceLink.rel = "noopener";
+        animationCaption.appendChild(sourceLink);
+      }
+      animationFigure.appendChild(animationCaption);
+      detail.appendChild(animationFigure);
+    }
+
     if (entity.images && entity.images.length) {
       var imageGrid = el("div", "entity-image-pair");
       entity.images.forEach(function (image) {
