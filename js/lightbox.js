@@ -1,6 +1,6 @@
 (function () {
   function initLightbox() {
-    var images = document.querySelectorAll("figure img");
+    var images = document.querySelectorAll("figure img, .image-slot.filled img");
     if (!images.length) return;
 
     var overlay = document.createElement("div");
