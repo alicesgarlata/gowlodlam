@@ -15,6 +15,9 @@ The project starts from the Wikipedia article on *God of War* (2018) and develop
 - `files/tei.xml` — TEI P5 encoding of the source article, including standoff entity definitions and authority reconciliation
 - `files/tei_to_html.py` — Python transformation from TEI/XML to the interactive HTML article
 - `files/index.html` — generated HTML output
+- `files/build_entity_data.py` — generator for the browser-based entity explorer
+- `files/entities.json` — generated entity metadata, TEI mention counts, and related RDF statements
+- `js/entity-explorer.js` — filters entities, displays their data, and highlights their mentions in the article
 - `assets/graffoo.png` — Graffoo conceptual model
 - `files/tei_to_rdf.py` — Python transformation from TEI/XML to RDF
 - `files/gow.ttl` — generated Turtle graph (104 triples across 18 subjects)
@@ -33,9 +36,10 @@ pip install -r requirements.txt
 
 python files/tei_to_html.py files/tei.xml files/index.html
 python files/tei_to_rdf.py files/tei.xml files/gow.ttl
+python files/build_entity_data.py files/tei.xml files/gow.ttl files/entities.json
 ```
 
-The RDF script reports the number of triples and subjects produced. The generated Turtle can be checked by reparsing it with RDFLib; this verifies that the serialisation is syntactically readable, but it is not a substitute for semantic or SHACL validation.
+The RDF script reports the number of triples and subjects produced. The generated Turtle can be checked by reparsing it with RDFLib; this verifies that the serialisation is syntactically readable, but it is not a substitute for semantic or SHACL validation. The final command combines entity metadata from the TEI with the RDF statements in which each entity appears as subject or object, keeping the website's Entity Explorer aligned with both sources.
 
 ## Modelling choices
 
