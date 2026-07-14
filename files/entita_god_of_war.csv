@@ -1,11 +1,11 @@
 name,type,layer,wikidata_qid,viaf_id,wikipedia_url,notes
-God of War (2018),work / vidoegame,TOPIC (central node),Q18345138,,https://en.wikipedia.org/wiki/God_of_War_(2018_video_game),starting point
+God of War (2018),work / videogame,TOPIC (central node),Q18345138,,https://en.wikipedia.org/wiki/God_of_War_(2018_video_game),starting point
 Cory Barlog,person,production,Q5173545,http://viaf.org/viaf/6865153289917732770006,https://en.wikipedia.org/wiki/Cory_Barlog,director
 Santa Monica Studio,organization,production,Q656710,http://viaf.org/viaf/232483995,https://en.wikipedia.org/wiki/Santa_Monica_Studio,developer
 Sony Interactive Entertainment,organization,production,Q18594,http://viaf.org/viaf/145689777,https://en.wikipedia.org/wiki/Sony_Interactive_Entertainment,publisher
 Bear McCreary,person,production,Q621437,http://viaf.org/viaf/91158885,https://en.wikipedia.org/wiki/Bear_McCreary,composer
 PlayStation 4,platform,production,Q5014725,,https://en.wikipedia.org/wiki/PlayStation_4,platform of release
-Kratos,fictional character,fictional,Q2291154,http://viaf.org/viaf/123456789,https://en.wikipedia.org/wiki/Kratos_(God_of_War),protagonist
+Kratos,fictional character,fictional,Q2291154,,https://en.wikipedia.org/wiki/Kratos_(God_of_War),protagonist
 Atreus,fictional character,fictional,Q54896805,,https://en.wikipedia.org/wiki/List_of_God_of_War_characters#Atreus,second character
 Odin,deity (mythology),mythologic,Q43610,http://viaf.org/viaf/309852469,https://en.wikipedia.org/wiki/Odin,real norse source
 Thor,deity (mythology),mythologic,Q42952,http://viaf.org/viaf/309851891,https://en.wikipedia.org/wiki/Thor,real norse source
