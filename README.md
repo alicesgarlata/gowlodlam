@@ -45,6 +45,8 @@ The RDF script reports the number of triples and subjects produced. The generate
 
 Real people and organisations are reconciled with external authority records using `owl:sameAs`; subject concepts use `skos:exactMatch`. Mythological figures are linked through `gow:reinterprets` because the in-game characters are adaptations of, rather than identical to, their mythological counterparts.
 
+Local resources use dereferenceable hash URIs in the Entity Explorer namespace (for example, `https://alicesgarlata.github.io/gowlodlam/html-rendering.html#kratos`). Opening one of these identifiers loads the public project page and automatically selects the corresponding entity.
+
 Attributed direct speech is encoded with TEI `<said who="#…">`, while unattributed quoted material uses `<quote>`. The HTML transformation preserves this distinction through different visual treatments and attribution tooltips.
 
 ## Sources and credits
