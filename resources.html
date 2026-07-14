@@ -84,8 +84,22 @@
       <div class="download-card">
         <span class="type-label">Phase 1 · Output</span>
         <h3>Interactive HTML article</h3>
-        <p>The Wikipedia text rendered as a self-contained HTML page with entities colour-coded by type. Browsable live on the <a href="html-rendering.html">HTML Rendering page</a>, or open the raw file directly below.</p>
-        <a href="files/index.html" target="_blank" class="download-link">Open raw file</a>
+        <p>The Wikipedia text rendered as a self-contained HTML page with entities colour-coded by type and addressable by the Entity Explorer. Browsable live on the <a href="html-rendering.html">HTML Rendering page</a>, or open the raw file directly below.</p>
+        <a href="files/index.html" target="_blank" rel="noopener" class="download-link">Open raw file</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Cross-phase · Transformation</span>
+        <h3>Entity Explorer data script</h3>
+        <p>Python script that combines the TEI entity definitions and mention counts with every RDF statement in which each entity appears as subject or object.</p>
+        <a href="files/build_entity_data.py" download class="download-link">Download build_entity_data.py</a>
+      </div>
+
+      <div class="download-card">
+        <span class="type-label">Cross-phase · Output</span>
+        <h3>Entity Explorer dataset</h3>
+        <p>Generated JSON used by the interactive selector: 15 entities with layers, identifiers, reconciliation notes, TEI occurrence counts, and RDF statements.</p>
+        <a href="files/entities.json" target="_blank" rel="noopener" class="download-link">Open entities.json</a>
       </div>
 
       <div class="download-card">
