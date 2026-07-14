@@ -1043,7 +1043,13 @@ td code { font-size: 0.85em; }
   max-width: 430px;
   overflow-wrap: anywhere;
   text-align: right;
+  align-self: center;
+  font: 0.74rem/1.45 var(--font-mono);
+  color: var(--color-frost-hover);
+  text-decoration: none;
+  border-bottom: 1px dotted #8aa1aa;
 }
+.entity-uri:hover { color: var(--color-frost); }
 .entity-facts {
   display: grid;
   grid-template-columns: max-content minmax(0, 1fr);
