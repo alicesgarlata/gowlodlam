@@ -268,7 +268,7 @@ body {
   background:
     linear-gradient(90deg, var(--color-stone-800) 0%, rgba(26,33,43,0.5) 22%, rgba(15,19,26,0.08) 62%),
     linear-gradient(0deg, rgba(15,19,26,0.62), transparent 55%),
-    url('../assets/gowcover.png') center / cover no-repeat;
+    url('../assets/gifs/cover.gif') center / cover no-repeat;
 }
 .graph-fragment {
   position: absolute;
@@ -1082,6 +1082,38 @@ article .entity-authority-link {
   color: var(--color-steel-title);
 }
 article .entity-authority-link:hover { border-color: var(--color-frost); }
+.entity-animation-card {
+  max-width: 620px;
+  margin: 1rem 0;
+  border: 1px solid #5d6a70;
+  border-radius: 3px;
+  background: var(--color-stone-800);
+  padding: 0.4rem;
+}
+.entity-animation-card > a,
+.entity-animation-card picture {
+  display: block;
+  border: 0;
+}
+.entity-animation-card img {
+  display: block;
+  width: 100%;
+  height: clamp(230px, 36vw, 360px);
+  object-fit: contain;
+  border: 0;
+  border-radius: 2px;
+  background: #0f131a;
+  padding: 0;
+}
+.entity-animation-card figcaption {
+  margin: 0.45rem 0.2rem 0.15rem;
+  color: var(--color-bone-muted);
+  font: 0.72rem/1.45 var(--font-sans);
+}
+article .entity-animation-card figcaption a {
+  color: #b8d4d3;
+  border-bottom-color: rgba(184, 212, 211, 0.55);
+}
 .entity-image-pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1237,6 +1269,15 @@ article #viewer-raw-link:hover { color: #fff; }
   color: var(--color-frost);
   text-decoration: none;
   border-bottom: 1px dotted var(--color-frost);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-image {
+    background:
+      linear-gradient(90deg, var(--color-stone-800) 0%, rgba(26,33,43,0.5) 22%, rgba(15,19,26,0.08) 62%),
+      linear-gradient(0deg, rgba(15,19,26,0.62), transparent 55%),
+      url('../assets/gowcover.png') center / cover no-repeat;
+  }
 }
 
 /* --- Lightbox (click-to-zoom images) ------------------------------ */
