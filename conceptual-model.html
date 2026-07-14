@@ -134,7 +134,7 @@
 
     <h3>Why below <code>dcterms:relation</code></h3>
 
-    <p><code>dcterms:relation</code> is the most generic "these two things are meaningfully connected" property in the DCMI vocabulary and its use is not restricted by class. Placing <code>gow:reinterprets</code> as its subproperty is a conservative choice: any SPARQL query that asks for <code>dcterms:relation</code> triples will also surface the <code>gow:reinterprets</code> ones, preserving the graph's readability from a naive consumer's point of view, while the more specific label remains available to consumers who understand it. The alternative — declaring <code>gow:reinterprets</code> as a top-level property with no parent — would have made it invisible to any query that did not know it by name.</p>
+    <p><code>dcterms:relation</code> is the most generic "these two things are meaningfully connected" property in the DCMI vocabulary and its use is not restricted by class. Placing <code>gow:reinterprets</code> below it is a conservative choice: an RDFS-aware consumer or triple store can infer a corresponding <code>dcterms:relation</code> statement from each <code>gow:reinterprets</code> assertion through the <code>rdfs:subPropertyOf</code> declaration, while the more specific relation remains available to consumers that understand it. This inference is not automatic in a plain SPARQL query over a graph without entailment; in that case, consumers must query <code>gow:reinterprets</code> directly or explicitly traverse the property hierarchy.</p>
 
     <div class="callout">
       <p class="callout-title">The interpretive payoff</p>
