@@ -105,7 +105,7 @@ def extract_entities(root) -> dict:
             continue
         name_el = obj.find(f"{_q('objectIdentifier')}/{_q('objectName')}")
         wikidata = ""
-        for idno in obj.findall(_q("idno")):
+        for idno in obj.findall(f".//{_q('idno')}"):
             if idno.get("type") == "Wikidata":
                 wikidata = clean_id(idno.text)
         entities[oid] = {
@@ -166,11 +166,13 @@ def render_entity_span(css_class: str, content: str, ref: str, entities: dict) -
     if ref and ref in entities:
         ent = entities[ref]
         title = escape(tooltip_for(ent))
+        entity_id = escape(ref)
         wd = wikidata_url(ent["wikidata"])
         if wd:
-            return (f'<a class="entity {css_class}" href="{wd}" '
+            return (f'<a class="entity {css_class}" data-entity="{entity_id}" href="{wd}" '
                     f'title="{title}" target="_blank" rel="noopener">{content}</a>')
-        return f'<span class="entity {css_class}" title="{title}">{content}</span>'
+        return (f'<span class="entity {css_class}" data-entity="{entity_id}" '
+                f'title="{title}">{content}</span>')
     return f'<span class="entity {css_class}">{content}</span>'
 
 
@@ -236,8 +238,8 @@ def render_element(el, entities: dict) -> str:
         title = escape(f"{place_type.capitalize()} place") if place_type else "Place"
         return f'<span class="entity place" title="{title}">{render_children(el, entities)}</span>'
 
-    # --- quotes -------------------------------------------------------
-    if tag == "quote":
+    # --- attributed speech and quotations ----------------------------
+    if tag == "said":
         who = el.get("who", "").lstrip("#")
         inner = render_children(el, entities)
         if who and who in entities:
@@ -245,6 +247,9 @@ def render_element(el, entities: dict) -> str:
             return (f'<span class="quote attributed" title="Attributed to {escape(speaker)}">'
                     f'&ldquo;{inner}&rdquo;</span>')
         return f'<span class="quote">&ldquo;{inner}&rdquo;</span>'
+
+    if tag == "quote":
+        return f'<span class="quote">&ldquo;{render_children(el, entities)}&rdquo;</span>'
 
     # --- titles (game / album / track names) --------------------------
     if tag == "title":
@@ -427,12 +432,21 @@ body {
   border-radius: 3px;
   text-decoration: none;
   cursor: help;
-  transition: filter 0.15s, box-shadow 0.15s;
+  transition: filter 0.15s, box-shadow 0.15s, opacity 0.15s;
   color: inherit;
 }
 .entity:hover {
   filter: brightness(0.94);
   box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+.entity.entity-muted { opacity: 0.24; filter: grayscale(0.65); }
+.entity.entity-selected {
+  opacity: 1;
+  filter: none;
+  background: #f2d79a !important;
+  color: #442814 !important;
+  border-bottom-color: #a2472f !important;
+  box-shadow: 0 0 0 2px #a2472f, 0 2px 7px rgba(0,0,0,0.22);
 }
 
 .entity.person  { background: #d2e0e6; color: #1f4a5c; border-bottom: 1px dotted #1f4a5c; }
