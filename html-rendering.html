@@ -47,19 +47,69 @@
       <p>The sidebar on the left of the embedded page lists the article's sections and the colour legend for the five entity types (person, organisation, object, concept, mythical place). Cory Barlog's and Bear McCreary's direct quotations are shown with a frost-blue left border and a "Attributed to…" tooltip, distinguishing them from unattributed quoted phrases which are shown in plain italics. Citation markers from the original Wikipedia text ("[26]", "[10]") are preserved as small superscript numbers.</p>
     </div>
 
-    <div class="embed-frame">
-      <iframe src="files/index.html" title="God of War (2018) — interactive HTML rendering of the TEI-encoded article" loading="lazy"></iframe>
-    </div>
+    <h2>Explore the entities</h2>
 
-    <p style="text-align: center; margin-top: 1rem;">
-      <a href="files/index.html" target="_blank" rel="noopener" class="download-link" style="display: inline-block; text-decoration: none;">Open in a new tab ↗</a>
-    </p>
+    <p>The controls below are generated from the same TEI standoff and RDF graph as the article. Filter the entity set, then select one to inspect its authority records and the statements in which it appears as subject or object. The corresponding mentions are highlighted inside the rendered article.</p>
+
+    <section class="entity-explorer" aria-labelledby="entity-explorer-title">
+      <div class="entity-explorer-heading">
+        <div>
+          <p class="entity-explorer-kicker">TEI mentions + RDF statements</p>
+          <h3 id="entity-explorer-title">Entity Explorer</h3>
+        </div>
+        <button type="button" id="entity-clear" class="entity-clear">Clear selection</button>
+      </div>
+
+      <div class="entity-filters" aria-label="Filter entities by layer">
+        <button type="button" class="entity-filter active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" class="entity-filter" data-filter="production" aria-pressed="false">Production</button>
+        <button type="button" class="entity-filter" data-filter="fictional" aria-pressed="false">Fictional</button>
+        <button type="button" class="entity-filter" data-filter="mythological" aria-pressed="false">Mythological</button>
+        <button type="button" class="entity-filter" data-filter="concepts" aria-pressed="false">Concepts</button>
+      </div>
+
+      <div id="entity-list" class="entity-list" aria-label="Project entities">
+        <p>Loading entity data…</p>
+      </div>
+      <p id="entity-status" class="entity-status" aria-live="polite">Loading the entity dataset…</p>
+
+      <div id="entity-detail" class="entity-detail" aria-live="polite"></div>
+    </section>
+
+    <h2>Inspect the transformation</h2>
+
+    <p>Switch between the generated article, its HTML source, and the TEI/XML input. The source views load the repository files directly, so the material shown here cannot drift away from the current transformation files.</p>
+
+    <div class="viewer-shell">
+      <div class="viewer-toolbar">
+        <div class="viewer-tabs" role="tablist" aria-label="Transformation views">
+          <button type="button" class="viewer-tab active" data-view="rendered" role="tab" aria-selected="true">Rendered article</button>
+          <button type="button" class="viewer-tab" data-view="html" role="tab" aria-selected="false" tabindex="-1">Generated HTML</button>
+          <button type="button" class="viewer-tab" data-view="tei" role="tab" aria-selected="false" tabindex="-1">TEI source</button>
+        </div>
+        <a id="viewer-raw-link" href="files/index.html" target="_blank" rel="noopener">Open rendered article ↗</a>
+      </div>
+
+      <div class="embed-frame viewer-panel" data-view="rendered">
+        <iframe id="article-frame" src="files/index.html" title="God of War (2018) — interactive HTML rendering of the TEI-encoded article" loading="lazy"></iframe>
+      </div>
+
+      <div class="source-panel viewer-panel" data-view="html" hidden>
+        <pre><code id="html-source-code">Select this view to load files/index.html.</code></pre>
+      </div>
+
+      <div class="source-panel viewer-panel" data-view="tei" hidden>
+        <pre><code id="tei-source-code">Select this view to load files/tei.xml.</code></pre>
+      </div>
+    </div>
 
     <h2>How this was produced</h2>
 
     <p>The rendering above is generated, not hand-written: every coloured span, tooltip, and Wikidata link is computed from the same TEI standoff and taxonomy that back the RDF graph on the <a href="knowledge-representation.html">Knowledge Representation page</a>. Regenerating it after any change to <code>tei.xml</code> is a single command:</p>
 
-<pre><code>python tei_to_html.py tei.xml index.html</code></pre>
+<pre><code>python files/tei_to_html.py files/tei.xml files/index.html
+python files/tei_to_rdf.py files/tei.xml files/gow.ttl
+python files/build_entity_data.py files/tei.xml files/gow.ttl files/entities.json</code></pre>
 
     <p>The full walkthrough of what the script does internally — how entities are extracted, how tooltips are built, how the TEI tree is walked recursively — is documented step by step on the <a href="knowledge-organization.html">Knowledge Organization page</a>, alongside the source code.</p>
 
@@ -71,5 +121,6 @@
   <p>Instructors: Prof. Francesca Tomasi and Prof. Marilena Daquino.</p>
 </footer>
 
+<script src="js/entity-explorer.js"></script>
 </body>
 </html>
