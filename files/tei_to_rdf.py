@@ -5,17 +5,9 @@ from lxml import etree
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.namespace import RDF, RDFS, OWL, XSD, DCTERMS, SKOS, FOAF
 
-
-# =======================================================================
-# Namespaces
-# =======================================================================
-
 TEI_NS = "http://www.tei-c.org/ns/1.0"
 XML_NS = "http://www.w3.org/XML/1998/namespace"
 
-# Project namespace. Hash URIs resolve to the Entity Explorer document,
-# which provides a human-readable representation of each local resource.
-# Example: .../html-rendering.html#entity-id
 GOW = Namespace(
     "https://alicesgarlata.github.io/gowlodlam/html-rendering.html#"
 )
@@ -27,9 +19,6 @@ SCHEMA = Namespace("https://schema.org/")
 DBO = Namespace("http://dbpedia.org/ontology/")
 
 
-# =======================================================================
-# ID cleaning helpers (mirror of tei_to_html.py)
-# =======================================================================
 
 def clean_id(text: str) -> str:
     """Strip square brackets and whitespace from an authority ID."""
@@ -57,9 +46,6 @@ def viaf_id_only(viaf: str) -> str:
     return viaf
 
 
-# =======================================================================
-# Entity extraction (same shape as tei_to_html.py)
-# =======================================================================
 
 def extract_entities(root) -> dict:
     """
@@ -176,9 +162,6 @@ def extract_game(root) -> dict:
     )
 
 
-# =======================================================================
-# Graph construction
-# =======================================================================
 
 def bind_prefixes(g: Graph) -> None:
     g.bind("gow", GOW)
