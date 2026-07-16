@@ -231,9 +231,12 @@
     <p>The current graph is deliberately scoped as a representative model rather than an exhaustive catalogue of the game's world. <em>God of War</em> (2018) offers many further points of contact between fiction and Norse tradition that could extend the project while testing whether the present modelling choices remain effective at a larger scale.</p>
 
     <div class="callout">
-      <p class="callout-title">Extending entities, sources, and relations</p>
-      <p>A future version could include Faye/Laufey and her mythological counterpart; Thor's sons Magni and Modi; the dwarven smiths Brok and Sindri; further objects, places, and family relations; and textual sources such as the <em>Poetic Edda</em> and the <em>Prose Edda</em>. The pipeline is prepared for that growth: new entity definitions and <code>&lt;relation&gt;</code> elements can be added to the TEI and transformed without writing entity-specific RDF code. Representing the Eddas as source works would also make it possible to state more explicitly which traditional accounts support each comparison, adding a provenance layer to the existing distinction between in-game facts and mythological identities. The same model could later be extended to <em>God of War Ragnarök</em> (2022), allowing reinterpretations to be compared across multiple instalments without collapsing their narrative contexts.</p>
-    </div>
+  <p class="callout-title">Extending entities, places, sources, and relations</p>
+
+  <p>A future version could extend the formal entity set with Faye/Laufey and her mythological counterpart; Thor's sons Magni and Modi; the dwarven smiths Brok and Sindri; and further characters such as Mímir and Týr. The mythical realms — including Midgard, Asgard, Jötunheim, Alfheim, Helheim, Niflheim, Muspelheim, Vanaheim, and Svartalfheim, are already identified at mention level in the TEI through <code>&lt;placeName type="mythical"&gt;</code>, but they are deliberately outside the current RDF dataset. A later version could promote them to first-class entities through a TEI <code>&lt;listPlace&gt;</code>, authority reconciliation, and explicit relations connecting characters and events to their settings.</p>
+
+  <p>The model could also incorporate textual sources such as the <em>Poetic Edda</em> and the <em>Prose Edda</em>. Representing these works as bibliographic resources would make it possible to identify which traditional accounts support each mythological comparison and to introduce a more detailed provenance layer. The current TEI-driven transformation is prepared for this expansion: new entity definitions and <code>&lt;relation&gt;</code> elements can be added to the TEI and materialised as RDF without writing entity-specific transformation code. The same approach could later be extended to <em>God of War Ragnarök</em> (2022), allowing portrayals and reinterpretations to be compared across different instalments without collapsing their distinct narrative contexts.</p>
+</div>
 
   </article>
 </main>
