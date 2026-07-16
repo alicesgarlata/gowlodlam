@@ -56,7 +56,7 @@
       <div class="download-card">
         <span class="type-label">Phase 1 · Source</span>
         <h3>TEI/XML encoding</h3>
-        <p>The Wikipedia article encoded in TEI/XML, with all fifteen entities defined in the standoff and taxonomy, reconciled to Wikidata and (where applicable) VIAF.</p>
+        <p>The Wikipedia article encoded in TEI/XML, with the central work, all fifteen selected entities, authority reconciliation, and the production, subject, character, and genealogy relations defined in the standoff.</p>
         <a href="files/tei.xml" download class="download-link">Download tei.xml</a>
       </div>
 
@@ -112,7 +112,7 @@
       <div class="download-card">
         <span class="type-label">Phase 3 · Transformation</span>
         <h3>TEI → RDF script</h3>
-        <p>Python script that builds the RDF graph with rdflib, differentiating reconciliation strategy per entity type and emitting the ontology header, game entity, entity triples, and relations.</p>
+        <p>Python script that builds the RDF graph with rdflib, reads the game and semantic relations from TEI, validates their pointers, and differentiates reconciliation strategy per entity type.</p>
         <a href="files/tei_to_rdf.py" download class="download-link">Download tei_to_rdf.py</a>
       </div>
 
@@ -141,7 +141,7 @@
       <li>Wikidata entity for the game: <a href="https://www.wikidata.org/wiki/Q18345138" target="_blank" rel="noopener">Q18345138</a>.</li>
     </ul>
 
-    <p>All fifteen entities in the graph resolve to Wikidata identifiers; the six mythological figures resolve through the coined <code>gow:reinterprets</code> property, everything else through <code>owl:sameAs</code> or <code>skos:exactMatch</code>. See the <a href="knowledge-representation.html">Knowledge Representation page</a> for the reconciliation breakdown.</p>
+    <p>The central game and all fifteen selected entities resolve to Wikidata identifiers; the six mythological figures resolve through the coined <code>gow:reinterprets</code> property, everything else through <code>owl:sameAs</code> or <code>skos:exactMatch</code>. See the <a href="knowledge-representation.html">Knowledge Representation page</a> for the reconciliation breakdown.</p>
 
     <h2>Tools used</h2>
 
