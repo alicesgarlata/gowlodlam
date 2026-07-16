@@ -230,21 +230,11 @@ def add_entity_triples(g: Graph, eid: str, ent: dict) -> None:
                 g.add((uri, OWL.sameAs, WD[wikidata]))
 
         elif role == "mythological-figure":
-            # Mythological figures are also active characters within the
-            # game's narrative (they appear, speak, and act — not just
-            # cited references), so they get the same dbo:FictionalCharacter
-            # typing as Kratos and Atreus. This makes gow:reinterprets have
-            # a single, uniform domain class instead of splitting across
-            # foaf:Person for some characters and dbo:FictionalCharacter
-            # for others.
             g.add((uri, RDF.type, DBO.FictionalCharacter))
             if wikidata:
-                # game character reinterprets the mythological figure —
-                # not owl:sameAs because Wikidata's entry is about the myth
                 g.add((uri, GOW["reinterprets"], WD[wikidata]))
 
         else:
-            # real person (director, composer, …)
             if wikidata:
                 g.add((uri, OWL.sameAs, WD[wikidata]))
             if viaf:
@@ -358,9 +348,6 @@ def add_relations_from_tei(g: Graph, root, local_ids: set[str]) -> int:
     return added
 
 
-# =======================================================================
-# Main
-# =======================================================================
 
 def build_graph(tei_path: str) -> Graph:
     tree = etree.parse(tei_path)
