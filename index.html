@@ -212,7 +212,7 @@
       <a class="section-card" href="knowledge-organization.html">
         <span class="step-number">Phase 1</span>
         <h3>Knowledge Organization</h3>
-        <p>Selecting the topic, identifying entities across three layers, encoding the Wikipedia text in TEI/XML with authority reconciliation, and rendering it as an interactive HTML article.</p>
+        <p>Selecting the topic, identifying entities and relations across three layers, encoding them in TEI/XML with authority reconciliation, and rendering the article as interactive HTML.</p>
       </a>
       <a class="section-card" href="conceptual-model.html">
         <span class="step-number">Phase 2</span>
@@ -222,7 +222,7 @@
       <a class="section-card" href="knowledge-representation.html">
         <span class="step-number">Phase 3</span>
         <h3>Knowledge Representation</h3>
-        <p>Building the RDF/Turtle graph with rdflib, differentiating reconciliation strategy per entity type, and closing the fiction↔myth loop through in-game and myth-derived family relations.</p>
+        <p>Building the RDF/Turtle graph from TEI-defined nodes and relations with rdflib, differentiating reconciliation strategy per entity type, and closing the fiction↔myth loop.</p>
       </a>
     </div>
 
@@ -232,7 +232,7 @@
 
     <div class="callout">
       <p class="callout-title">Extending entities, sources, and relations</p>
-      <p>A future version could include Faye/Laufey and her mythological counterpart; Thor's sons Magni and Modi; the dwarven smiths Brok and Sindri; further objects, places, and family relations; and textual sources such as the <em>Poetic Edda</em> and the <em>Prose Edda</em>. Representing the Eddas as source works would also make it possible to state more explicitly which traditional accounts support each comparison, adding a provenance layer to the existing distinction between in-game facts and mythological identities. The same model could later be extended to <em>God of War Ragnarök</em> (2022), allowing reinterpretations to be compared across multiple instalments without collapsing their narrative contexts.</p>
+      <p>A future version could include Faye/Laufey and her mythological counterpart; Thor's sons Magni and Modi; the dwarven smiths Brok and Sindri; further objects, places, and family relations; and textual sources such as the <em>Poetic Edda</em> and the <em>Prose Edda</em>. The pipeline is prepared for that growth: new entity definitions and <code>&lt;relation&gt;</code> elements can be added to the TEI and transformed without writing entity-specific RDF code. Representing the Eddas as source works would also make it possible to state more explicitly which traditional accounts support each comparison, adding a provenance layer to the existing distinction between in-game facts and mythological identities. The same model could later be extended to <em>God of War Ragnarök</em> (2022), allowing reinterpretations to be compared across multiple instalments without collapsing their narrative contexts.</p>
     </div>
 
   </article>
