@@ -15,7 +15,7 @@ XML_NS = "http://www.w3.org/XML/1998/namespace"
 
 # Project namespace. Hash URIs resolve to the Entity Explorer document,
 # which provides a human-readable representation of each local resource.
-# Example: .../html-rendering.html#kratos
+# Example: .../html-rendering.html#entity-id
 GOW = Namespace(
     "https://alicesgarlata.github.io/gowlodlam/html-rendering.html#"
 )
@@ -145,6 +145,37 @@ def extract_entities(root) -> dict:
     return entities
 
 
+def extract_game(root) -> dict:
+    """Read the central video-game resource from the TEI standOff."""
+    for bibl in root.iter(_q("bibl")):
+        game_id = _xml_id(bibl)
+        if not game_id or bibl.get("type") != "video-game":
+            continue
+
+        title_el = bibl.find(_q("title"))
+        date_el = bibl.find(_q("date"))
+        wikidata = ""
+        for idno in bibl.findall(_q("idno")):
+            if idno.get("type") == "Wikidata":
+                wikidata = clean_id(idno.text)
+
+        if title_el is None or not (title_el.text or "").strip():
+            raise ValueError(f"Video game #{game_id} has no TEI title")
+        if date_el is None or not date_el.get("when"):
+            raise ValueError(f"Video game #{game_id} has no machine-readable TEI date")
+
+        return {
+            "id": game_id,
+            "title": title_el.text.strip(),
+            "date": date_el.get("when"),
+            "wikidata": wikidata,
+        }
+
+    raise ValueError(
+        "No <bibl xml:id='...' type='video-game'> resource found in TEI standOff"
+    )
+
+
 # =======================================================================
 # Graph construction
 # =======================================================================
@@ -183,14 +214,17 @@ def add_ontology_header(g: Graph) -> None:
         "the myth figure, not the fictional character.", lang="en")))
 
 
-def add_game(g: Graph) -> None:
-    """The game itself: God of War (2018)."""
-    game = GOW["god-of-war-2018"]
+def add_game(g: Graph, game_data: dict) -> None:
+    """Emit the central game from metadata extracted from the TEI."""
+    game = GOW[game_data["id"]]
+    title = game_data["title"]
     g.add((game, RDF.type, SCHEMA.VideoGame))
-    g.add((game, RDFS.label, Literal("God of War", lang="en")))
-    g.add((game, DCTERMS.title, Literal("God of War", lang="en")))
-    g.add((game, DCTERMS.date, Literal("2018-04-20", datatype=XSD.date)))
-    g.add((game, OWL.sameAs, WD["Q18345138"]))
+    g.add((game, RDFS.label, Literal(title, lang="en")))
+    g.add((game, DCTERMS.title, Literal(title, lang="en")))
+    g.add((game, DCTERMS.date,
+           Literal(game_data["date"], datatype=XSD.date)))
+    if game_data["wikidata"]:
+        g.add((game, OWL.sameAs, WD[game_data["wikidata"]]))
 
 
 def add_entity_triples(g: Graph, eid: str, ent: dict) -> None:
@@ -221,13 +255,6 @@ def add_entity_triples(g: Graph, eid: str, ent: dict) -> None:
             # foaf:Person for some characters and dbo:FictionalCharacter
             # for others.
             g.add((uri, RDF.type, DBO.FictionalCharacter))
-            # Every mythological-figure entity in this dataset belongs to
-            # Norse mythology specifically (there are no Greek deities in
-            # the entity set — Kratos is a fictional-character, not a
-            # mythological-figure). This makes explicit, at the individual
-            # level, the pantheon each figure belongs to — a tighter link
-            # than just having the game itself carry dcterms:subject.
-            g.add((uri, DCTERMS.subject, GOW["norse-mythology"]))
             if wikidata:
                 # game character reinterprets the mythological figure —
                 # not owl:sameAs because Wikidata's entry is about the myth
@@ -264,44 +291,88 @@ def add_entity_triples(g: Graph, eid: str, ent: dict) -> None:
             g.add((uri, SKOS.exactMatch, WD[wikidata]))
 
 
-def add_game_relations(g: Graph) -> None:
-    """Production, characters, subjects: from the game to the entities."""
-    game = GOW["god-of-war-2018"]
+def _resolve_relation_pointer(pointer: str, local_ids: set[str]) -> URIRef:
+    """Resolve a TEI pointer to either a local project URI or an absolute URI."""
+    pointer = pointer.strip()
+    if pointer.startswith("#"):
+        local_id = pointer[1:]
+        if local_id not in local_ids:
+            raise ValueError(f"TEI relation points to undefined local ID: {pointer}")
+        return GOW[local_id]
+    if pointer.startswith(("http://", "https://")):
+        return URIRef(pointer)
+    raise ValueError(
+        f"Unsupported TEI relation pointer {pointer!r}; use #xml-id or an absolute URI"
+    )
 
-    g.add((game, SCHEMA.director, GOW["cory-barlog"]))
-    g.add((game, DBO.developer, GOW["santa-monica-studio"]))
-    g.add((game, DCTERMS.publisher, GOW["sony-ie"]))
-    g.add((game, SCHEMA.musicBy, GOW["bear-mccreary"]))
-    g.add((game, SCHEMA.gamePlatform, GOW["playstation-4"]))
-    g.add((game, SCHEMA.character, GOW["kratos"]))
-    g.add((game, SCHEMA.character, GOW["atreus"]))
-    g.add((game, DCTERMS.subject, GOW["norse-mythology"]))
-    g.add((game, DCTERMS.subject, GOW["greek-mythology"]))
 
-
-def add_character_relations(g: Graph) -> None:
+def add_relations_from_tei(g: Graph, root, local_ids: set[str]) -> int:
     """
-    In-game and myth-derived family relations. These are the triples that
-    expose the fiction↔myth interplay (the standout modelling angle for
-    the report).
+    Materialise every TEI <relation> as RDF.
+
+    For a directed relation, @active is the RDF subject, @ref is the
+    predicate URI, and @passive is the object. Space-separated values are
+    expanded as a Cartesian product. @mutual is also supported and produces
+    both directions for every pair of distinct participants.
     """
-    # In-game genealogy: Kratos → Atreus
-    g.add((GOW["kratos"], SCHEMA.children, GOW["atreus"]))
+    added = 0
 
-    # In-game genealogy: Odin & Freyja are Baldur's parents
-    # NOTE: Freyja-as-Baldur's-mother is a game-specific reinterpretation
-    #       of Norse myth, where Frigg (not Freyja) is Baldur's mother.
-    g.add((GOW["odin"], SCHEMA.children, GOW["baldur"]))
-    g.add((GOW["freyja"], SCHEMA.children, GOW["baldur"]))
+    for relation in root.iter(_q("relation")):
+        predicate_ref = clean_id(relation.get("ref", ""))
+        if not predicate_ref.startswith(("http://", "https://")):
+            relation_name = relation.get("name", "unnamed")
+            raise ValueError(
+                f"TEI relation {relation_name!r} needs an absolute predicate URI in @ref"
+            )
+        predicate = URIRef(predicate_ref)
 
-    # Odin → Thor (both game and myth; Thor is Baldur's half-brother)
-    g.add((GOW["odin"], SCHEMA.children, GOW["thor"]))
+        active = relation.get("active", "").split()
+        passive = relation.get("passive", "").split()
+        mutual = relation.get("mutual", "").split()
 
-    # Myth-derived: Loki fathers Jörmungandr.
-    # Combined with the in-game reveal that Atreus is Loki, and the trio
-    # (Kratos, Atreus, Jörmungandr) meeting on the boat, this triple
-    # closes the fiction↔myth loop.
-    g.add((GOW["loki"], SCHEMA.children, GOW["jormungandr"]))
+        if active and mutual:
+            raise ValueError("A TEI relation cannot have both @active and @mutual")
+        if passive and not active:
+            raise ValueError("A TEI relation with @passive must also have @active")
+
+        triples = []
+        if mutual:
+            participants = [
+                _resolve_relation_pointer(pointer, local_ids)
+                for pointer in mutual
+            ]
+            triples = [
+                (subject, predicate, obj)
+                for subject in participants
+                for obj in participants
+                if subject != obj
+            ]
+        elif active and passive:
+            subjects = [
+                _resolve_relation_pointer(pointer, local_ids)
+                for pointer in active
+            ]
+            objects = [
+                _resolve_relation_pointer(pointer, local_ids)
+                for pointer in passive
+            ]
+            triples = [
+                (subject, predicate, obj)
+                for subject in subjects
+                for obj in objects
+            ]
+        else:
+            raise ValueError(
+                "A directed TEI relation needs both @active and @passive, "
+                "or it must use @mutual"
+            )
+
+        for triple in triples:
+            before = len(g)
+            g.add(triple)
+            added += len(g) - before
+
+    return added
 
 
 # =======================================================================
@@ -312,15 +383,16 @@ def build_graph(tei_path: str) -> Graph:
     tree = etree.parse(tei_path)
     root = tree.getroot()
     entities = extract_entities(root)
+    game_data = extract_game(root)
+    local_ids = set(entities) | {game_data["id"]}
 
     g = Graph()
     bind_prefixes(g)
     add_ontology_header(g)
-    add_game(g)
+    add_game(g, game_data)
     for eid, ent in entities.items():
         add_entity_triples(g, eid, ent)
-    add_game_relations(g)
-    add_character_relations(g)
+    add_relations_from_tei(g, root, local_ids)
 
     return g
 
