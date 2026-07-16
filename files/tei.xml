@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  TEI encoding of the selected Wikipedia text for the LODLAM project on
-  God of War (2018 video game).
-
-  Source permalink: https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&oldid=1357494264
-
-  All 15 entities in the standoff and taxonomy are reconciled to Wikidata
-  (and VIAF, where applicable). Transformations: tei_to_html.py produces
-  the HTML rendering, tei_to_rdf.py produces the RDF/Turtle graph (gow.ttl).
---><TEI xmlns="http://www.tei-c.org/ns/1.0">
+  <TEI xmlns="http://www.tei-c.org/ns/1.0">
   <teiHeader>
     <fileDesc>
       <titleStmt>
@@ -19,7 +10,7 @@
         </respStmt>
         <respStmt>
           <resp>TEI encoding by</resp>
-          <persName>Alice</persName>
+          <persName>Alice Sgarlata</persName>
         </respStmt>
       </titleStmt>
       <publicationStmt>
@@ -51,7 +42,14 @@
   </teiHeader>
 
   <standOff>
-    <listPerson>
+      <listBibl type="described-work">
+        <bibl xml:id="god-of-war-2018" type="video-game">
+          <title>God of War</title>
+          <date when="2018-04-20">20 April 2018</date>
+          <idno type="Wikidata">Q18345138</idno>
+        </bibl>
+      </listBibl>
+      <listPerson>
       <!-- Production: real persons -->
       <person xml:id="cory-barlog" role="director">
         <persName>Cory Barlog</persName>
@@ -122,6 +120,55 @@
         </objectIdentifier>
       </object>
     </listObject>
+    <listRelation type="semantic-relations">
+      <!-- Production and publication -->
+      <relation type="production" name="director"
+        ref="https://schema.org/director"
+        active="#god-of-war-2018" passive="#cory-barlog"/>
+      <relation type="production" name="developer"
+        ref="http://dbpedia.org/ontology/developer"
+        active="#god-of-war-2018" passive="#santa-monica-studio"/>
+      <relation type="production" name="publisher"
+        ref="http://purl.org/dc/terms/publisher"
+        active="#god-of-war-2018" passive="#sony-ie"/>
+      <relation type="production" name="musicBy"
+        ref="https://schema.org/musicBy"
+        active="#god-of-war-2018" passive="#bear-mccreary"/>
+      <relation type="production" name="gamePlatform"
+        ref="https://schema.org/gamePlatform"
+        active="#god-of-war-2018" passive="#playstation-4"/>
+
+      <!-- Characters and subjects of the game -->
+      <relation type="participation" name="character"
+        ref="https://schema.org/character"
+        active="#god-of-war-2018" passive="#kratos #atreus"/>
+      <relation type="subject" name="subject"
+        ref="http://purl.org/dc/terms/subject"
+        active="#god-of-war-2018"
+        passive="#norse-mythology #greek-mythology"/>
+      <relation type="subject" name="subject"
+        ref="http://purl.org/dc/terms/subject"
+        active="#odin #thor #freyja #baldur #loki #jormungandr"
+        passive="#norse-mythology">
+        <desc>Each selected mythological figure belongs to the Norse mythology subject layer.</desc>
+      </relation>
+
+      <!-- Genealogies are typed by provenance/context. -->
+      <relation type="in-game-genealogy" name="children"
+        ref="https://schema.org/children"
+        active="#kratos" passive="#atreus"/>
+      <relation type="in-game-genealogy" name="children"
+        ref="https://schema.org/children"
+        active="#odin #freyja" passive="#baldur">
+        <desc>In the game, Freyja rather than Frigg is Baldur's mother.</desc>
+      </relation>
+      <relation type="game-and-myth-genealogy" name="children"
+        ref="https://schema.org/children"
+        active="#odin" passive="#thor"/>
+      <relation type="myth-derived-genealogy" name="children"
+        ref="https://schema.org/children"
+        active="#loki" passive="#jormungandr"/>
+    </listRelation>
   </standOff>
 
   <text>
