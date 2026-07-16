@@ -12,7 +12,7 @@ The project starts from the Wikipedia article on *God of War* (2018) and develop
 
 - `files/entita_god_of_war.csv` — initial inventory of the central work and the 15 selected entities, with their authority identifiers
 - `assets/mind-map.png` — theoretical model developed during the knowledge-organisation phase
-- `files/tei.xml` — TEI P5 encoding of the source article, including standoff entity definitions and authority reconciliation
+- `files/tei.xml` — TEI P5 encoding of the source article, including the central work, standoff entity definitions, authority reconciliation, and semantic relations in `<listRelation>`
 - `files/tei_to_html.py` — Python transformation from TEI/XML to the interactive HTML article
 - `files/index.html` — generated HTML output
 - `files/build_entity_data.py` — generator for the browser-based entity explorer
@@ -39,7 +39,7 @@ python files/tei_to_rdf.py files/tei.xml files/gow.ttl
 python files/build_entity_data.py files/tei.xml files/gow.ttl files/entities.json
 ```
 
-The RDF script reports the number of triples and subjects produced. The generated Turtle can be checked by reparsing it with RDFLib; this verifies that the serialisation is syntactically readable, but it is not a substitute for semantic or SHACL validation. The final command combines entity metadata from the TEI with the RDF statements in which each entity appears as subject or object, keeping the website's Entity Explorer aligned with both sources.
+The RDF script reports the number of triples and subjects produced. The central game metadata comes from the TEI `<listBibl>`, while every internal semantic edge comes from a TEI `<relation>`: `@active` supplies the RDF subject, `@ref` the predicate URI, and `@passive` the object. The transformer expands space-separated pointers generically, so adding a valid entity or relation to the TEI does not require adding entity-specific Python code. The generated Turtle can be checked by reparsing it with RDFLib; this verifies that the serialisation is syntactically readable, but it is not a substitute for semantic or SHACL validation. The final command combines entity metadata from the TEI with the RDF statements in which each entity appears as subject or object, keeping the website's Entity Explorer aligned with both sources.
 
 ## Modelling choices
 
@@ -48,6 +48,8 @@ Real people and organisations are reconciled with external authority records usi
 Local resources use dereferenceable hash URIs in the Entity Explorer namespace (for example, `https://alicesgarlata.github.io/gowlodlam/html-rendering.html#kratos`). Opening one of these identifiers loads the public project page and automatically selects the corresponding entity.
 
 Attributed direct speech is encoded with TEI `<said who="#…">`, while unattributed quoted material uses `<quote>`. The HTML transformation preserves this distinction through different visual treatments and attribution tooltips.
+
+Relations among local resources are encoded in TEI `<listRelation>` rather than hard-coded in the RDF script. The list contains production credits, characters, subjects, and genealogies; `@type` also records whether a genealogy belongs to the game, to myth, or to both. The RDF transformation validates local pointers and fails clearly if a relation targets an undefined `xml:id`.
 
 ## Sources and credits
 
