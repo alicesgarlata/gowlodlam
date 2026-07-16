@@ -1,5 +1,4 @@
 import sys
-from pathlib import Path
 
 from lxml import etree
 from rdflib import Graph, Namespace, Literal, URIRef
