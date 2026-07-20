@@ -1,7 +1,5 @@
 # Animated media filenames
 
-Save the selected GIF files in this directory with these exact names:
-
 | Filename | Content | Source |
 | --- | --- | --- |
 | `cover.gif` | Kratos and Atreus on the boat | https://64.media.tumblr.com/4d53fc6d0979ff18a4cdac402918d327/tumblr_p8yxydXgip1x88raco1_400.gif |
