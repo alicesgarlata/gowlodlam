@@ -1444,4 +1444,26 @@ figure img.zoomable-img:focus-visible {
   .graph-edge b { left: calc(50% + 0.7rem); bottom: auto; transform: none; }
   .graph-edge i { right: auto; left: calc(50% - 4px); bottom: -1px; transform: rotate(90deg); }
   .model-question { align-items: start; }
+  }
+/* --- Footer Social Links --- */
+.footer-social {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
+
+.site-footer a.github-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none; 
+  opacity: 0.6; 
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.site-footer a.github-link:hover,
+.site-footer a.github-link:focus-visible {
+  opacity: 1; 
+  transform: translateY(-3px); 
+}
+
