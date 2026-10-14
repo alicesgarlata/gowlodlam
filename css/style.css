@@ -52,6 +52,9 @@ body {
   line-height: 1.7;
 }
 
+html { 
+  scroll-behavior: smooth; 
+}
 /* --- Header + navigation ------------------------------------------- */
 
 .site-header {
