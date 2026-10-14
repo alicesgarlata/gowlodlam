@@ -72,7 +72,71 @@
     <p>This project takes a single Wikipedia article for the 2018 video game <em><a href="https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&amp;oldid=1357494264" target="_blank" rel="noopener">God of War</a></em> — and progressively lifts its content into a Linked Open Data graph. Fifteen entities are identified across three narrative layers (production, fictional, mythological) plus two subject concepts; encoded in TEI/XML with authority reconciliation to Wikidata and VIAF; transformed into an interactive HTML rendering; modelled conceptually against a reused vocabulary of dcterms, schema.org, FOAF, SKOS, and DBpedia; and finally serialised as an RDF/Turtle graph of 104 triples across 18 subjects.</p>
 
     <p>The interesting modelling problem lies in how the game <em>reinterprets</em> its mythological source. The 2018 <em>God of War</em> takes six figures from Norse mythology: Odin, Thor, Freyja, Baldur, Loki, Jörmungandr, and redraws their genealogy in ways that do not match the received tradition: in the game Freyja is Baldur's mother, where the <em>Prose Edda</em> attributes that role to Frigg; the young character Atreus is revealed to be Loki, the mythological father of the World Serpent whom the pair encounter on the boat. Standard vocabularies do not carry a property that means "fictional reinterpretation of a mythological figure", so this project introduces a single coined term, <code>gow:reinterprets</code>, as a subproperty of <code>dcterms:relation</code>. The graph is built so that a mythological figure's Wikidata identity is preserved (through <code>gow:reinterprets</code>) while the game's alternative genealogy is stated in its own right (through <code>schema:children</code>), without collapsing the two into a single <code>owl:sameAs</code> assertion.</p>
-
+<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+<div id="lod-network" style="width: 100%; height: 450px; border: 1px solid var(--color-parchment-dark); background: #eef3f2; border-radius: 3px; margin: 2rem 0;"></div> 
+<script type="text/javascript">  
+  var colorGame = '#4e7f97'; 
+  var colorMyth = '#a2472f'; 
+  var colorGameEdge = '#22384a'; 
+  var colorMythEdge = '#71301f'; 
+  var colorReinterprets = '#93a3ac'; 
+  
+  var nodes = new vis.DataSet([
+    { id: 'g_kratos', label: 'Kratos\n(Game)', color: colorGame },
+    { id: 'g_atreus', label: 'Atreus/Loki\n(Game)', color: colorGame },
+    { id: 'g_jorm', label: 'Jörmungandr\n(Game)', color: colorGame },
+    { id: 'g_odin', label: 'Odin\n(Game)', color: colorGame },
+    { id: 'g_thor', label: 'Thor\n(Game)', color: colorGame },
+    { id: 'g_freyja', label: 'Freyja\n(Game)', color: colorGame },
+    { id: 'g_baldur', label: 'Baldur\n(Game)', color: colorGame },
+    { id: 'm_kratos', label: 'Kratos\n(Myth)', color: colorMyth },
+    { id: 'm_loki', label: 'Loki\n(Myth)', color: colorMyth },
+    { id: 'm_jorm', label: 'Jörmungandr\n(Myth)', color: colorMyth },
+    { id: 'm_odin', label: 'Odin\n(Myth)', color: colorMyth },
+    { id: 'm_thor', label: 'Thor\n(Myth)', color: colorMyth },
+    { id: 'm_freyja', label: 'Freyja\n(Myth)', color: colorMyth },
+    { id: 'm_baldur', label: 'Baldur\n(Myth)', color: colorMyth },
+    { id: 'm_frigg', label: 'Frigg\n(Myth)', color: colorMyth }
+  ]);
+  
+  var edges = new vis.DataSet([
+    { from: 'g_kratos', to: 'm_kratos', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_atreus', to: 'm_loki', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_jorm', to: 'm_jorm', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_odin', to: 'm_odin', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_thor', to: 'm_thor', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_freyja', to: 'm_freyja', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_baldur', to: 'm_baldur', label: 'gow:reinterprets', dashes: true, color: colorReinterprets },
+    { from: 'g_kratos', to: 'g_atreus', label: 'schema:children', arrows: 'to', color: colorGameEdge },
+    { from: 'g_atreus', to: 'g_jorm', label: 'schema:children', arrows: 'to', color: colorGameEdge },
+    { from: 'g_odin', to: 'g_thor', label: 'schema:children', arrows: 'to', color: colorGameEdge },
+    { from: 'g_freyja', to: 'g_baldur', label: 'schema:children', arrows: 'to', color: colorGameEdge }, 
+    { from: 'm_loki', to: 'm_jorm', label: 'schema:children', arrows: 'to', color: colorMythEdge },
+    { from: 'm_odin', to: 'm_thor', label: 'schema:children', arrows: 'to', color: colorMythEdge },
+    { from: 'm_frigg', to: 'm_baldur', label: 'schema:children', arrows: 'to', color: colorMythEdge }
+  ]);
+  
+  var container = document.getElementById('lod-network');
+  var data = { nodes: nodes, edges: edges };
+  var options = {
+    nodes: {
+      font: { size: 18, color: 'white' }
+    },
+    physics: { 
+      barnesHut: { 
+        springLength: 120, 
+        centralGravity: 0.3
+      }
+    },
+    edges: { 
+      smooth: { type: 'continuous' }, /* <-- VIRGOLA MANCANTE AGGIUNTA QUI */
+      font: { size: 14, color: '#22384a', strokeWidth: 3, strokeColor: '#eef3f2' }
+    },
+    interaction: { hover: true, tooltipDelay: 200 }
+  };
+  
+  new vis.Network(container, data, options);
+</script>
     <div class="callout">
       <p class="callout-title">Course context</p>
       <p>Individual project for the Information Science and Cultural Heritage course, taught by Prof. Francesca Tomasi and Prof. Marilena Daquino in the Digital Humanities and Digital Knowledge (DHDK) MA at the University of Bologna, academic year 2025-2026.</p>
@@ -205,71 +269,6 @@
         <button type="button" class="slide-dot" aria-label="Go to Jörmungandr"></button>
       </div>
     </div>
-  
-    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-    <div id="lod-network" style="width: 100%; height: 450px; border: 1px solid var(--color-parchment-dark); background: #eef3f2; border-radius: 3px; margin: 2rem 0;"></div> 
-    <script type="text/javascript">  
-      var colorGame = '#4e7f97'; 
-        var colorMyth = '#a2472f'; 
-        var colorGameEdge = '#22384a'; 
-        var colorMythEdge = '#71301f'; 
-        var colorReinterprets = '#93a3ac'; 
-      
-        var nodes = new vis.DataSet([
-          { id: 'g_kratos', label: 'Kratos\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_atreus', label: 'Atreus/Loki\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_jorm', label: 'Jörmungandr\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_odin', label: 'Odin\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_thor', label: 'Thor\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_freyja', label: 'Freyja\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'g_baldur', label: 'Baldur\n(Game)', color: colorGame, font: {color: 'white'} },
-          { id: 'm_kratos', label: 'Kratos\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_loki', label: 'Loki\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_jorm', label: 'Jörmungandr\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_odin', label: 'Odin\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_thor', label: 'Thor\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_freyja', label: 'Freyja\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_baldur', label: 'Baldur\n(Myth)', color: colorMyth, font: {color: 'white'} },
-          { id: 'm_frigg', label: 'Frigg\n(Myth)', color: colorMyth, font: {color: 'white'} }
-        ]);
-      
-        var edges = new vis.DataSet([
-          { from: 'g_kratos', to: 'm_kratos', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_atreus', to: 'm_loki', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_jorm', to: 'm_jorm', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_odin', to: 'm_odin', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_thor', to: 'm_thor', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_freyja', to: 'm_freyja', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_baldur', to: 'm_baldur', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
-          { from: 'g_kratos', to: 'g_atreus', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
-          { from: 'g_atreus', to: 'g_jorm', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
-          { from: 'g_odin', to: 'g_thor', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
-          { from: 'g_freyja', to: 'g_baldur', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} }, 
-          { from: 'm_loki', to: 'm_jorm', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} },
-          { from: 'm_odin', to: 'm_thor', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} },
-          { from: 'm_frigg', to: 'm_baldur', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} }
-        ]);
-      
-        var container = document.getElementById('lod-network');
-        var data = { nodes: nodes, edges: edges };
-        var options = {
-          nodes: {
-            font: { size: 18, color: 'white' }
-          },
-          physics: { 
-            barnesHut: { 
-              springLength: 120, 
-              centralGravity: 0.3
-            }
-          },
-          edges: { smooth: { type: 'continuous' } 
-                   font: { size: 14, color: '#22384a', strokeWidth: 3, strokeColor: '#eef3f2' }
-          },
-          interaction: { hover: true, tooltipDelay: 200 }
-        };
-        
-        new vis.Network(container, data, options);
-      </script>
 
     <h2>How to read this site</h2>
 
