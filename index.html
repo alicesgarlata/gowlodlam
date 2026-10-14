@@ -253,13 +253,18 @@
         var container = document.getElementById('lod-network');
         var data = { nodes: nodes, edges: edges };
         var options = {
+          nodes: {
+            font: { size: 18, color: 'white' }
+          },
           physics: { 
             barnesHut: { 
               springLength: 120, 
               centralGravity: 0.3
             }
           },
-          edges: { smooth: { type: 'continuous' } },
+          edges: { smooth: { type: 'continuous' } 
+                   font: { size: 14, color: '#22384a', strokeWidth: 3, strokeColor: '#eef3f2' }
+          },
           interaction: { hover: true, tooltipDelay: 200 }
         };
         
