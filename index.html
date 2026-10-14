@@ -72,6 +72,8 @@
     <p>This project takes a single Wikipedia article for the 2018 video game <em><a href="https://en.wikipedia.org/w/index.php?title=God_of_War_(2018_video_game)&amp;oldid=1357494264" target="_blank" rel="noopener">God of War</a></em> — and progressively lifts its content into a Linked Open Data graph. Fifteen entities are identified across three narrative layers (production, fictional, mythological) plus two subject concepts; encoded in TEI/XML with authority reconciliation to Wikidata and VIAF; transformed into an interactive HTML rendering; modelled conceptually against a reused vocabulary of dcterms, schema.org, FOAF, SKOS, and DBpedia; and finally serialised as an RDF/Turtle graph of 104 triples across 18 subjects.</p>
 
     <p>The interesting modelling problem lies in how the game <em>reinterprets</em> its mythological source. The 2018 <em>God of War</em> takes six figures from Norse mythology: Odin, Thor, Freyja, Baldur, Loki, Jörmungandr, and redraws their genealogy in ways that do not match the received tradition: in the game Freyja is Baldur's mother, where the <em>Prose Edda</em> attributes that role to Frigg; the young character Atreus is revealed to be Loki, the mythological father of the World Serpent whom the pair encounter on the boat. Standard vocabularies do not carry a property that means "fictional reinterpretation of a mythological figure", so this project introduces a single coined term, <code>gow:reinterprets</code>, as a subproperty of <code>dcterms:relation</code>. The graph is built so that a mythological figure's Wikidata identity is preserved (through <code>gow:reinterprets</code>) while the game's alternative genealogy is stated in its own right (through <code>schema:children</code>), without collapsing the two into a single <code>owl:sameAs</code> assertion.</p>
+<h3>Interactive Knowledge Graphs</h3>
+<p>Play and discover the relations between entities by dragging the nodes. The dashed lines represent the <code>gow:reinterprets</code> property connecting the game to the myth, while the solid lines show the different family trees.</p>
 <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <div id="lod-network" style="width: 100%; height: 450px; border: 1px solid var(--color-parchment-dark); background: #eef3f2; border-radius: 3px; margin: 2rem 0;"></div> 
 <script type="text/javascript">  
@@ -137,13 +139,8 @@
   
   new vis.Network(container, data, options);
 </script>
-    <div class="callout">
-      <p class="callout-title">Course context</p>
-      <p>Individual project for the Information Science and Cultural Heritage course, taught by Prof. Francesca Tomasi and Prof. Marilena Daquino in the Digital Humanities and Digital Knowledge (DHDK) MA at the University of Bologna, academic year 2025-2026.</p>
-    </div>
-
+    
     <h2 id="myth-and-reinterpretation">Myth and reinterpretation, side by side</h2>
-
     <p>For each figure, the traditional depiction and the game's portrayal are shown together, with a short note on where the game follows its source and where it departs from it, the same distinction that <code>gow:reinterprets</code> and <code>schema:children</code> keep separate in the RDF graph.</p>
 
 <div class="myth-slideshow" role="region" aria-roledescription="carousel" aria-label="Myth and game character gallery">
@@ -308,7 +305,7 @@
 </main>
 
 <footer class="site-footer">
-  <p>LODLAM project for the <a href="https://www.unibo.it/it/studiare/insegnamenti-competenze-trasversali-moocs/insegnamenti/insegnamento/2025/542134" target="_blank" rel="noopener noreferrer"> Information Science and Cultural Heritage</a> course, <a href="https://corsi.unibo.it/magistrale/DigitalHumanitiesKnowledge" target="_blank" rel="noopener noreferrer"> Digital Humanities and Digital Knowledge (DHDK) MA </a>, University of Bologna, a.y. 2025-2026.</p>
+  <p>LODLAM project for the <a href="https://www.unibo.it/it/studiare/insegnamenti-competenze-trasversali-moocs/insegnamenti/insegnamento/2025/542134" target="_blank" rel="noopener noreferrer"> Information Science and Cultural Heritage</a> course, <a href="https://corsi.unibo.it/magistrale/DigitalHumanitiesKnowledge" target="_blank" rel="noopener noreferrer"> Digital Humanities and Digital Knowledge (DHDK) MA </a>, University of Bologna, a.y. 2025-2026, by <a href="https://github.com/alicesgarlata" target="_blank" rel="noopener noreferrer">Alice Sgarlata</a>.</p>
   <p>Instructors: <a href="https://www.unibo.it/sitoweb/francesca.tomasi" target="_blank" rel="noopener noreferrer">Prof. Francesca Tomasi</a> and <a href="https://www.unibo.it/sitoweb/marilena.daquino2" target="_blank" rel="noopener noreferrer">Prof. Marilena Daquino</a>.</p>
   <div class="footer-social">
     <a href="https://github.com/alicesgarlata/gowlodlam" target="_blank" rel="noopener noreferrer" class="github-link" aria-label="Visit the repository on Github!">
