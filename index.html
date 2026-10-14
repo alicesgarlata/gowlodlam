@@ -206,38 +206,64 @@
       </div>
     </div>
 
-    <div id="lod-network" style="width: 100%; height: 500px; border: 1px solid var(--color-parchment-dark); background: #eef3f2; border-radius: 3px; margin: 2rem 0;"></div>
-    <script type="text/javascript">
-      var nodes = new vis.DataSet([
-        { id: 'gow_kratos', label: 'Kratos\n(Game)', color: '#4e7f97', font: {color: 'white'} },
-        { id: 'myth_kratos', label: 'Kratos\n(Myth)', color: '#a2472f', font: {color: 'white'} },
-        { id: 'gow_atreus', label: 'Atreus / Loki\n(Game)', color: '#4e7f97', font: {color: 'white'} },
-        { id: 'myth_loki', label: 'Loki\n(Myth)', color: '#a2472f', font: {color: 'white'} },
-        { id: 'gow_jorm', label: 'Jörmungandr\n(Game)', color: '#4e7f97', font: {color: 'white'} },
-        { id: 'myth_jorm', label: 'Jörmungandr\n(Myth)', color: '#a2472f', font: {color: 'white'} }
-      ]);
-    
-      var edges = new vis.DataSet([
-        { from: 'gow_kratos', to: 'myth_kratos', label: 'gow:reinterprets', dashes: true, color: '#93a3ac', font: {size: 11} },
-        { from: 'gow_atreus', to: 'myth_loki', label: 'gow:reinterprets', dashes: true, color: '#93a3ac', font: {size: 11} },
-        { from: 'gow_jorm', to: 'myth_jorm', label: 'gow:reinterprets', dashes: true, color: '#93a3ac', font: {size: 11} },
-        { from: 'gow_kratos', to: 'gow_atreus', label: 'schema:children', arrows: 'to', color: '#22384a', font: {size: 11} },
-        { from: 'gow_atreus', to: 'gow_jorm', label: 'schema:children', arrows: 'to', color: '#22384a', font: {size: 11} }
-      ]);
-    
-      var container = document.getElementById('lod-network');
-      var data = { nodes: nodes, edges: edges };
-      var options = {
-        physics: { 
-          barnesHut: { springLength: 150 } // Mantiene i nodi distanziati e fluttuanti
-        },
-        edges: {
-          smooth: { type: 'continuous' } // Ammorbidisce le curve delle linee
-        }
-      };
+    <div id="lod-network" style="width: 100%; height: 700px; border: 1px solid var(--color-parchment-dark); background: #eef3f2; border-radius: 3px; margin: 2rem 0;"></div>    <script type="text/javascript">
+     <script type="text/javascript">
+        var colorGame = '#4e7f97'; 
+        var colorMyth = '#a2472f'; 
+        var colorGameEdge = '#22384a'; 
+        var colorMythEdge = '#71301f'; 
+        var colorReinterprets = '#93a3ac'; 
       
-      new vis.Network(container, data, options);
-    </script>
+        var nodes = new vis.DataSet([
+          { id: 'g_kratos', label: 'Kratos\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_atreus', label: 'Atreus/Loki\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_jorm', label: 'Jörmungandr\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_odin', label: 'Odin\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_thor', label: 'Thor\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_freyja', label: 'Freyja\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'g_baldur', label: 'Baldur\n(Game)', color: colorGame, font: {color: 'white'} },
+          { id: 'm_kratos', label: 'Kratos\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_loki', label: 'Loki\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_jorm', label: 'Jörmungandr\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_odin', label: 'Odin\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_thor', label: 'Thor\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_freyja', label: 'Freyja\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_baldur', label: 'Baldur\n(Myth)', color: colorMyth, font: {color: 'white'} },
+          { id: 'm_frigg', label: 'Frigg\n(Myth)', color: colorMyth, font: {color: 'white'} }
+        ]);
+      
+        var edges = new vis.DataSet([
+          { from: 'g_kratos', to: 'm_kratos', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_atreus', to: 'm_loki', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_jorm', to: 'm_jorm', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_odin', to: 'm_odin', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_thor', to: 'm_thor', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_freyja', to: 'm_freyja', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_baldur', to: 'm_baldur', label: 'gow:reinterprets', dashes: true, color: colorReinterprets, font: {size: 11} },
+          { from: 'g_kratos', to: 'g_atreus', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
+          { from: 'g_atreus', to: 'g_jorm', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
+          { from: 'g_odin', to: 'g_thor', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} },
+          { from: 'g_freyja', to: 'g_baldur', label: 'schema:children', arrows: 'to', color: colorGameEdge, font: {size: 11} }, 
+          { from: 'm_loki', to: 'm_jorm', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} },
+          { from: 'm_odin', to: 'm_thor', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} },
+          { from: 'm_frigg', to: 'm_baldur', label: 'schema:children', arrows: 'to', color: colorMythEdge, font: {size: 11} }
+        ]);
+      
+        var container = document.getElementById('lod-network');
+        var data = { nodes: nodes, edges: edges };
+        var options = {
+          physics: { 
+            barnesHut: { 
+              springLength: 200, 
+              centralGravity: 0.3
+            }
+          },
+          edges: { smooth: { type: 'continuous' } },
+          interaction: { hover: true, tooltipDelay: 200 }
+        };
+        
+        new vis.Network(container, data, options);
+      </script>
 
     <h2>How to read this site</h2>
 
